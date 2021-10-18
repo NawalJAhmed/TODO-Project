@@ -9,18 +9,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       group_id: {
+        allowNull: false,
+        references: {model: 'Groups'},
         type: Sequelize.INTEGER
       },
       owner_id: {
+        allowNull: false,
+        references: {model: 'Users'},
         type: Sequelize.INTEGER
       },
       due_date: {
         type: Sequelize.DATE
       },
       completed: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       },
       createdAt: {

@@ -9,12 +9,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       owner_id: {
+        allowNull: false,
+        references: {model: 'Users'},
         type: Sequelize.INTEGER
       },
       dashboard: {
+        allowNull: false,
         type: Sequelize.BOOLEAN
       },
       createdAt: {

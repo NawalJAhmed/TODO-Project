@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Sub-Tasks', {
+    return queryInterface.createTable('SubTasks', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,9 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       task_id: {
+        allowNull: false,
+        references: {model: 'Tasks'},
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -25,6 +28,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Sub-Tasks');
+    return queryInterface.dropTable('SubTasks');
   }
 };
