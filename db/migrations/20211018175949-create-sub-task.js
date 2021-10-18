@@ -9,9 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       task_id: {
+        allowNull: false,
+        references: {model: 'Tasks'},
         type: Sequelize.INTEGER
       },
       createdAt: {
