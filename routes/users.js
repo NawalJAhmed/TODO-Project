@@ -111,4 +111,53 @@ const loginValidators = [
     .withMessage("Please provide a Password"),
 ];
 
+router.post(
+  "/login",
+  csrfProtection,
+  loginValidators,
+  asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    let errors = [];
+    const validatorErrors = validationResult(req);
+
+    if (validatorErrors.isEmpty()) {
+      const user = await db.User.findOne({ where: { email } });
+
+      if (user !== null) {
+        // If the user exists then compare their password
+        // to the provided password.
+        const passwordMatch = await bcrypt.compare(
+          password,
+          user.hashed_password.toString()
+        );
+
+        if (passwordMatch) {
+          // If the password hashes match, then login the user
+          // and redirect them to the users dashboard route.
+          loginUser(req, res, user);
+          return res.redirect("/users/dashboard"); //TODO fix route
+        }
+      }
+
+      // Otherwise display an error message to the user.
+      errors.push("please check your email address and password and try again");
+    } else {
+      errors = validatorErrors.array().map((error) => error.msg);
+    }
+
+    res.render("login", {
+      title: "Login",
+      emailAddress,
+      errors,
+      csrfToken: req.csrfToken(),
+    });
+  })
+);
+
+router.post("/logout", (req, res) => {
+  logoutUser(req, res);
+  res.redirect("/");
+});
+
 module.exports = router;
