@@ -11,6 +11,9 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const groupsRouter = require("./routes/groups");
+const tasksRouter = require("./routes/tasks");
+const subTasksRouter = require("./routes/sub-tasks");
 
 const app = express();
 
@@ -41,6 +44,9 @@ store.sync();
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/users/:userID/", groupsRouter);
+app.use("/users/:userID/:groupID/", tasksRouter);
+app.use("/users/:userID/:groupID/:taskID", subTasksRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
