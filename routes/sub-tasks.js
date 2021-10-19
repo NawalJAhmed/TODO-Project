@@ -9,13 +9,30 @@ const { requireAuth } = require("../auth");
 const router = express.Router();
 
 router.post(
-  "/add",
-  requireAuth,
-  csrfProtection,
+  "/:taskID/add",
+  //requireAuth,
+  //csrfProtection,
   asyncHandler(async (req, res) => {
     const { name } = req.body;
     const task_id = parseInt(req.params.taskID, 10);
     db.SubTask.create({ name, task_id });
-    res.send("happy");
+    res.send("added");
   })
 );
+
+router.delete(
+  "/:taskID/:subTaskID",
+  //requireAuth,
+  //csrfProtection,
+  asyncHandler(async (req, res) => {
+    const { name } = req.body;
+    const subTaskId = req.params.subTaskID;
+    const subTask = await db.SubTask.findByPk(subTaskId);
+    if (subTask) {
+      await subTask.destroy();
+      res.send("deleted");
+    }
+    res.send("subtask not found");
+  })
+);
+module.exports = router;
