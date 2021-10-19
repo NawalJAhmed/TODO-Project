@@ -42,6 +42,7 @@ app.use(
 // create Session table if it doesn't already exist
 store.sync();
 
+// comment out routes that are not being worked on
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 // app.use("/users/:userID/", groupsRouter);
