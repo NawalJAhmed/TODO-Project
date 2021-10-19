@@ -74,7 +74,6 @@ router.post(
     });
 
     const validatorErrors = validationResult(req);
-    console.log(username);
     if (validatorErrors.isEmpty()) {
       const hashedPassword = await bcrypt.hash(password, 10);
       user.hashed_password = hashedPassword;
@@ -136,7 +135,6 @@ router.post(
           // If the password hashes match, then login the user
           // and redirect them to the users dashboard route.
           loginUser(req, res, user);
-          console.log(res.locals);
           return res.redirect("/users/dashboard"); //TODO fix route
         }
       }
@@ -145,6 +143,7 @@ router.post(
       errors.push("please check your email address and password and try again");
     } else {
       errors = validatorErrors.array().map((error) => error.msg);
+      console.log(errors);
     }
 
     res.render("login", {
@@ -156,7 +155,7 @@ router.post(
   })
 );
 
-router.post("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   logoutUser(req, res);
   res.redirect("/");
 });

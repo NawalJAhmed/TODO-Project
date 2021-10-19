@@ -14,8 +14,8 @@ router.post(
   csrfProtection,
   asyncHandler(async (req, res) => {
     const { name } = req.body;
-    const taskId = parseInt(req.params.taskID, 10);
-    db.SubTask.create({ name, task_id: taskId });
+    const task_id = parseInt(req.params.taskID, 10);
+    db.SubTask.create({ name, task_id });
     res.send("happy");
   })
 );

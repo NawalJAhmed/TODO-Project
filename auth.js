@@ -10,9 +10,14 @@ const logoutUser = (req, res) => {
   delete req.session.auth;
 };
 
-const requireAuth = (req, res, next) => {
+const requireAuth = async (req, res, next) => {
   if (!res.locals.authenticated) {
     return res.redirect("/users/login");
+  }
+  let userId = req.params.userID;
+  const user = await db.User.findByPk(userId);
+  if (res.locals.user !== user) {
+    return res.redirect(`/users/${userId}/dashboard`);
   }
   return next();
 };
