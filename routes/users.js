@@ -136,6 +136,7 @@ router.post(
           // If the password hashes match, then login the user
           // and redirect them to the users dashboard route.
           loginUser(req, res, user);
+          console.log(res.locals);
           return res.redirect("/users/dashboard"); //TODO fix route
         }
       }

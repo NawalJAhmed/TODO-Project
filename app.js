@@ -6,6 +6,7 @@ const logger = require("morgan");
 const { sequelize } = require("./db/models");
 const session = require("express-session");
 const { sessionSecret } = require("./config");
+const { restoreUser } = require("./auth");
 
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
@@ -46,9 +47,9 @@ store.sync();
 app.use(restoreUser);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-// app.use("/users/:userID/", groupsRouter);
-// app.use("/users/:userID/#groups/:groupID/", tasksRouter);
-app.use("/users/:userID/:groupID/:taskID", subTasksRouter);
+// // app.use("/users/:userID/", groupsRouter);
+// // app.use("/users/:userID/#groups/:groupID/", tasksRouter);
+// app.use("/users/:userID/:groupID/:taskID", subTasksRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
