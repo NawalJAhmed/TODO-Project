@@ -1,8 +1,19 @@
+include utils.pug
+
 doctype html
 html
   head
       block head
-        title="Express Starter App"
+        title="TODO App"
         link(rel='stylesheet' href='/stylesheets/reset.css')
   body
-    block content
+    nav
+      div
+        h1.logo //TODO:
+        button.logout Logout
+    aside
+      a.dashbutton Dashboard
+      h2.groups Groups
+        +groupList(groups)
+
+    block group

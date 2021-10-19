@@ -5,3 +5,20 @@ mixin validationErrorSummary(errors)
       ul
         each error in errors
           li= error
+mixin groupList(groups)
+  if groups
+    ul.groupList
+      each group in groups
+        li= group
+mixin taskList(tasks, subtasks)
+  if tasks
+    ul.taskList
+      each task in tasks
+        li= task
+          if (subtasks)
+            ul.subTasksList
+              each subTask in subTasks
+                li= subTask
+mixin field(labelText, fieldName, fieldValue, fieldType = 'text')
+    label(for=fieldName)= labelText
+    input(type=fieldType id=fieldName name=fieldName value=fieldValue)
