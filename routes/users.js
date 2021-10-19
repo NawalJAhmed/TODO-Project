@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const db = require("../db/models");
 const { csrfProtection, asyncHandler } = require("./utils");
 const { loginUser, logoutUser } = require("../auth");
+const { Op } = require("sequelize");
 
 const router = express.Router();
 
@@ -74,13 +75,19 @@ router.post(
     });
 
     const validatorErrors = validationResult(req);
-    console.log(username);
     if (validatorErrors.isEmpty()) {
       const hashedPassword = await bcrypt.hash(password, 10);
       user.hashed_password = hashedPassword;
       await user.save();
       loginUser(req, res, user);
-      res.redirect(`/users/dashboard`);
+
+      const owner_id = req.session.auth.userId;
+      let dashboard = await db.Group.create({
+        name: "dashboard",
+        owner_id,
+        dashboard: true,
+      });
+      res.redirect(`/users/${dashboard.id}`);
     } else {
       const errors = validatorErrors.array().map((error) => error.msg);
       res.render("signup", {
@@ -136,7 +143,14 @@ router.post(
           // If the password hashes match, then login the user
           // and redirect them to the users dashboard route.
           loginUser(req, res, user);
-          return res.redirect("/users/dashboard"); //TODO fix route
+
+          const owner_id = req.session.auth.userId;
+          let dashboard = await db.Group.findOne({
+            where: {
+              [Op.and]: [{ owner_id }, { dashboard: true }],
+            },
+          });
+          res.redirect(`/users/${dashboard.id}`);
         }
       }
 
@@ -148,14 +162,14 @@ router.post(
 
     res.render("login", {
       title: "Login",
-      emailAddress,
+      email,
       errors,
       csrfToken: req.csrfToken(),
     });
   })
 );
 
-router.post("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   logoutUser(req, res);
   res.redirect("/");
 });

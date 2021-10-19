@@ -6,7 +6,8 @@ const logger = require("morgan");
 const { sequelize } = require("./db/models");
 const session = require("express-session");
 const { sessionSecret } = require("./config");
-const { restoreUser } = require('./auth')
+const { restoreUser } = require("./auth");
+
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const indexRouter = require("./routes/index");
@@ -43,12 +44,12 @@ app.use(
 store.sync();
 
 // comment out routes that are not being worked on
-app.use(restoreUser)
+app.use(restoreUser);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/users/", groupsRouter);
-//app.use("/users/:userID/#groups/:groupID/", tasksRouter); //does not seem possible to use fragments on express midddleware request. https://stackoverflow.com/questions/17744003/get-url-after-in-express-js-middleware-request
-//app.use("/users/:userID/:groupID/:taskID", subTasksRouter);
+// // app.use("/users/:userID/", groupsRouter);
+app.use("/users/:userID/#groups/:groupID/", tasksRouter);
+app.use("/users/:userID/:groupID", subTasksRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
