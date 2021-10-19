@@ -16,7 +16,7 @@ const requireAuth = async (req, res, next) => {
   }
   let userId = req.params.userID;
   if (req.session.auth.userId !== userId) {
-    return res.redirect(`/users/${userId}/dashboard`);
+    return res.redirect(`/`);
   }
   return next();
 };
