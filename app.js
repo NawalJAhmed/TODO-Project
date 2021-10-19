@@ -46,7 +46,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 // app.use("/users/:userID/", groupsRouter);
 // app.use("/users/:userID/#groups/:groupID/", tasksRouter);
-// app.use("/users/:userID/:groupID/:taskID", subTasksRouter);
+app.use("/users/:userID/:groupID/:taskID", subTasksRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
