@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const db = require("../db/models");
 const { csrfProtection, asyncHandler } = require("./utils");
 const { loginUser, logoutUser } = require("../auth");
+const { Op } = require("sequelize");
 
 const router = express.Router();
 
@@ -144,10 +145,10 @@ router.post(
           loginUser(req, res, user);
 
           const owner_id = req.session.auth.userId;
-          let dashboard = await db.Group.create({
-            name: "dashboard",
-            owner_id,
-            dashboard: true,
+          let dashboard = await db.Group.findOne({
+            where: {
+              [Op.and]: [{ owner_id }, { dashboard: true }],
+            },
           });
           res.redirect(`/users/${dashboard.id}`);
         }
