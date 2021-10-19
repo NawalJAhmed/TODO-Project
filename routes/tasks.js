@@ -28,8 +28,8 @@ const router = express.Router();
 router.get(
     "/:id",
     asyncHandler(async (req, res) => {
-      //const task_id = parseInt(req.params.id, 10);
-      const task_id = 1
+      const task_id = parseInt(req.params.id, 10);
+      //const task_id = 1
       const task = await Task.findByPk(task_id)
       const { name, due_date, completed, owner_id} = task
       console.log({ name, due_date, completed, owner_id});
@@ -44,8 +44,8 @@ router.post(
     "/add",
     asyncHandler(async (req, res) => {
       const { name, owner_id, due_date } = req.body;
-      //const group_id = parseInt(req.params.groupID, 10);
-      const group_id = 1
+      const group_id = parseInt(req.params.groupID, 10);
+      //const group_id = 1
       Task.create({ name, due_date, owner_id, group_id, completed: false });
       res.send("sent");
       //res.render('tasks')
@@ -58,7 +58,7 @@ router.post(
     const id = parseInt(req.params.id, 10);
         Task.update({completed: true},
             {where: {id}})
-      //const group_id = parseInt(req.params.groupID, 10);
+      const group_id = parseInt(req.params.groupID, 10);
       //res.render('tasks')
       res.send('updated')
     })
@@ -68,9 +68,9 @@ router.post(
     "/:id",
     asyncHandler(async (req, res) => {
     // if(req.session.auth) {
-        //const task_id = parseInt(req.params.id, 10);
-        //const owner_id = req.session.auth.userId
-        const task_id = 1
+        const task_id = parseInt(req.params.id, 10);
+        const owner_id = req.session.auth.userId
+        // const task_id = 1
         const task = await Task.findByPk(task_id);
         const subTasks = await SubTask.findAll({
             where: {task_id},
@@ -94,7 +94,5 @@ router.post(
     // }
     })
   );
-
-
 
 module.exports = router;
