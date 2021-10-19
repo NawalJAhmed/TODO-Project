@@ -143,12 +143,11 @@ router.post(
       errors.push("please check your email address and password and try again");
     } else {
       errors = validatorErrors.array().map((error) => error.msg);
-      console.log(errors);
     }
 
     res.render("login", {
       title: "Login",
-      emailAddress,
+      email,
       errors,
       csrfToken: req.csrfToken(),
     });

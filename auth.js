@@ -15,8 +15,7 @@ const requireAuth = async (req, res, next) => {
     return res.redirect("/users/login");
   }
   let userId = req.params.userID;
-  const user = await db.User.findByPk(userId);
-  if (res.locals.user !== user) {
+  if (req.session.auth.userId !== userId) {
     return res.redirect(`/users/${userId}/dashboard`);
   }
   return next();
