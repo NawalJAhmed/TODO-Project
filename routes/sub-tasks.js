@@ -7,11 +7,11 @@ const { csrfProtection, asyncHandler } = require("./utils");
 const { requireAuth } = require("../auth");
 
 const router = express.Router();
+router.use(requireAuth);
 
 router.post(
   "/:taskID/add",
-  //requireAuth,
-  //csrfProtection,
+  csrfProtection,
   asyncHandler(async (req, res) => {
     const { name } = req.body;
     const task_id = parseInt(req.params.taskID, 10);
@@ -22,8 +22,7 @@ router.post(
 
 router.delete(
   "/:taskID/:subTaskID",
-  //requireAuth,
-  //csrfProtection,
+  csrfProtection,
   asyncHandler(async (req, res) => {
     const { name } = req.body;
     const subTaskId = req.params.subTaskID;
