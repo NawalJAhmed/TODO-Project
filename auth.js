@@ -10,9 +10,13 @@ const logoutUser = (req, res) => {
   delete req.session.auth;
 };
 
-const requireAuth = (req, res, next) => {
+const requireAuth = async (req, res, next) => {
   if (!res.locals.authenticated) {
-    return res.redirect("/user/login");
+    return res.redirect("/users/login");
+  }
+  let userId = req.params.userID;
+  if (req.session.auth.userId !== userId) {
+    return res.redirect(`/`);
   }
   return next();
 };
