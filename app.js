@@ -42,11 +42,11 @@ app.use(
 // create Session table if it doesn't already exist
 store.sync();
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/users/:userID/", groupsRouter);
-app.use("/users/:userID/:groupID/", tasksRouter);
-app.use("/users/:userID/:groupID/:taskID", subTasksRouter);
+//app.use("/", indexRouter);
+//app.use("/users", usersRouter);
+app.use("/users/", groupsRouter);
+//app.use("/users/:userID/:groupID/", tasksRouter);
+//app.use("/users/:userID/:groupID/:taskID", subTasksRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

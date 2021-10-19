@@ -10,11 +10,13 @@ module.exports = (sequelize, DataTypes) => {
     const columnMapping = {
       through: 'Member',
       foreignKey: 'group_id',
-      otherKey: 'user_id'
+      otherKey: 'user_id',
+      as: 'groupToMember'
     }
     Group.belongsToMany(models.User, columnMapping)
     Group.belongsTo(models.User, {
-      foreignKey: 'owner_id'
+      foreignKey: 'owner_id',
+      as: 'groupToUser'
     })
   };
   return Group;
