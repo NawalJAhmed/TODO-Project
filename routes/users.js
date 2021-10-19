@@ -79,7 +79,14 @@ router.post(
       user.hashed_password = hashedPassword;
       await user.save();
       loginUser(req, res, user);
-      res.redirect(`/users/dashboard`);
+
+      const owner_id = req.session.auth.userId;
+      let dashboard = await db.Group.create({
+        name: "dashboard",
+        owner_id,
+        dashboard: true,
+      });
+      res.redirect(`/users/${dashboard.id}`);
     } else {
       const errors = validatorErrors.array().map((error) => error.msg);
       res.render("signup", {
@@ -135,7 +142,14 @@ router.post(
           // If the password hashes match, then login the user
           // and redirect them to the users dashboard route.
           loginUser(req, res, user);
-          return res.redirect("/users/dashboard"); //TODO fix route
+
+          const owner_id = req.session.auth.userId;
+          let dashboard = await db.Group.create({
+            name: "dashboard",
+            owner_id,
+            dashboard: true,
+          });
+          res.redirect(`/users/${dashboard.id}`);
         }
       }
 
