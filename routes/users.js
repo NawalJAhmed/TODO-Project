@@ -89,11 +89,23 @@ router.post(
       });
       res.redirect(`/users/${dashboard.id}`);
     } else {
-      const errors = validatorErrors.array().map((error) => error.msg);
+      const errors = validatorErrors.array(); //.map((error) => error.msg);
+      const usernameError = errors.find((error) => error.param === "username");
+      const emailError = errors.find((error) => error.param === "email");
+      const passwordError = errors.find((error) => error.param === "password");
+      const comfirmPasswordError = errors.find(
+        (error) => error.param === "confirmPassword"
+      );
+      const data = req.body;
+
       res.render("signup", {
         title: "signup",
         user,
-        errors,
+        usernameError,
+        emailError,
+        passwordError,
+        comfirmPasswordError,
+        data,
         csrfToken: req.csrfToken(),
       });
     }

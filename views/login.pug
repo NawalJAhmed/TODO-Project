@@ -1,13 +1,11 @@
-extends layout
 
 include utils.pug
 
-block content
-  +validationErrorSummary(errors)
-  form(action='/users/login' method='post')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    label(for='email') email
-    input(type='email' name='email' required)
-    label(for='password') password
-    input(type='password' name='password' required)
-    button(type='submit' ) signup
++validationErrorSummary(errors)
+form(action='/users/login' method='post')
+  input(type='hidden' name='_csrf' value=csrfToken)
+  label(for='email') Email
+  input(type='email' name='email' required)
+  label(for='password') Password
+  input(type='password' name='password' required)
+  button(type='submit' ) Signup
