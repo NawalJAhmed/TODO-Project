@@ -12,6 +12,7 @@ module.exports = {
      {username: 'Test1', email: 'email1@test.com', hashed_password: 'password1', createdAt: new Date(), updatedAt: new Date()},
      {username: 'Test2', email: 'email2@test.com', hashed_password: 'password2', createdAt: new Date(), updatedAt: new Date()},
      {username: 'Test3', email: 'email3@test.com', hashed_password: 'password3', createdAt: new Date(), updatedAt: new Date()},
+     {username: 'Test4', email: 'email4@test.com', hashed_password: 'password4', createdAt: new Date(), updatedAt: new Date()},
    ], {});
   },
 
