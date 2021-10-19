@@ -75,13 +75,13 @@ router.post(
         const subTasks = await SubTask.findAll({
             where: {task_id},
          })
-        // if (owner_id !== task.owner_id) {
-        //   const err = new Error("Unauthorized");
-        //   err.status = 401;
-        //   err.message = "You are not authorized to delete this task.";
-        //   err.title = "Unauthorized";
-        //   throw err;
-        // }
+        if (owner_id !== task.owner_id) {
+          const err = new Error("Unauthorized");
+          err.status = 401;
+          err.message = "You are not authorized to delete this task.";
+          err.title = "Unauthorized";
+          throw err;
+        }
         if (task) {
             if(subTasks.length) {
                 for (const subTask of subTasks) {
