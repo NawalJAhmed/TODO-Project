@@ -80,3 +80,6 @@ article {
 p {
   text-align: center;
 }
+form {
+  margin: 0;
+}
