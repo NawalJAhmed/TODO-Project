@@ -11,6 +11,7 @@ const router = express.Router();
 // TODO add groups, tasks, sub-tasks
 router.get(
   "/:id/:groupId",
+  csrfProtection, 
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10);
     const groupId = parseInt(req.params.groupId, 10);
@@ -51,6 +52,7 @@ router.get(
       groups,
       ownerGroups,
       tasks,
+      csrfToken: req.csrfToken()
     });
   })
 );
@@ -88,7 +90,7 @@ const groupValidators = [
 
 // TODO test this route with logged in user
 router.post(
-  "/:id/create-group",
+  "/:id/:groupId/",
   csrfProtection,
   groupValidators,
   asyncHandler(async (req, res) => {
