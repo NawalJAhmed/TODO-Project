@@ -87,7 +87,8 @@ router.post(
         owner_id,
         dashboard: true,
       });
-      res.redirect(`/users/${dashboard.id}`);
+      let url = `/users/${owner_id}/${dashboard.id}`;
+      res.redirect(url);
     } else {
       const errors = validatorErrors.array();
       const usernameError = errors.find((error) => error.param === "username");
@@ -164,7 +165,9 @@ router.post(
               [Op.and]: [{ owner_id }, { dashboard: true }],
             },
           });
-          res.redirect(`/users/${dashboard.id}`);
+          let url = `/users/${owner_id}/${dashboard.id}`;
+          console.log("!!!!!!!!!!!! " + url);
+          return res.redirect(url);
         }
       }
 
