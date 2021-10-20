@@ -16,6 +16,9 @@ block tasksList
             li= task.dataValues.name
 block group
     if members
+        p Group Owner: #{ownerName.username}
+        br
+        p Group Members
         ul.groupList
         each member in members.dataValues.groupToMember
             li= member.dataValues.username
