@@ -22,10 +22,10 @@ router.get(
     });
 
     const members = await db.Group.findByPk(groupId, {
-      include: { model: db.User, as:'groupToMember'},
+      include: { model: db.User, as: "groupToMember" },
     });
 
-    const ownerId = members.dataValues.owner_id
+    const ownerId = members.dataValues.owner_id;
     const ownerName = await db.User.findByPk(ownerId);
 
     const groups = await db.User.findByPk(userId, {
@@ -33,9 +33,15 @@ router.get(
     });
 
     const ownerGroups = await db.Group.findAll({
-      where: { owner_id: userId },
+      where: {
+        [Op.and]: [{ owner_id: userId }, { dashboard: false }],
+      },
     });
-
+    const dashboard = await db.Group.findOne({
+      where: {
+        [Op.and]: [{ owner_id: userId }, { dashboard: true }],
+      },
+    });
     //querying from members and using userId
     //or user.findbypk include group
 
@@ -47,11 +53,13 @@ router.get(
       order: [["due_date", "ASC"]],
     });
     res.render("groupInfo", {
-      ownerName,  
+      ownerName,
       members,
       groups,
       ownerGroups,
       tasks,
+      userId,
+      dashboard,
       csrfToken: req.csrfToken()
     });
   })
