@@ -28,6 +28,11 @@ router.get(
         include: {model: db.Group, as: 'userToMember'},
     })
 
+    const ownerGroups = await db.Group.findAll({
+        where: {owner_id: userId}
+    })
+    console.log('!!!!!', ownerGroups)
+
     //querying from members and using userId
     //or user.findbypk include group
 
@@ -41,6 +46,7 @@ router.get(
     res.render("groupInfo", {
       members,
       groups,
+      ownerGroups,
       tasks,
     });
   })
