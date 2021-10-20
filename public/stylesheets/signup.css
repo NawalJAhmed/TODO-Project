@@ -26,7 +26,7 @@ body {
 }
 .logo {
   font-family: Inconsolata, monospace;
-  color: rgb(18, 140, 18);
+  color: darkred;
   font-size: 40px;
   margin: 0;
   font-weight: normal;

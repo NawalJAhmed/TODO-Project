@@ -1,23 +1,23 @@
 .addTaskButton {
-    color: lightseagreen
+  color: lightseagreen;
 }
 
 #completeTaskListButton {
-    color: blue;
+  color: blue;
 }
 
 #incompleteTaskListButton {
-    color: green
+  color: green;
 }
 
 .delete-btn {
-    color: red
+  color: darkred;
 }
 
 h1 {
-    color: red
+  color: darkred;
 }
 
 .taskList {
-    color: red
+  color: darkred;
 }
