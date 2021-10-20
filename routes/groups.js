@@ -24,9 +24,17 @@ router.get(
       where: { group_id: groupId },
     });
 
+    const groups = await db.User.findByPk(userId, {
+        include: {model: db.Group, as: 'userToMember'},
+    })
+    //console.log('!!!!!!!!', groups.dataValues.userToMember)
+    //querying from members and using userId
+    //or user.findbypk include group
+    
     const groupInfo = await db.Group.findByPk(groupId);
     res.render("groupInfo", {
       members,
+      groups
     });
   })
 );

@@ -8,8 +8,8 @@ mixin validationErrorSummary(errors)
 mixin groupList(groups)
   if groups
     ul.groupList
-      each group in groups
-        li= group
+      each group in groups.dataValues.userToMember
+        li= group.dataValues.name
 mixin taskList(tasks, subtasks)
   if tasks
     ul.taskList
