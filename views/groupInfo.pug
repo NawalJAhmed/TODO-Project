@@ -1,5 +1,19 @@
 extends layout
-
+append head
+    link(rel="stylesheet", href="/stylesheets/tasks.css")
+    script(src="/javascripts/index.js" type="module")
+block tasksList
+    br
+    br
+    br
+    h1= "Tasks List"
+    br
+    br
+    if tasks
+        ul.taskList
+        each task in tasks
+            //- display task name
+            li= task.dataValues.name
 block group
     if members
         ul.groupList

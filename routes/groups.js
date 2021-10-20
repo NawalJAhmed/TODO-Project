@@ -14,7 +14,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10);
     const groupId = parseInt(req.params.groupId, 10);
-
+    // const taskId = parseInt(req.params.taskId, 10);
     const groupTasks = await db.Task.findAll({
       where: { group_id: groupId },
       include: { model: db.SubTask },
@@ -30,11 +30,18 @@ router.get(
     //console.log('!!!!!!!!', groups.dataValues.userToMember)
     //querying from members and using userId
     //or user.findbypk include group
-    
+
     const groupInfo = await db.Group.findByPk(groupId);
+    const group_id = parseInt(req.params.groupId, 10);
+    //const group_id = 1
+    const tasks = await db.Task.findAll({
+       where: {group_id},
+       order: [['due_date', 'ASC']]
+    })
     res.render("groupInfo", {
       members,
-      groups
+      groups,
+      tasks,
     });
   })
 );
