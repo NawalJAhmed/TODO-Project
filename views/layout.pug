@@ -11,9 +11,9 @@ html
     nav
       div
         h1.logo //TODO:
-      button.logout Logout
+      a.logout(href="/users/logout") Logout
     aside
-      a.dashbutton Dashboard
+      a(href="/users/logout").dashbutton Dashboard
       h2.groups Groups
         +groupList(groups)
     block errors
