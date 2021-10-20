@@ -21,6 +21,9 @@ body {
   height: 70%;
   border-radius: 30px;
 }
+.signupBox#login {
+  height: 50%;
+}
 .logo {
   font-family: Inconsolata, monospace;
   color: rgb(18, 140, 18);
@@ -77,4 +80,9 @@ p {
 }
 .signupHeader > div {
   width: 24px;
+}
+.alert {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 10px;
 }

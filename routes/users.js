@@ -89,7 +89,7 @@ router.post(
       });
       res.redirect(`/users/${dashboard.id}`);
     } else {
-      const errors = validatorErrors.array(); //.map((error) => error.msg);
+      const errors = validatorErrors.array();
       const usernameError = errors.find((error) => error.param === "username");
       const emailError = errors.find((error) => error.param === "email");
       const passwordError = errors.find((error) => error.param === "password");
@@ -117,6 +117,7 @@ router.get("/login", csrfProtection, (req, res) => {
   res.render("login", {
     title: "login",
     user,
+    notFound: "",
     csrfToken: req.csrfToken(),
   });
 });
@@ -138,6 +139,7 @@ router.post(
     const { email, password } = req.body;
 
     let errors = [];
+    let notFound = "";
     const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
@@ -167,15 +169,20 @@ router.post(
       }
 
       // Otherwise display an error message to the user.
-      errors.push("please check your email address and password and try again");
+      notFound = "please check your email address and password and try again";
     } else {
-      errors = validatorErrors.array().map((error) => error.msg);
+      errors = validatorErrors.array();
     }
-
+    const emailError = errors.find((error) => error.param === "email");
+    const passwordError = errors.find((error) => error.param === "password");
+    const data = req.body;
     res.render("login", {
       title: "Login",
       email,
-      errors,
+      emailError,
+      passwordError,
+      notFound,
+      data,
       csrfToken: req.csrfToken(),
     });
   })

@@ -1,11 +1,25 @@
 
 include utils.pug
+head
+  title="Sign up"
+  link(rel="stylesheet" href="/stylesheets/signup.css")
+  link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
 
-+validationErrorSummary(errors)
-form(action='/users/login' method='post')
-  input(type='hidden' name='_csrf' value=csrfToken)
-  label(for='email') Email
-  input(type='email' name='email' required)
-  label(for='password') Password
-  input(type='password' name='password' required)
-  button(type='submit' ) Signup
+  //- add page specific js
+  //- script(src="/javascripts/index.js" type="module" defer)
+body
+  .signupBox#login
+    .signupHeader
+      a(class="material-icons" href="/")= "arrow_back"
+      h2.logo //TODO:
+      div
+    p.alert= `${notFound}`
+    .signupForm
+      h2 Login to your account
+      form(action='/users/login' method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        p= `${emailError ? emailError.msg : ""}`
+        input(type='email' name='email' placeholder="Email" value=`${data ? data.email : ""}`)
+        p= `${passwordError ? passwordError.msg : ""}`
+        input(type='password' name='password' placeholder="Password")
+        button(type='submit' ) Login
