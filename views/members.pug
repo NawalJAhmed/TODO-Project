@@ -1,11 +1,7 @@
-//- this is a sample pug file to test post functionality for groups
-//- NOT MEANT FOR PRODUCTION
-
 extends layout
-
 block content
   form(action=`/users/${id}/${groupId}/add-member` method='post')
     input(type='hidden' name='_csrf' value=csrfToken)
     label(for='user_id') User Id
     input(type='number' name='user_id' required)
-    button(type='submit' ) submit
+    button(type='submit' ) Add Member

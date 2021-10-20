@@ -47,7 +47,7 @@ store.sync();
 app.use(restoreUser);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-// // app.use("/users/:userID/", groupsRouter);
+app.use("/users", groupsRouter);
 app.use("/users/:userID/#groups/:groupID/", tasksRouter);
 app.use("/users/:userID/:groupID", subTasksRouter);
 

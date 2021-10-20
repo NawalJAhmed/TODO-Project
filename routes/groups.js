@@ -19,12 +19,15 @@ router.get('/:id/:groupId', asyncHandler(async (req, res) => {
         include: {model: db.SubTask}
     })
 
-    const groupMembers = await db.Member.findAll({
+    const members = await db.Member.findAll({
         where: {group_id: groupId}
     })
 
     const groupInfo = await db.Group.findByPk(groupId);
-    res.send(groupMembers)
+    console.log('!!!!!!', members[0].dataValues.user_id)
+    res.render('groupInfo', {
+        members
+    })
 }));
 
 

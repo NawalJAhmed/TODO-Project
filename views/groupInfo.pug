@@ -1,0 +1,6 @@
+extends layout
+block content
+    if members
+        ul.groupList
+        each member in members
+            li= member.dataValues.user_id
