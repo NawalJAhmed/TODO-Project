@@ -5,10 +5,6 @@ a:active {
   text-decoration: none;
   color: inherit;
 }
-a:focus,
-a:visited {
-  color: white;
-}
 .logout {
   background-color: darkred;
   color: white;
@@ -77,6 +73,9 @@ h2.groups {
 .groupButton > div {
   margin-top: 10px;
   margin-left: 15px;
+}
+.groupButton > div {
+  color: black;
 }
 .groupButton > div.hide {
   display: none;
