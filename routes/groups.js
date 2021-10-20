@@ -20,8 +20,8 @@ router.get(
       include: { model: db.SubTask },
     });
 
-    const members = await db.Member.findAll({
-      where: { group_id: groupId },
+    const members = await db.Group.findByPk(groupId, {
+      include: { model: db.User, as:'groupToMember'},
     });
 
     const groups = await db.User.findByPk(userId, {
