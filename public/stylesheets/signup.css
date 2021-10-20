@@ -1,3 +1,11 @@
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -13,11 +21,12 @@ body {
   height: 70%;
   border-radius: 30px;
 }
-.signupBox > h2 {
-  font-family: "Ubuntu Mono";
+.logo {
+  font-family: Inconsolata, monospace;
   color: rgb(18, 140, 18);
   font-size: 40px;
   margin: 0;
+  font-weight: normal;
 }
 .signupForm {
   margin: 0px;
@@ -58,4 +67,14 @@ button {
 p {
   margin: 0;
   color: red;
+}
+.signupHeader {
+  width: 95%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.signupHeader > div {
+  width: 24px;
 }
