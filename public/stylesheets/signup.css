@@ -1,0 +1,88 @@
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #999999;
+}
+.signupBox {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33%;
+  height: 70%;
+  border-radius: 30px;
+}
+.signupBox#login {
+  height: 50%;
+}
+.logo {
+  font-family: Inconsolata, monospace;
+  color: rgb(18, 140, 18);
+  font-size: 40px;
+  margin: 0;
+  font-weight: normal;
+}
+.signupForm {
+  margin: 0px;
+  width: 80%;
+  font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+}
+input {
+  margin-bottom: 15px;
+  border: solid 1px lavender;
+  font-size: 18px;
+  color: black;
+  width: 100%;
+  height: 60px;
+  border-radius: 10px;
+}
+::placeholder {
+  color: dimgray;
+  opacity: 1;
+}
+button {
+  background-color: royalblue;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  height: 50px;
+  border-radius: 25px;
+}
+p {
+  margin: 0;
+  color: red;
+}
+.signupHeader {
+  width: 95%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.signupHeader > div {
+  width: 24px;
+}
+.alert {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 10px;
+}

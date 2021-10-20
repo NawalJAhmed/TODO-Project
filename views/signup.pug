@@ -1,17 +1,29 @@
-extends layout
 
 include utils.pug
+head
+  title="Sign up"
+  link(rel="stylesheet" href="/stylesheets/signup.css")
+  link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
 
-block content
-  +validationErrorSummary(errors)
-  form(action='/users/signup' method='post')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    label(for='username') username
-    input(type='text' name='username' required)
-    label(for='email') email
-    input(type='email' name='email' required)
-    label(for='password') password
-    input(type='password' name='password' required)
-    label(for='confirmPassword') confirmPassword
-    input(type='password' name='confirmPassword' required)
-    button(type='submit' ) signup
+  //- add page specific js
+  //- script(src="/javascripts/index.js" type="module" defer)
+body
+  //- +validationErrorSummary(errors)
+  .signupBox
+    .signupHeader
+      a(class="material-icons" href="/")= "arrow_back"
+      h2.logo //TODO:
+      div
+    .signupForm
+      h2 Create your account
+      form(action='/users/signup' method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        p= `${usernameError ? usernameError.msg : ""}`
+        input(type='text' name='username' placeholder="Username" value=`${data ? data.username : ""}` )
+        p= `${emailError ? emailError.msg : ""}`
+        input(type='email' name='email' placeholder="Email" value=`${data ? data.email : ""}` )
+        p= `${passwordError ? passwordError.msg : ""}`
+        input(type='password' name='password' placeholder="Password" )
+        p= `${comfirmPasswordError ? comfirmPasswordError.msg : ""}`
+        input(type='password' name='confirmPassword' placeholder="Confirm Password" )
+        button(type='submit' ) Signup

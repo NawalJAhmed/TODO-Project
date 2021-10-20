@@ -87,13 +87,26 @@ router.post(
         owner_id,
         dashboard: true,
       });
-      res.redirect(`/users/${dashboard.id}`);
+      let url = `/users/${owner_id}/${dashboard.id}`;
+      res.redirect(url);
     } else {
-      const errors = validatorErrors.array().map((error) => error.msg);
+      const errors = validatorErrors.array();
+      const usernameError = errors.find((error) => error.param === "username");
+      const emailError = errors.find((error) => error.param === "email");
+      const passwordError = errors.find((error) => error.param === "password");
+      const comfirmPasswordError = errors.find(
+        (error) => error.param === "confirmPassword"
+      );
+      const data = req.body;
+
       res.render("signup", {
         title: "signup",
         user,
-        errors,
+        usernameError,
+        emailError,
+        passwordError,
+        comfirmPasswordError,
+        data,
         csrfToken: req.csrfToken(),
       });
     }
@@ -105,6 +118,7 @@ router.get("/login", csrfProtection, (req, res) => {
   res.render("login", {
     title: "login",
     user,
+    notFound: "",
     csrfToken: req.csrfToken(),
   });
 });
@@ -126,6 +140,7 @@ router.post(
     const { email, password } = req.body;
 
     let errors = [];
+    let notFound = "";
     const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
@@ -150,20 +165,27 @@ router.post(
               [Op.and]: [{ owner_id }, { dashboard: true }],
             },
           });
-          res.redirect(`/users/${dashboard.id}`);
+          let url = `/users/${owner_id}/${dashboard.id}`;
+          console.log("!!!!!!!!!!!! " + url);
+          return res.redirect(url);
         }
       }
 
       // Otherwise display an error message to the user.
-      errors.push("please check your email address and password and try again");
+      notFound = "please check your email address and password and try again";
     } else {
-      errors = validatorErrors.array().map((error) => error.msg);
+      errors = validatorErrors.array();
     }
-
+    const emailError = errors.find((error) => error.param === "email");
+    const passwordError = errors.find((error) => error.param === "password");
+    const data = req.body;
     res.render("login", {
       title: "Login",
       email,
-      errors,
+      emailError,
+      passwordError,
+      notFound,
+      data,
       csrfToken: req.csrfToken(),
     });
   })
