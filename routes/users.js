@@ -143,7 +143,7 @@ router.post(
     let errors = [];
     let notFound = "";
     const validatorErrors = validationResult(req);
-
+    console.log(req.body);
     if (validatorErrors.isEmpty()) {
       const user = await db.User.findOne({ where: { email } });
 
