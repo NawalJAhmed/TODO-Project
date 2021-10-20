@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -8,10 +8,40 @@ module.exports = {
 
       Example:
       */
-   return queryInterface.bulkInsert('Groups', [
-     {name: 'Group1', owner_id: 1, dashboard: false, createdAt: new Date(), updatedAt: new Date()},
-     {name: 'Group2', owner_id: 2, dashboard: false, createdAt: new Date(), updatedAt: new Date()}
-   ], {});
+    return queryInterface.bulkInsert(
+      "Groups",
+      [
+        {
+          name: "dashboard",
+          owner_id: 1,
+          dashboard: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: "demogroup1",
+          owner_id: 1,
+          dashboard: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: "demogroup2",
+          owner_id: 1,
+          dashboard: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: "demogroup3",
+          owner_id: 1,
+          dashboard: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    );
   },
 
   down: (queryInterface, Sequelize) => {
@@ -21,6 +51,6 @@ module.exports = {
 
       Example:
       */
-   return queryInterface.bulkDelete('Groups', null, {});
-  }
+    return queryInterface.bulkDelete("Groups", null, {});
+  },
 };

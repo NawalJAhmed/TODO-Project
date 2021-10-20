@@ -1,5 +1,5 @@
-'use strict';
-
+"use strict";
+const bcrypt = require("bcryptjs");
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -8,12 +8,40 @@ module.exports = {
 
       Example:
       */
-   return queryInterface.bulkInsert('Users', [
-     {username: 'Test1', email: 'email1@test.com', hashed_password: 'password1', createdAt: new Date(), updatedAt: new Date()},
-     {username: 'Test2', email: 'email2@test.com', hashed_password: 'password2', createdAt: new Date(), updatedAt: new Date()},
-     {username: 'Test3', email: 'email3@test.com', hashed_password: 'password3', createdAt: new Date(), updatedAt: new Date()},
-     {username: 'Test4', email: 'email4@test.com', hashed_password: 'password4', createdAt: new Date(), updatedAt: new Date()},
-   ], {});
+    return queryInterface.bulkInsert(
+      "Users",
+      [
+        {
+          username: "demo",
+          email: "demo@test.com",
+          hashed_password: bcrypt.hashSync("demouser", 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          username: "billy",
+          email: "email1@test.com",
+          hashed_password: bcrypt.hashSync("password1", 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          username: "bob",
+          email: "email2@test.com",
+          hashed_password: bcrypt.hashSync("password2", 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          username: "jandice",
+          email: "email3@test.com",
+          hashed_password: bcrypt.hashSync("password3", 10),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    );
   },
 
   down: (queryInterface, Sequelize) => {
@@ -23,6 +51,6 @@ module.exports = {
 
       Example:
       */
-   return queryInterface.bulkDelete('Users', null, {});
-  }
+    return queryInterface.bulkDelete("Users", null, {});
+  },
 };

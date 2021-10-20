@@ -8,9 +8,10 @@ const { loginUser, logoutUser } = require("../auth");
 const { Op } = require("sequelize");
 
 const router = express.Router();
-
+//DEMO USER PWD IS demouser
 router.get("/signup", csrfProtection, (req, res) => {
   const user = db.User.build();
+
   res.render("signup", {
     title: "signup",
     user,
