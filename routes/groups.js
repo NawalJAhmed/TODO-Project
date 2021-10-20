@@ -20,9 +20,12 @@ router.get(
       include: { model: db.SubTask },
     });
 
-    const members = await db.Member.findAll({
-      where: { group_id: groupId },
+    const members = await db.Group.findByPk(groupId, {
+      include: { model: db.User, as: "groupToMember" },
     });
+
+    const ownerId = members.dataValues.owner_id;
+    const ownerName = await db.User.findByPk(ownerId);
 
     const groups = await db.User.findByPk(userId, {
       include: { model: db.Group, as: "userToMember" },
@@ -49,6 +52,7 @@ router.get(
       order: [["due_date", "ASC"]],
     });
     res.render("groupInfo", {
+      ownerName,
       members,
       groups,
       ownerGroups,
