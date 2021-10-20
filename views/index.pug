@@ -1,11 +1,20 @@
-extends layout
 
-append head
+head
   //- add page specific styles by appending to the head
+  title="TODO"
   link(rel="stylesheet" href="/stylesheets/index.css")
   //- add page specific js
   script(src="/javascripts/index.js" type="module" defer)
 
-block content
-  h1= title
-  p Welcome to your Project Skeleton
+body
+  nav
+    span
+    h1 //TODO:
+    a.navButtons(href="/users/login") Login
+  main
+    content
+      article
+        p New Here?  Check out Demo to see how the site works without having to make an account!
+        .buttons
+          a.navButtons(href="/users/signup") Demo
+          a.navButtons(href="/users/signup") Signup
