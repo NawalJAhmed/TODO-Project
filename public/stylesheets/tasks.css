@@ -1,0 +1,15 @@
+.addTaskButton {
+    color: lightseagreen
+}
+
+#completeTaskListButton {
+    color: blue;
+}
+
+#incompleteTaskListButton {
+    color: green
+}
+
+.delete-btn {
+    color: red
+}
