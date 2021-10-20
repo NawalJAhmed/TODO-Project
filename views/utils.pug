@@ -7,9 +7,9 @@ mixin validationErrorSummary(errors)
           li= error
 mixin groupList(groups)
   if groups
-    ul.groupList
-      each group in groups.dataValues.userToMember
-        li= group.dataValues.name
+    each group in groups.dataValues.userToMember
+      div
+        a(href=`/users/${groups.dataValues.id}/${group.dataValues.id}`)= group.dataValues.name
 mixin taskList(tasks, subtasks)
   if tasks
     ul.taskList
