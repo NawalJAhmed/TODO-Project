@@ -1,0 +1,18 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 0.4fr repeat(2, 1fr);
+  grid-template-rows: 0.1fr 1fr 0.1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 0px;
+}
+nav {
+  grid-area: 1 / 1 / 2 / 4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+footer {
+  grid-area: 3 / 1 / 4 / 4;
+}

@@ -1,20 +1,25 @@
 include utils.pug
 
 doctype html
-block content
 html
   head
       block head
         title="TODO App"
         link(rel='stylesheet' href='/stylesheets/reset.css')
+        link(rel='stylesheet' href='/stylesheets/layout.css')
   body
     nav
       div
         h1.logo //TODO:
-        button.logout Logout
+      button.logout Logout
     aside
       a.dashbutton Dashboard
       h2.groups Groups
         +groupList(groups)
-    block content
-    block group
+    block errors
+    content.group
+    content.task
+      block groupInfo
+      block group
+      block task
+    footer

@@ -1,5 +1,5 @@
 extends layout
-block content
+block group
   form(action='/users/:id/create-group' method='post')
     input(type='hidden' name='_csrf' value=csrfToken)
     label(for='name') name
