@@ -345,6 +345,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10);
     const groupId = parseInt(req.params.groupId, 10);
+
     // const taskId = parseInt(req.params.taskId, 10);
     const groupTasks = await db.Task.findAll({
       where: { group_id: groupId },
@@ -356,13 +357,21 @@ router.get(
     });
 
     const groups = await db.User.findByPk(userId, {
-        include: {model: db.Group, as: 'userToMember'},
-    })
+      include: { model: db.Group, as: "userToMember" },
+    });
 
     const ownerGroups = await db.Group.findAll({
-        where: {owner_id: userId}
-    })
+      where: {
+        [Op.and]: [{ owner_id: userId }, { dashboard: false }],
+      },
+    });
     console.log('!!!!!', ownerGroups)
+
+    const dashboard = await db.Group.findOne({
+      where: {
+        [Op.and]: [{ owner_id: userId }, { dashboard: true }],
+      },
+    });
 
     //querying from members and using userId
     //or user.findbypk include group
@@ -379,6 +388,7 @@ router.get(
       groups,
       ownerGroups,
       tasks,
+      dashboard
     });
   })
 );
