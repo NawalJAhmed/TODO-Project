@@ -14,10 +14,13 @@ const requireAuth = async (req, res, next) => {
   if (!res.locals.authenticated) {
     return res.redirect("/users/login");
   }
-  let userId = req.params.userID;
+  let userId = parseInt(req.url.split("/")[1], 10);
   if (req.session.auth.userId !== userId) {
-    return res.redirect(`/`);
+    return res.redirect(`/user`);
   }
+  const groupId = parseInt(req.url.split("/")[2], 10);
+  const group = await db.Group.findByPk(groupId);
+  if (!group) return res.redirect(`/user`);
   return next();
 };
 

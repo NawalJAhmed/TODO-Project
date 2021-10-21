@@ -4,9 +4,9 @@ const { Op } = require("sequelize");
 
 const db = require("../db/models");
 const { csrfProtection, asyncHandler } = require("./utils");
-
+const { requireAuth } = require("../auth");
 const router = express.Router();
-
+router.use(requireAuth);
 // this route returns groups that a given user belongs to
 // TODO add groups, tasks, sub-tasks
 
