@@ -43,6 +43,9 @@ nav {
   justify-content: center;
   align-items: center;
 }
+.navButtons:hover {
+  color: black;
+}
 span {
   width: 75px;
 }

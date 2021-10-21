@@ -11,7 +11,7 @@ const router = express.Router();
 // TODO add groups, tasks, sub-tasks
 router.get(
   "/:id/:groupId",
-  csrfProtection, 
+  csrfProtection,
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10);
     const groupId = parseInt(req.params.groupId, 10);
@@ -27,7 +27,7 @@ router.get(
 
     const ownerId = members.dataValues.owner_id;
     const ownerName = await db.User.findByPk(ownerId);
-    const isOwner = userId === ownerId
+    const isOwner = userId === ownerId;
 
     const groups = await db.User.findByPk(userId, {
       include: { model: db.Group, as: "userToMember" },
@@ -42,7 +42,7 @@ router.get(
       where: {
         [Op.and]: [{ owner_id: userId }, { dashboard: true }],
       },
-    });
+    }).id;
     //querying from members and using userId
     //or user.findbypk include group
 
@@ -62,11 +62,10 @@ router.get(
       tasks,
       userId,
       dashboard,
-      csrfToken: req.csrfToken()
+      csrfToken: req.csrfToken(),
     });
   })
 );
-
 
 router.get(
   "/:id/:groupId/add-member",
@@ -107,7 +106,7 @@ router.post(
 
     if (validatorErrors.isEmpty()) {
       await group.save();
-      res.redirect('back');
+      res.redirect("back");
       //res.redirect("/");
     } else {
       const errors = validatorErrors.array().map((error) => error.msg);
@@ -136,7 +135,9 @@ router.post(
     const { user_id } = req.body;
     //req.params returning empty object. Is this because post url doesn't match current page's url?
     //const groupId = parseInt(req.params.groupId, 10);
-    const groupId = parseInt(JSON.stringify(req.headers.referer).split('/').slice(-1))
+    const groupId = parseInt(
+      JSON.stringify(req.headers.referer).split("/").slice(-1)
+    );
     const member = db.Member.build({
       user_id,
       group_id: groupId,
@@ -146,7 +147,7 @@ router.post(
 
     if (validatorErrors.isEmpty()) {
       await member.save();
-      res.redirect('back');
+      res.redirect("back");
     } else {
       const errors = validatorErrors.array().map((error) => error.msg);
       res.render("members", {
