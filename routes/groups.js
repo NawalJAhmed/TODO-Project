@@ -42,7 +42,7 @@ router.get(
       where: {
         [Op.and]: [{ owner_id: userId }, { dashboard: true }],
       },
-    }).id;
+    });
     //querying from members and using userId
     //or user.findbypk include group
 
