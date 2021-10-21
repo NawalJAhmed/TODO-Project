@@ -14,13 +14,6 @@ mixin groupList(groups)
       each ownerGroup in ownerGroups
         div
           a(href=`/users/${ownerGroup.dataValues.owner_id}/${ownerGroup.dataValues.id}`)= ownerGroup.dataValues.name
-  br
-  br
-  form(action='/users/:id/:groupId/create-group' method='post')
-    input(type='hidden' name='_csrf' value=csrfToken)
-    label(for='name') Group Name
-    input(type='input' name='name' required)
-    button(type='submit' ) Create Group
 
 mixin taskList(tasks, subtasks)
   if tasks

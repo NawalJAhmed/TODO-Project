@@ -69,6 +69,7 @@ h2.groups {
 }
 .groupButton {
   margin-left: 25px;
+  margin-top: 15px;
 }
 .groupButton > div {
   margin-top: 10px;
@@ -86,4 +87,55 @@ h2.groups {
   align-items: center;
   height: 24px;
   cursor: pointer;
+}
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer > h2 {
+  color: white;
+  font-size: 40px;
+}
+.people > div {
+  width: fit-content;
+}
+.links {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.people {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 30%;
+}
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: darkred;
+  color: white;
+  font-weight: bold;
+  border: none;
+  margin-top: 5px;
+  padding: 5px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  outline: inherit;
+  border-radius: 5px;
+}
+form {
+  margin-left: 5px;
+  margin-top: 30px;
+}
+input {
+  border: solid 1px lavender;
+  font-size: 18px;
+  color: black;
+  width: 100%;
+  height: 25px;
+  border-radius: 5px;
 }
