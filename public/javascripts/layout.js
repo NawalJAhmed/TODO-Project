@@ -1,5 +1,7 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-  let links = document.querySelectorAll("a");
+  let dash = document.querySelector(".dashbutton");
+  let groups = document.querySelectorAll(".groupButton > div > a");
+  let links = [dash, ...groups];
   links.forEach((link) => {
     if (link.href === window.location.href) link.style.color = "white";
   });
