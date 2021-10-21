@@ -48,7 +48,7 @@ router.post(
       const { name, owner_id, due_date } = req.body;
       const group_id = parseInt(req.params.groupID, 10);
       //const group_id = 1
-      Task.create({ name, due_date, owner_id, group_id, completed: false });
+      db.Task.create({ name, due_date, owner_id, group_id, completed: false });
       res.send("sent");
       //res.render('tasks')
     })

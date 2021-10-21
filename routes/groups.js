@@ -9,6 +9,9 @@ const router = express.Router();
 
 // this route returns groups that a given user belongs to
 // TODO add groups, tasks, sub-tasks
+
+
+
 router.get(
   "/:id/:groupId",
   asyncHandler(async (req, res) => {
@@ -31,7 +34,9 @@ router.get(
     const ownerGroups = await db.Group.findAll({
         where: {owner_id: userId}
     })
-    console.log('!!!!!', ownerGroups)
+    // console.log('!!!!!', ownerGroups)
+
+  //console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', JSON.parse(memberGroups).id)
 
     //querying from members and using userId
     //or user.findbypk include group
@@ -180,5 +185,206 @@ router.post(
     res.redirect("/");
   })
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//post route for creating a new task
+router.post(
+  "/:id/:groupId",
+  asyncHandler(async (req, res) => {
+    const owner_id = req.params.id;
+    const { name, due_date} = req.body;
+    // owner_id = parseInt(req.params.owner_id, 10);
+    console.log("??????????????????????????????/");
+    console.log("++++++++++++++");
+    console.log(req.body.group_name);
+    console.log(owner_id);
+    console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77");
+    // const group_id = parseInt(req.params.groupID, 10);
+    // console.log(group_id);
+    const group_id = req.body.group_name
+    //console.log({ name, group_id, owner_id, due_date, completed: false });
+    db.Task.create({ name, group_id, owner_id, due_date, completed: false });
+    // res.redirect("users/:id/:groupId")
+    res.redirect(req.originalUrl)
+
+  })
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// router.get(
+//   "/:id/:groupId/add-task",
+//   asyncHandler(async (req, res) => {
+//     const userId = parseInt(req.params.id, 10);
+//     const groupId = parseInt(req.params.groupId, 10);
+//     // const taskId = parseInt(req.params.taskId, 10);
+//     const groupTasks = await db.Task.findAll({
+//       where: { group_id: groupId },
+//       include: { model: db.SubTask },
+//     });
+
+//     const members = await db.Member.findAll({
+//       where: { group_id: groupId },
+//     });
+
+//     const groups = await db.User.findByPk(userId, {
+//         include: {model: db.Group, as: 'userToMember'},
+//     })
+
+//     const ownerGroups = await db.Group.findAll({
+//         where: {owner_id: userId}
+//     })
+//     console.log('!!!!!', ownerGroups)
+
+//     //querying from members and using userId
+//     //or user.findbypk include group
+
+//     const groupInfo = await db.Group.findByPk(groupId);
+//     const group_id = parseInt(req.params.groupId, 10);
+//     //const group_id = 1
+//     const tasks = await db.Task.findAll({
+//        where: {group_id},
+//        order: [['due_date', 'ASC']]
+//     })
+//     res.render("showCompletedTasks", {
+//       members,
+//       groups,
+//       ownerGroups,
+//       tasks,
+//     });
+//   })
+// );
+
+// router.post(
+//   "/:id/:groupId/add-task",
+//   asyncHandler(async (req, res) => {
+//     const { name, owner_id, due_date } = req.body;
+//     const group_id = parseInt(req.params.groupID, 10);
+//     //const group_id = 1
+//     db.Task.create({ name, due_date, owner_id, group_id, completed: false });
+//     //res.send("sent");
+//     res.redirect("/:id/:groupId")
+//     //res.render('groupInfo')
+//   })
+// );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// show completed tasks
+// refactor later
+router.get(
+  "/:id/:groupId/completed",
+  asyncHandler(async (req, res) => {
+    const userId = parseInt(req.params.id, 10);
+    const groupId = parseInt(req.params.groupId, 10);
+    // const taskId = parseInt(req.params.taskId, 10);
+    const groupTasks = await db.Task.findAll({
+      where: { group_id: groupId },
+      include: { model: db.SubTask },
+    });
+
+    const members = await db.Member.findAll({
+      where: { group_id: groupId },
+    });
+
+    const groups = await db.User.findByPk(userId, {
+        include: {model: db.Group, as: 'userToMember'},
+    })
+
+    const ownerGroups = await db.Group.findAll({
+        where: {owner_id: userId}
+    })
+    console.log('!!!!!', ownerGroups)
+
+    //querying from members and using userId
+    //or user.findbypk include group
+
+    const groupInfo = await db.Group.findByPk(groupId);
+    const group_id = parseInt(req.params.groupId, 10);
+    //const group_id = 1
+    const tasks = await db.Task.findAll({
+       where: {group_id},
+       order: [['due_date', 'ASC']]
+    })
+    res.render("showCompletedTasks", {
+      members,
+      groups,
+      ownerGroups,
+      tasks,
+    });
+  })
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;

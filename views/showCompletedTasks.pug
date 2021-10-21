@@ -3,14 +3,6 @@ append head
     link(rel="stylesheet", href="/stylesheets/tasks.css")
     script(src="/javascripts/index.js" type="module")
 block tasksList
-    //- if ownerGroups
-    //-     ul.taskList
-    //-         each ownerGroup in ownerGroups
-    //-                 //- display task name
-    //-                 li= ownerGroup.dataValues.name
-    //- br
-    //- form(action=`/users/${user.id}/${group.id}/add-Task` method='post')
-        form(action='/users/:id/:id/add' method='post')
     form(action='' method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
         label(for='name')
@@ -27,20 +19,19 @@ block tasksList
         input(type='date' name='due_date' placeholder="2021-12-31" min="2021-10-20" max="2022-12-31" required pattern="\d{4}-\d{2}-\d{2}")
         button(class='addTaskButton' type='submit' ) Add Task
     br
-    h1= "Incomplete Tasks List"
-    button#completeTaskListButton Show Complete Tasks
+    h1= "Complete Tasks List"
+    button#showIncompletedTasksButton Show Incomplete Tasks
     br
     //- if tasks
     //-     ul.taskList
     //-         each task in tasks
-    //-             if task.completed === false
+    //-             if task.completed === true
     //-                 //- display task name
     //-                 li= task.dataValues.name
-
     div.taskList
         if tasks
             each task in tasks
-                if task.completed === false
+                if task.completed === true
                     div.currentTask
                         input(type='checkbox' name= task.dataValues.name)
                         label(for='task.dataValues.name')= task.dataValues.name
