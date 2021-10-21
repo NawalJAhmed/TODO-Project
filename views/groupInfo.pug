@@ -15,8 +15,14 @@ block tasksList
             //- display task name
             li= task.dataValues.name
 block group
+    p Group Owner: #{ownerName.username}
+    br
+    form(action=`/users/${id}/${groupId}/add-member` method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        label(for='user_id')
+        input(type='number' name='user_id' placeholder='Member Id' required)
+        button(type='submit' ) Add Member
     if members
-        p Group Owner: #{ownerName.username}
         br
         p Group Members
         ul.groupList

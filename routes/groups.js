@@ -27,6 +27,7 @@ router.get(
 
     const ownerId = members.dataValues.owner_id;
     const ownerName = await db.User.findByPk(ownerId);
+    const isOwner = userId === ownerId
 
     const groups = await db.User.findByPk(userId, {
       include: { model: db.Group, as: "userToMember" },
@@ -54,6 +55,7 @@ router.get(
     });
     res.render("groupInfo", {
       ownerName,
+      isOwner,
       members,
       groups,
       ownerGroups,
@@ -65,16 +67,6 @@ router.get(
   })
 );
 
-//sample page to post a form that creates a group
-router.get(
-  "/:id/create-group",
-  csrfProtection,
-  asyncHandler(async (req, res) => {
-    res.render("groups", {
-      csrfToken: req.csrfToken(),
-    });
-  })
-);
 
 router.get(
   "/:id/:groupId/add-member",
@@ -96,9 +88,9 @@ const groupValidators = [
     .withMessage("Please provide a value for group name"),
 ];
 
-// TODO test this route with logged in user
+// create group
 router.post(
-  "/:id/:groupId/",
+  "/:id/:groupId/create-group",
   csrfProtection,
   groupValidators,
   asyncHandler(async (req, res) => {
@@ -115,7 +107,8 @@ router.post(
 
     if (validatorErrors.isEmpty()) {
       await group.save();
-      res.redirect("/");
+      res.redirect('back');
+      //res.redirect("/");
     } else {
       const errors = validatorErrors.array().map((error) => error.msg);
       res.render("groups", {
@@ -134,12 +127,16 @@ const memberValidators = [
     .withMessage("Please provide a value for member name"),
 ];
 
+//add member
 router.post(
   "/:id/:groupId/add-member",
+  csrfProtection,
   memberValidators,
   asyncHandler(async (req, res) => {
     const { user_id } = req.body;
-    const groupId = parseInt(req.params.groupId, 10);
+    //req.params returning empty object. Is this because post url doesn't match current page's url?
+    //const groupId = parseInt(req.params.groupId, 10);
+    const groupId = parseInt(JSON.stringify(req.headers.referer).split('/').slice(-1))
     const member = db.Member.build({
       user_id,
       group_id: groupId,
@@ -149,7 +146,7 @@ router.post(
 
     if (validatorErrors.isEmpty()) {
       await member.save();
-      res.redirect("/");
+      res.redirect('back');
     } else {
       const errors = validatorErrors.array().map((error) => error.msg);
       res.render("members", {
