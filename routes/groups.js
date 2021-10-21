@@ -17,7 +17,6 @@ router.get(
     const userId = parseInt(req.params.id, 10);
     
     const groupId = parseInt(req.params.groupId, 10);
-    console.log('!!!!!!!', groupId)
     // const taskId = parseInt(req.params.taskId, 10);
     const groupTasks = await db.Task.findAll({
       where: { group_id: groupId },
@@ -29,7 +28,7 @@ router.get(
     const members = await db.Group.findByPk(groupId, {
       include: { model: db.User, as: "groupToMember" },
     });
-
+    console.log('!!!!!!!members',members)
     let currentMemberIds = []
     const getIds = (members) => {
         for(let i=0; i<members.groupToMember.length; i++) {
@@ -69,6 +68,9 @@ router.get(
         [Op.and]: [{ owner_id: userId }, { dashboard: true }],
       },
     });
+
+    const isDashboard = dashboard.id === groupId
+    console.log('!!!dashboard', isDashboard)
     //querying from members and using userId
     //or user.findbypk include group
 
@@ -80,6 +82,7 @@ router.get(
       order: [["due_date", "ASC"]],
     });
     res.render("groupInfo", {
+      isDashboard,
       ownerName,
       isOwner,
       users,
@@ -141,7 +144,6 @@ router.post(
   "/:id/:groupId/addMember",
   csrfProtection,
   asyncHandler(async (req, res) => {
-    console.log('!!!!!', req.url)
     const user_id = parseInt(req.body.addMember);
     //req.params returning empty object. Is this because post url doesn't match current page's url?
     //const groupId = parseInt(req.params.groupId, 10);
@@ -182,10 +184,12 @@ router.post(
 
 //TODO requires testing once members have been added
 router.post(
-  "/:id/:groupId/leave-group",
+  "/:id/:groupId/removeMember",
   asyncHandler(async (req, res) => {
-    const groupId = parseInt(req.params.groupId, 10);
-    const userId = parseInt(req.params.id, 10);
+    const groupId = parseInt(
+        JSON.stringify(req.headers.referer).split("/").slice(-1)
+      );
+    const userId = parseInt(req.body.removeMember);
     const member = await db.Member.findOne({
       where: {
         [Op.and]: [{ user_id: userId }, { group_id: groupId }],
@@ -193,7 +197,7 @@ router.post(
     });
 
     await member.destroy();
-    res.redirect("/");
+    res.redirect("back");
   })
 );
 
