@@ -28,7 +28,7 @@ body {
   display: grid;
   grid-template-columns: 0.2fr repeat(2, 1fr);
   grid-template-rows: 0.1fr 1fr 0.1fr;
-
+  font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
   background-color: cornflowerblue;
 }
 nav {
@@ -141,4 +141,11 @@ input {
 }
 input.member {
   width: 30%;
+}
+h1.logo {
+  font-family: Inconsolata, monospace;
+  color: darkred;
+  font-weight: normal;
+  font-size: 50px;
+  margin: 0;
 }
