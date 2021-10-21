@@ -278,6 +278,7 @@ router.post(
 // refactor later
 router.get(
   "/:id/:groupId/completed",
+  csrfProtection,
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10);
     const groupId = parseInt(req.params.groupId, 10);
@@ -287,19 +288,29 @@ router.get(
       include: { model: db.SubTask },
     });
 
-    const members = await db.Member.findAll({
-      where: { group_id: groupId },
+    const members = await db.Group.findByPk(groupId, {
+      include: { model: db.User, as: "groupToMember" },
     });
+
+    const ownerId = members.dataValues.owner_id;
+    const ownerName = await db.User.findByPk(ownerId);
+    const userName = await db.User.findByPk(userId);
+    const isOwner = userId === ownerId;
 
     const groups = await db.User.findByPk(userId, {
       include: { model: db.Group, as: "userToMember" },
     });
 
     const ownerGroups = await db.Group.findAll({
-      where: { owner_id: userId },
+      where: {
+        [Op.and]: [{ owner_id: userId }, { dashboard: false }],
+      },
     });
-    console.log("!!!!!", ownerGroups);
-
+    const dashboard = await db.Group.findOne({
+      where: {
+        [Op.and]: [{ owner_id: userId }, { dashboard: true }],
+      },
+    });
     //querying from members and using userId
     //or user.findbypk include group
 
@@ -311,10 +322,16 @@ router.get(
       order: [["due_date", "ASC"]],
     });
     res.render("showCompletedTasks", {
+      ownerName,
+      isOwner,
       members,
       groups,
       ownerGroups,
       tasks,
+      userId,
+      dashboard: dashboard.id,
+      userName: userName.username,
+      csrfToken: req.csrfToken(),
     });
   })
 );
