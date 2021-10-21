@@ -50,8 +50,9 @@ footer {
 }
 content {
   background-color: white;
-  margin: 10px 10px;
+  margin: 10px 10px 0px 10px;
   border-radius: 10px 10px 0 0;
+  border: 1px solid grey;
 }
 
 aside {
@@ -118,12 +119,13 @@ button {
   font-weight: bold;
   border: none;
   margin-top: 5px;
-  padding: 5px;
+  padding: 5px 10px;
   font: inherit;
   font-size: 12px;
   cursor: pointer;
   outline: inherit;
   border-radius: 5px;
+  font-weight: bold;
 }
 form {
   margin-left: 5px;
@@ -136,4 +138,7 @@ input {
   width: 100%;
   height: 25px;
   border-radius: 5px;
+}
+input.member {
+  width: 30%;
 }

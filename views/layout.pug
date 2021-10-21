@@ -20,7 +20,7 @@ html
       form(action='/users/:id/create-group' method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
         input(type='input' name='name' placeholder="Group Name" required)
-        button(type='submit' ) Create Group
+        button(type='submit' ) Add
       .groupButton
         header.groupTop
           span(class="material-icons" style="font-size:22px;")= "expand_more"

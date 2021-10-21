@@ -19,9 +19,8 @@ block group
     br
     form(action=`/users/${id}/${groupId}/add-member` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
-        label(for='user_id')
-        input(type='number' name='user_id' placeholder='Member Id' required)
-        button(type='submit' ) Add Member
+        input.member(type='number' name='user_id' placeholder='Member Id' required)
+        button(type='submit' ) Add
     if members
         br
         p Group Members
