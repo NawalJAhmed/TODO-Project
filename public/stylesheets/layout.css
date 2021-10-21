@@ -44,11 +44,14 @@ nav {
 footer {
   grid-area: 3 / 1 / 4 / 4;
   background-color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 content {
   background-color: white;
   margin: 10px 10px;
-  border-radius: 25px;
+  border-radius: 10px 10px 0 0;
 }
 
 aside {
@@ -87,11 +90,6 @@ h2.groups {
   align-items: center;
   height: 24px;
   cursor: pointer;
-}
-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 footer > h2 {
   color: white;
