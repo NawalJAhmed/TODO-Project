@@ -13,11 +13,11 @@ html
   body
     nav
       div
-        h1.logo //TODO:
+        h1.logo= `//TODO: ${userName}`
       a.logout(href="/users/logout") Logout
     aside
-      a(href=`/users/${userId}/${dashboard.id}`).dashbutton Dashboard
-      form(action='/users/:id/create-group' method='post')
+      a(href=`/users/${userId}/${dashboard}`).dashbutton Dashboard
+      form(action=`/users/${userId}/${groupId}/create-group` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
         input(type='input' name='name' placeholder="Group Name" required)
         button(type='submit' ) Add

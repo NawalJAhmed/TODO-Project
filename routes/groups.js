@@ -10,8 +10,6 @@ const router = express.Router();
 // this route returns groups that a given user belongs to
 // TODO add groups, tasks, sub-tasks
 
-
-
 router.get(
   "/:id/:groupId",
   csrfProtection,
@@ -30,6 +28,7 @@ router.get(
 
     const ownerId = members.dataValues.owner_id;
     const ownerName = await db.User.findByPk(ownerId);
+    const userName = await db.User.findByPk(userId);
     const isOwner = userId === ownerId;
 
     const groups = await db.User.findByPk(userId, {
@@ -64,7 +63,8 @@ router.get(
       ownerGroups,
       tasks,
       userId,
-      dashboard,
+      dashboard: dashboard.id,
+      userName: userName.username,
       csrfToken: req.csrfToken(),
     });
   })
@@ -96,6 +96,7 @@ router.post(
   csrfProtection,
   groupValidators,
   asyncHandler(async (req, res) => {
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!! ");
     const { name } = req.body;
     const owner_id = req.session.auth.userId;
 
@@ -195,30 +196,12 @@ router.post(
   })
 );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //post route for creating a new task
 router.post(
   "/:id/:groupId",
   asyncHandler(async (req, res) => {
     const owner_id = req.params.id;
-    const { name, due_date} = req.body;
+    const { name, due_date } = req.body;
     // owner_id = parseInt(req.params.owner_id, 10);
     console.log("??????????????????????????????/");
     console.log("++++++++++++++");
@@ -227,36 +210,13 @@ router.post(
     console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77");
     // const group_id = parseInt(req.params.groupID, 10);
     // console.log(group_id);
-    const group_id = req.body.group_name
+    const group_id = req.body.group_name;
     //console.log({ name, group_id, owner_id, due_date, completed: false });
     db.Task.create({ name, group_id, owner_id, due_date, completed: false });
     // res.redirect("users/:id/:groupId")
-    res.redirect(req.originalUrl)
-
+    res.redirect(req.originalUrl);
   })
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // router.get(
 //   "/:id/:groupId/add-task",
@@ -314,30 +274,6 @@ router.post(
 //   })
 // );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // show completed tasks
 // refactor later
 router.get(
@@ -356,13 +292,13 @@ router.get(
     });
 
     const groups = await db.User.findByPk(userId, {
-        include: {model: db.Group, as: 'userToMember'},
-    })
+      include: { model: db.Group, as: "userToMember" },
+    });
 
     const ownerGroups = await db.Group.findAll({
-        where: {owner_id: userId}
-    })
-    console.log('!!!!!', ownerGroups)
+      where: { owner_id: userId },
+    });
+    console.log("!!!!!", ownerGroups);
 
     //querying from members and using userId
     //or user.findbypk include group
@@ -371,9 +307,9 @@ router.get(
     const group_id = parseInt(req.params.groupId, 10);
     //const group_id = 1
     const tasks = await db.Task.findAll({
-       where: {group_id},
-       order: [['due_date', 'ASC']]
-    })
+      where: { group_id },
+      order: [["due_date", "ASC"]],
+    });
     res.render("showCompletedTasks", {
       members,
       groups,
@@ -382,18 +318,5 @@ router.get(
     });
   })
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = router;
