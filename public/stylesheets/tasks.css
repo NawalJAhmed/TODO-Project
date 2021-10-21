@@ -17,18 +17,6 @@ input[type=checkbox]:checked + label {
     text-decoration: line-through;
   }
 
-.addTaskButton {
-  color: lightseagreen;
-}
-
-#completeTaskListButton {
-  color: blue;
-}
-
-#incompleteTaskListButton {
-  color: green;
-}
-
 .delete-btn {
   color: darkred;
 }
@@ -40,3 +28,7 @@ h1 {
 .taskList {
   color: darkred;
 }
+
+/* .back {
+  display: none
+} */
