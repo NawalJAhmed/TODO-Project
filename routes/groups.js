@@ -14,6 +14,7 @@ const router = express.Router();
 
 router.get(
   "/:id/:groupId",
+  csrfProtection,
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10);
     const groupId = parseInt(req.params.groupId, 10);
@@ -23,21 +24,28 @@ router.get(
       include: { model: db.SubTask },
     });
 
-    const members = await db.Member.findAll({
-      where: { group_id: groupId },
+    const members = await db.Group.findByPk(groupId, {
+      include: { model: db.User, as: "groupToMember" },
     });
 
+    const ownerId = members.dataValues.owner_id;
+    const ownerName = await db.User.findByPk(ownerId);
+    const isOwner = userId === ownerId;
+
     const groups = await db.User.findByPk(userId, {
-        include: {model: db.Group, as: 'userToMember'},
-    })
+      include: { model: db.Group, as: "userToMember" },
+    });
 
     const ownerGroups = await db.Group.findAll({
-        where: {owner_id: userId}
-    })
-    // console.log('!!!!!', ownerGroups)
-
-  //console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', JSON.parse(memberGroups).id)
-
+      where: {
+        [Op.and]: [{ owner_id: userId }, { dashboard: false }],
+      },
+    });
+    const dashboard = await db.Group.findOne({
+      where: {
+        [Op.and]: [{ owner_id: userId }, { dashboard: true }],
+      },
+    });
     //querying from members and using userId
     //or user.findbypk include group
 
@@ -45,24 +53,18 @@ router.get(
     const group_id = parseInt(req.params.groupId, 10);
     //const group_id = 1
     const tasks = await db.Task.findAll({
-       where: {group_id},
-       order: [['due_date', 'ASC']]
-    })
+      where: { group_id },
+      order: [["due_date", "ASC"]],
+    });
     res.render("groupInfo", {
+      ownerName,
+      isOwner,
       members,
       groups,
       ownerGroups,
       tasks,
-    });
-  })
-);
-
-//sample page to post a form that creates a group
-router.get(
-  "/:id/create-group",
-  csrfProtection,
-  asyncHandler(async (req, res) => {
-    res.render("groups", {
+      userId,
+      dashboard,
       csrfToken: req.csrfToken(),
     });
   })
@@ -88,9 +90,9 @@ const groupValidators = [
     .withMessage("Please provide a value for group name"),
 ];
 
-// TODO test this route with logged in user
+// create group
 router.post(
-  "/:id/create-group",
+  "/:id/:groupId/create-group",
   csrfProtection,
   groupValidators,
   asyncHandler(async (req, res) => {
@@ -107,7 +109,8 @@ router.post(
 
     if (validatorErrors.isEmpty()) {
       await group.save();
-      res.redirect("/");
+      res.redirect("back");
+      //res.redirect("/");
     } else {
       const errors = validatorErrors.array().map((error) => error.msg);
       res.render("groups", {
@@ -126,12 +129,18 @@ const memberValidators = [
     .withMessage("Please provide a value for member name"),
 ];
 
+//add member
 router.post(
   "/:id/:groupId/add-member",
+  csrfProtection,
   memberValidators,
   asyncHandler(async (req, res) => {
     const { user_id } = req.body;
-    const groupId = parseInt(req.params.groupId, 10);
+    //req.params returning empty object. Is this because post url doesn't match current page's url?
+    //const groupId = parseInt(req.params.groupId, 10);
+    const groupId = parseInt(
+      JSON.stringify(req.headers.referer).split("/").slice(-1)
+    );
     const member = db.Member.build({
       user_id,
       group_id: groupId,
@@ -141,7 +150,7 @@ router.post(
 
     if (validatorErrors.isEmpty()) {
       await member.save();
-      res.redirect("/");
+      res.redirect("back");
     } else {
       const errors = validatorErrors.array().map((error) => error.msg);
       res.render("members", {

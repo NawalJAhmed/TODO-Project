@@ -46,7 +46,15 @@ block tasksList
                         label(for='task.dataValues.name')= task.dataValues.name
                         br
 block group
+    p Group Owner: #{ownerName.username}
+    br
+    form(action=`/users/${id}/${groupId}/add-member` method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        input.member(type='number' name='user_id' placeholder='Member Id' required)
+        button(type='submit' ) Add
     if members
+        br
+        p Group Members
         ul.groupList
-        each member in members
-            li= member.dataValues.user_id
+        each member in members.dataValues.groupToMember
+            li= member.dataValues.username

@@ -7,14 +7,24 @@ html
         title="TODO App"
         link(rel='stylesheet' href='/stylesheets/reset.css')
         link(rel='stylesheet' href='/stylesheets/layout.css')
+        link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css")
+        script(src="/javascripts/layout.js")
   body
     nav
       div
         h1.logo //TODO:
-      button.logout Logout
+      a.logout(href="/users/logout") Logout
     aside
-      a.dashbutton Dashboard
-      h2.groups Groups
+      a(href=`/users/${userId}/${dashboard.id}`).dashbutton Dashboard
+      form(action='/users/:id/create-group' method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        input(type='input' name='name' placeholder="Group Name" required)
+        button(type='submit' ) Add
+      .groupButton
+        header.groupTop
+          span(class="material-icons" style="font-size:22px;")= "expand_more"
+          h2.groups Groups
         +groupList(groups)
     block errors
     content.group
@@ -24,3 +34,20 @@ html
       block group
       block task
     footer
+      h2 Created By:
+      .people
+        .will
+          h3 William Short
+          .links
+            a(href="https://www.linkedin.com/in/will-s-231740126/" class="fab fa-linkedin-in" target="_blank")
+            a(href="https://github.com/will-short" class="fab fa-github" target="_blank")
+        .nawal
+          h3 Nawal Ahmed
+          .links
+            a(href="" class="fab fa-linkedin-in" target="_blank")
+            a(href="https://github.com/NawalJAhmed" class="fab fa-github" target="_blank")
+        .anthony
+          h3 Anthony Fahden
+          .links
+            a(href="" class="fab fa-linkedin-in" target="_blank")
+            a(href="https://github.com/juniporous" class="fab fa-github" target="_blank")
