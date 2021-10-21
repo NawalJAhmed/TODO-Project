@@ -194,7 +194,7 @@ router.post(
 
 router.get("/logout", (req, res) => {
   logoutUser(req, res);
-  res.redirect("/");
+  res.redirect("/users/login");
 });
 
 module.exports = router;

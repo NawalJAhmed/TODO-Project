@@ -12,13 +12,15 @@ body
     h1 //TODO:
     a.navButtons(href="/users/login") Login
   main
-    content
-      article
-        p New Here?  Check out Demo to see how the site works without having to make an account!
-        .buttons
-          form(action='/users/login' method='post')
-            input(type='hidden' name='_csrf' value=csrfToken)
-            input(value=`${demoEmail}` name="email" type='hidden')
-            input(value=`${demoPwd}` name="password" type='hidden')
-            button.navButtons(type='submit' ) Demo
-          a.navButtons(href="/users/signup") Signup
+    content.main
+      h3 Hello,
+      h2 WELCOME TO TODO
+      .buttons
+        form(action='/users/login' method='post')
+          input(type='hidden' name='_csrf' value=csrfToken)
+          input(value=`${demoEmail}` name="email" type='hidden')
+          input(value=`${demoPwd}` name="password" type='hidden')
+          button.navButtons(type='submit' ) Demo
+        a.navButtons(href="/users/signup") Signup
+      p remember the milk clone catered to programmers. TODO lets users create groups, add members and set tasks for members.  Try it out without creating an account by clicking the Demo button!
+    img(src="./snippet1.PNG")
