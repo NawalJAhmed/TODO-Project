@@ -48,13 +48,25 @@ block tasksList
 block group
     p Group Owner: #{ownerName.username}
     br
-    form(action=`/users/${id}/${groupId}/add-member` method='post')
+    form(action=`/users/${id}/${groupId}/deleteGroup` method='post')
+        button(type='submit') Delete Group
+    br
+    form(action=`/users/${id}/${groupId}/addMember` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
-        input.member(type='number' name='user_id' placeholder='Member Id' required)
-        button(type='submit' ) Add
+        label(for='addMember') Add Member
+        select(type='select' name='addMember' placeholder='Add Member')
+            each user in users
+                option(value= user.id)= user.username
+        button(type='submit') Add Member
     if members
         br
         p Group Members
         ul.groupList
         each member in members.dataValues.groupToMember
             li= member.dataValues.username
+
+    //- form(action=`/users/${id}/${groupId}/add-member` method='post')
+    //-     input(type='hidden' name='_csrf' value=csrfToken)
+    //-     input.member(type='number' name='user_id' placeholder='Member Id' required)
+    //-     button(type='submit' ) Add
+

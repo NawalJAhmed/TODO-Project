@@ -22,14 +22,36 @@ router.get(
       include: { model: db.SubTask },
     });
 
+    
+
     const members = await db.Group.findByPk(groupId, {
       include: { model: db.User, as: "groupToMember" },
     });
+
+    let currentMemberIds = []
+    const getIds = (members) => {
+        for(let i=0; i<members.groupToMember.length; i++) {
+            currentMemberIds.push(members.groupToMember[i].dataValues.id)
+        }
+    }
+    getIds(members)
 
     const ownerId = members.dataValues.owner_id;
     const ownerName = await db.User.findByPk(ownerId);
     const userName = await db.User.findByPk(userId);
     const isOwner = userId === ownerId;
+
+    const users = await db.User.findAll({
+        include: { model: db.Group, as: 'userToMember'},
+        where: {
+        id: {
+            [Op.notIn]: currentMemberIds,
+            [Op.ne]: ownerId
+        }
+    },
+    });
+    
+
 
     const groups = await db.User.findByPk(userId, {
       include: { model: db.Group, as: "userToMember" },
@@ -58,6 +80,7 @@ router.get(
     res.render("groupInfo", {
       ownerName,
       isOwner,
+      users,
       members,
       groups,
       ownerGroups,
@@ -70,19 +93,6 @@ router.get(
   })
 );
 
-router.get(
-  "/:id/:groupId/add-member",
-  csrfProtection,
-  asyncHandler(async (req, res) => {
-    const { id, groupId } = req.params;
-
-    res.render("members", {
-      id,
-      groupId,
-      csrfToken: req.csrfToken(),
-    });
-  })
-);
 
 const groupValidators = [
   check("name")
@@ -96,7 +106,6 @@ router.post(
   csrfProtection,
   groupValidators,
   asyncHandler(async (req, res) => {
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!! ");
     const { name } = req.body;
     const owner_id = req.session.auth.userId;
 
@@ -124,58 +133,49 @@ router.post(
   })
 );
 
-const memberValidators = [
-  check("user_id")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide a value for member name"),
-];
 
 //add member
 router.post(
-  "/:id/:groupId/add-member",
+  "/:id/:groupId/addMember",
   csrfProtection,
-  memberValidators,
   asyncHandler(async (req, res) => {
-    const { user_id } = req.body;
+
+    const user_id = parseInt(req.body.addMember);
     //req.params returning empty object. Is this because post url doesn't match current page's url?
     //const groupId = parseInt(req.params.groupId, 10);
     const groupId = parseInt(
       JSON.stringify(req.headers.referer).split("/").slice(-1)
     );
-    const member = db.Member.build({
+
+
+    const member = await db.Member.create({
       user_id,
       group_id: groupId,
     });
 
-    const validatorErrors = validationResult(req);
-
-    if (validatorErrors.isEmpty()) {
-      await member.save();
       res.redirect("back");
-    } else {
-      const errors = validatorErrors.array().map((error) => error.msg);
-      res.render("members", {
-        title: "Add a member",
-        errors,
-        csrfToken: req.csrfToken(),
-      });
-    }
   })
 );
 
 router.post(
-  "/:id/:groupId/delete-group",
+  "/:id/:groupId/deleteGroup",
   asyncHandler(async (req, res) => {
-    const groupId = parseInt(req.params.groupId, 10);
+    const groupId = parseInt(
+        JSON.stringify(req.headers.referer).split("/").slice(-1)
+      );
+    
+    const members = await db.Member.findAll({ where: { group_id: groupId } });
+    if (members) {
+      for(let i= 0; i < members.length; i++) {
+          await members[i].destroy()
+      }
+    }
     const group = await db.Group.findByPk(groupId);
     await group.destroy();
 
-    const members = await db.Member.findAll({ where: { group_id: groupId } });
-    if (members) {
-      await members.destroy();
-    }
 
-    res.redirect("/");
+
+    res.redirect("back");
   })
 );
 
@@ -318,5 +318,19 @@ router.get(
     });
   })
 );
+
+// router.get(
+//   "/:id/:groupId/add-member",
+//   csrfProtection,
+//   asyncHandler(async (req, res) => {
+//     const { id, groupId } = req.params;
+
+//     res.render("members", {
+//       id,
+//       groupId,
+//       csrfToken: req.csrfToken(),
+//     });
+//   })
+//);
 
 module.exports = router;
