@@ -7,13 +7,13 @@ block tasksList
         input(type='hidden' name='_csrf' value=csrfToken)
         label(for='name')
         input(type='input' name='name' placeholder="Add a task..." required)#addTaskBox
-        select(name="group_name")
-            if ownerGroups
-                each ownerGroup in ownerGroups
-                    option(value=ownerGroup.dataValues.id)=ownerGroup.dataValues.name
-            if groups
-                each group in groups.dataValues.userToMember
-                    option(value=groups.dataValues.id)=groups.dataValues.name
+        //- select(name="group_name")
+        //-     if ownerGroups
+        //-         each ownerGroup in ownerGroups
+        //-             option(value=ownerGroup.dataValues.id)=ownerGroup.dataValues.name
+        //-     if groups
+        //-         each group in groups.dataValues.userToMember
+        //-             option(value=groups.dataValues.id)=groups.dataValues.name
         br
         label(for='due_date')
         input(type='date' name='due_date' placeholder="2021-12-31" min="2021-10-20" max="2022-12-31" required pattern="\d{4}-\d{2}-\d{2}")
