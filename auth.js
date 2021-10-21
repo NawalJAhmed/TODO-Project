@@ -19,13 +19,14 @@ const requireAuth = async (req, res, next) => {
     return res.redirect(`/user`);
   }
   const groupId = parseInt(req.url.split("/")[2], 10);
+  if(!isNaN(groupId)) {
   const group = await db.Group.findByPk(groupId);
-  if (!group) return res.redirect(`/user`);
+  if (!group && !undefined) return res.redirect(`/user`);
+  }
   return next();
 };
 
 const restoreUser = async (req, res, next) => {
-  console.log(req.session);
 
   if (req.session.auth) {
     const { userId } = req.session.auth;
