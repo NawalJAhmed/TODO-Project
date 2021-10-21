@@ -1,4 +1,4 @@
-.taskList .currentTask {
+/* .taskList .currentTask {
   padding-top: 3px;
   padding-bottom: 3px;
 }
@@ -6,11 +6,15 @@
 .taskList .currentTask:hover {
   background-color: lightsalmon;
   font-weight: bold;
+} */
+
+.taskList {
+  padding-left: 25px;
 }
 
-/* .taskList li:hover {
+.taskList li:hover {
     background-color: orange;
-  } */
+  }
 
 input[type="checkbox"]:checked + label {
   color: grey;
@@ -23,6 +27,10 @@ input[type="checkbox"]:checked + label {
 
 h1 {
   color: darkred;
+}
+
+input.currentTask {
+  font-size: small;
 }
 
 .taskList {

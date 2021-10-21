@@ -201,16 +201,17 @@ router.post(
   "/:id/:groupId",
   asyncHandler(async (req, res) => {
     const owner_id = req.params.id;
+    const groupId = parseInt(req.params.groupId, 10);
     const { name, due_date } = req.body;
     // owner_id = parseInt(req.params.owner_id, 10);
     console.log("??????????????????????????????/");
     console.log("++++++++++++++");
-    console.log(req.body.group_name);
+    console.log(groupId);
     console.log(owner_id);
     console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77");
     // const group_id = parseInt(req.params.groupID, 10);
     // console.log(group_id);
-    const group_id = req.body.group_name;
+    const group_id = groupId
     //console.log({ name, group_id, owner_id, due_date, completed: false });
     db.Task.create({ name, group_id, owner_id, due_date, completed: false });
     // res.redirect("users/:id/:groupId")
