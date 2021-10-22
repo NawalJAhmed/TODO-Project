@@ -28,14 +28,17 @@ block tasksList
     //-             if task.completed === true
     //-                 //- display task name
     //-                 li= task.dataValues.name
-    div.taskList
-        if tasks
+    if tasks
+        ul.taskList
             each task in tasks
                 if task.completed === true
-                    div.currentTask
-                        input(type='checkbox' name= task.dataValues.name)
-                        label(for='task.dataValues.name')= task.dataValues.name
-                        //- br
+                    //- display task name
+                    //- li= task.dataValues.name
+                    li
+                        form(action=`/users/${userId}/${groupId}/${task.id}/completed` method='post')
+                            input(type='hidden' name='_csrf' value=csrfToken)
+                            input(type='checkbox' checked='true' class="singletask" name= task.dataValues.name onChange="this.form.submit()")
+                        a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
 block group
     p Group Owner: #{ownerName.username}
     br

@@ -29,7 +29,7 @@ router.get(
     });
 
 
-    console.log(members)
+    //console.log(members)
     let currentMemberIds = []
     const getIds = (members) => {
         for(let i=0; i<members.groupToMember.length; i++) {
@@ -309,10 +309,10 @@ router.get(
     const taskNameObject = await db.Task.findByPk(taskId);
     const taskName = taskNameObject.dataValues.name
     const taskDueDate = taskNameObject.dataValues.due_date
-    const taskDueDateYear = taskDueDate.getFullYear().toString()
-    const taskDueDateMonth = (taskDueDate.getMonth()+1).toString()
-    const taskDueDateDay = (taskDueDate.getDate()+1).toString()
-    const formatedtaskDueDateString = `${taskDueDateYear}-${taskDueDateMonth}-${taskDueDateDay}`
+    // const taskDueDateYear = taskDueDate.getFullYear().toString()
+    // const taskDueDateMonth = (taskDueDate.getMonth()+1).toString()
+    // const taskDueDateDay = (taskDueDate.getDate()+1).toString()
+    // const formatedtaskDueDateString = `${taskDueDateYear}-${taskDueDateMonth}-${taskDueDateDay}`
     // console.log("taskId", taskId);
 
 
@@ -395,17 +395,15 @@ router.get(
 
 
 
-      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+      //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      //console.log(Subtask);
       //console.log(subTasks);
       // console.log(newGroupId);
       res.render("taskDetails", {
         ownerName,
         isOwner,
         taskName,
-        taskDueDateYear,
-        taskDueDateMonth,
-        taskDueDateDay,
-        formatedtaskDueDateString,
         taskId,
         users,
         members,
@@ -449,8 +447,8 @@ router.post(
     //await db.Task.update({ name, due_date, group_id, owner_id: memberId, completed: false });
     // res.redirect("users/:id/:groupId")
     await db.Task.upsert({ id: taskId , name, group_id, owner_id: memberId, due_date, completed: false });
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    console.log(owner_id);
+    //console.log("****************************************");
+    //console.log(owner_id);
     //console.log(req.originalUrl);
     res.redirect(req.originalUrl);
   })
@@ -475,8 +473,8 @@ router.post(
   // if(req.session.auth) {
       const newtaskId = req.params.taskId
       const task_id = parseInt(req.params.taskId)
-      console.log("////////////////////////////////////////////////////////////");
-      console.log(task_id);
+      //console.log("////////////////////////////////////////////////////////////");
+      //console.log(task_id);
       const owner_id = req.session.auth.userId
       // const task_id = 1
       const task = await db.Task.findByPk(task_id);
@@ -507,6 +505,62 @@ router.post(
 
 
 
+
+
+
+
+
+// adding a subtask
+router.post(
+  "/:id/:groupId/:taskId/addSubTask",
+  csrfProtection,
+  asyncHandler(async (req, res) => {
+    const { name } = req.body;
+    const task_id = parseInt(req.params.taskId, 10);
+    //db.Task.create({ name, group_id, owner_id: memberId, due_date, completed: false });
+    // res.redirect("users/:id/:groupId")
+    await db.SubTask.create({ name, task_id });
+    res.redirect("back");
+  })
+);
+
+
+//deleting a subtask
+router.post(
+  "/:id/:groupId/:taskId/:subTaskId/delete",
+  csrfProtection,
+  asyncHandler(async (req, res) => {
+    const { name } = req.body;
+    const subTaskId = req.params.subTaskId;
+    console.log("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+    const subTask = await db.SubTask.findByPk(subTaskId);
+    if (subTask) {
+      await subTask.destroy();
+    }
+    res.redirect("back")
+  })
+);
+
+
+
+
+router.post(
+  "/:id/:groupId/:taskId/completed",
+  asyncHandler(async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+    const taskId = parseInt(req.params.taskId, 10);
+    const task = await db.Task.findByPk(taskId)
+    //res.render('tasks')
+    if (task.completed === false) {
+      await db.Task.update({completed: true }, { where: { id: taskId } }
+        );
+    } else {
+      await db.Task.update({completed: false }, { where: { id: taskId } }
+        );
+    }
+    res.redirect("back")
+  })
+);
 
 
 

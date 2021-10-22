@@ -42,6 +42,9 @@ block tasksList
                     //- display task name
                     //- li= task.dataValues.name
                     li
+                        form(action=`/users/${userId}/${groupId}/${task.id}/completed` method='post')
+                            input(type='hidden' name='_csrf' value=csrfToken)
+                            input(type='checkbox' class="singletask" name= task.dataValues.name onChange="this.form.submit()")
                         a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
 
     //- div.taskList
@@ -51,7 +54,7 @@ block tasksList
     //-                 div.currentTask
     //-                     input(type='checkbox' class="singletask" name= task.dataValues.name)
     //-                     label(for='task.dataValues.name')= task.dataValues.name
-                        //- br
+    //-                     br
 block group
     div
         div.groupTopBar
@@ -88,4 +91,3 @@ block group
             ul.groupList
             each member in members.dataValues.groupToMember
                 li.groupMembers= member.dataValues.username
-

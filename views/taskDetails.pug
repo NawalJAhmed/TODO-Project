@@ -11,19 +11,10 @@ block tasksList
     //- br
     //- form(action=`/users/${user.id}/${group.id}/add-Task` method='post')
         form(action='/users/:id/:id/add' method='post')
-    form(action=`/users/${userId}/${groupId}`
- method='post')
+    form(action=`/users/${userId}/${groupId}` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
         label(for='name')
         input(type='input' name='name' placeholder="Add a task..." required)#addTaskBox
-        //- select(name="group_name")
-        //-     if ownerGroups
-        //-         each ownerGroup in ownerGroups
-        //-             option(value=ownerGroup.dataValues.id)=ownerGroup.dataValues.name
-        //-     if groups
-        //-         each group in groups.dataValues.userToMember
-        //-             option(value=groups.dataValues.id)=groups.dataValues.name
-
         select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
             each user in users
                 option(value= user.id)= user.username
@@ -42,6 +33,9 @@ block tasksList
                     //- display task name
                     //- li= task.dataValues.name
                     li
+                        form(action=`/users/${userId}/${groupId}/${task.id}/completed` method='post')
+                            input(type='hidden' name='_csrf' value=csrfToken)
+                            input(type='checkbox' class="singletask" name= task.dataValues.name onChange="this.form.submit()")
                         a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
     //- div.taskList
     //-     if tasks
@@ -57,31 +51,32 @@ block group
     form(action=`/users/${userId}/${groupId}/${taskId}/delete` method='post')
         button.deleteTaskButtn(type='submit') Delete Task
 
-
-
-
-
-
-    form(action='' method='post')
+    form(action=`/users/${userId}/${groupId}/${taskId}` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
         label(for='name')
         input(type='input' name='name' value=`${taskName}` required)
-
-
         select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
             each user in users
                 option(value= user.id)= user.username
-
-    p `#{formatedtaskDueDateString}`
-
-        input(type='date' name='due_date' value=`${formatedtaskDueDateString}` min="2021-10-20" max="2022-12-31" required)
+        p `#{taskDueDate}`
+        input(type='date' name='due_date' value=`${taskDueDate}` min="2021-10-20" max="2022-12-31" required)
         button(class='editTaskButton' type='submit' ) Edit Task
+
+    form(action=`/users/${userId}/${groupId}/${taskId}/addSubTask` method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        label(for='name')
+        input(type='input' name='name' placeholder="Add a subtask..." required)#addTaskBox
+        br
+        button(class='addTaskButton' type='submit' ) Add Sub-task
 
     if Subtask
         p Sub-tasks List
         ul.subtaskList
-            each subTask in Subtask
-                    li= subTask.dataValues.name
+            each sub in Subtask
+                    li= sub.dataValues.name
+                        form(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+                            input(type='hidden' name='_csrf' value=csrfToken)
+                            button.deleteTaskButtn(type='submit') Delete Subtask
 
     //- form(action=`/users/${id}/${groupId}/add-member` method='post')
     //-     input(type='hidden' name='_csrf' value=csrfToken)
