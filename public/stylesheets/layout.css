@@ -21,7 +21,22 @@ a:active {
   justify-content: center;
   align-items: center;
 }
-
+.groupDetailsButton {
+  background-color: royalblue;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 5px 10px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  height: 25px;
+  width: fit-content;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 body {
   height: 100vh;
   width: 100vw;

@@ -52,7 +52,7 @@ block tasksList
 block group
     h1 #{taskName}
     p Edit Task
-    button(class='groupDetailsButton' id="groupDetailsBttn" type='submit' ) Group Details
+    a(class='groupDetailsButton' id="groupDetailsBttn" href=`/users/${userId}/${groupId}`) Group Details
     //- p #{task.owner_Id}
     //- p User Id
     //-     p #{user.id}
