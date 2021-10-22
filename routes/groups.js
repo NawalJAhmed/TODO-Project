@@ -15,7 +15,6 @@ router.get(
   csrfProtection,
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10);
-    
     const groupId = parseInt(req.params.groupId, 10);
     // const taskId = parseInt(req.params.taskId, 10);
     const groupTasks = await db.Task.findAll({
@@ -23,14 +22,14 @@ router.get(
       include: { model: db.SubTask },
     });
 
-    
+
 
     const members = await db.Group.findByPk(groupId, {
       include: { model: db.User, as: "groupToMember" },
     });
 
-    console.log(members)
 
+    console.log(members)
     let currentMemberIds = []
     const getIds = (members) => {
         for(let i=0; i<members.groupToMember.length; i++) {
@@ -53,7 +52,7 @@ router.get(
         }
     },
     });
-    
+
 
 
     const groups = await db.User.findByPk(userId, {
@@ -70,10 +69,11 @@ router.get(
         [Op.and]: [{ owner_id: userId }, { dashboard: true }],
       },
     });
+    //querying from members and using userId
 
     const isDashboard = dashboard.id === groupId
-    
-
+    const groupNameObject = await db.Group.findOne({ attributes: ['name'], where: {id: groupId},})
+    const groupName = groupNameObject.dataValues.name
     const groupInfo = await db.Group.findByPk(groupId);
     const group_id = parseInt(req.params.groupId, 10);
     //const group_id = 1
@@ -91,6 +91,8 @@ router.get(
       ownerGroups,
       tasks,
       userId,
+      groupId,
+      groupName,
       dashboard: dashboard.id,
       userName: userName.username,
       csrfToken: req.csrfToken(),
@@ -144,12 +146,14 @@ router.post(
   "/:id/:groupId/addMember",
   csrfProtection,
   asyncHandler(async (req, res) => {
+
     const user_id = parseInt(req.body.addMember);
     //req.params returning empty object. Is this because post url doesn't match current page's url?
     //const groupId = parseInt(req.params.groupId, 10);
     const groupId = parseInt(
       JSON.stringify(req.headers.referer).split("/").slice(-1)
     );
+
 
     const member = await db.Member.create({
       user_id,
@@ -166,7 +170,7 @@ router.post(
     const groupId = parseInt(
         JSON.stringify(req.headers.referer).split("/").slice(-1)
       );
-    
+
     const members = await db.Member.findAll({ where: { group_id: groupId } });
     if (members) {
       for(let i= 0; i < members.length; i++) {
@@ -187,9 +191,9 @@ router.post(
   "/:id/:groupId/removeMember",
   asyncHandler(async (req, res) => {
     const groupId = parseInt(
-        JSON.stringify(req.headers.referer).split("/").slice(-1)
-      );
-    const userId = parseInt(req.body.removeMember);
+      JSON.stringify(req.headers.referer).split("/").slice(-1)
+    );
+  const userId = parseInt(req.body.removeMember);
     const member = await db.Member.findOne({
       where: {
         [Op.and]: [{ user_id: userId }, { group_id: groupId }],
@@ -201,29 +205,43 @@ router.post(
   })
 );
 
-//post route for creating a new task
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//post route for adding a new task
 router.post(
   "/:id/:groupId",
   asyncHandler(async (req, res) => {
-    const owner_id = req.params.id;
+    let owner_id = req.params.id;
+    let memberId = req.body.assignTo
     const groupId = parseInt(req.params.groupId, 10);
     const { name, due_date } = req.body;
     // owner_id = parseInt(req.params.owner_id, 10);
-    console.log("??????????????????????????????/");
-    console.log("++++++++++++++");
-    console.log(groupId);
-    console.log(owner_id);
-    console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&77");
     // const group_id = parseInt(req.params.groupID, 10);
     // console.log(group_id);
     const group_id = groupId
-    //console.log({ name, group_id, owner_id, due_date, completed: false });
-    db.Task.create({ name, group_id, owner_id, due_date, completed: false });
+    if (memberId === undefined) {
+      //console.log({ name, group_id, owner_id: memberId, due_date, completed: false });
+      memberId = owner_id
+    }
+    db.Task.create({ name, group_id, owner_id: memberId, due_date, completed: false });
     // res.redirect("users/:id/:groupId")
     res.redirect(req.originalUrl);
   })
 );
 
+// DELETE DELETE DELETE DELETE DELETE DELETE
 // router.get(
 //   "/:id/:groupId/add-task",
 //   asyncHandler(async (req, res) => {
@@ -234,20 +252,16 @@ router.post(
 //       where: { group_id: groupId },
 //       include: { model: db.SubTask },
 //     });
-
 //     const members = await db.Member.findAll({
 //       where: { group_id: groupId },
 //     });
-
 //     const groups = await db.User.findByPk(userId, {
 //         include: {model: db.Group, as: 'userToMember'},
 //     })
-
 //     const ownerGroups = await db.Group.findAll({
 //         where: {owner_id: userId}
 //     })
 //     console.log('!!!!!', ownerGroups)
-
 //     //querying from members and using userId
 //     //or user.findbypk include group
 
@@ -279,7 +293,6 @@ router.post(
 //     //res.render('groupInfo')
 //   })
 // );
-
 // show completed tasks
 // refactor later
 router.get(
@@ -319,7 +332,10 @@ router.get(
     });
     //querying from members and using userId
     //or user.findbypk include group
-
+    const groupNameObject = await db.Group.findOne({
+      attributes: ['name'],
+      where: {id: groupId},})
+    const groupName = groupNameObject.dataValues.name
     const groupInfo = await db.Group.findByPk(groupId);
     const group_id = parseInt(req.params.groupId, 10);
     //const group_id = 1
@@ -335,6 +351,7 @@ router.get(
       ownerGroups,
       tasks,
       userId,
+      groupName,
       dashboard: dashboard.id,
       userName: userName.username,
       csrfToken: req.csrfToken(),
@@ -342,18 +359,182 @@ router.get(
   })
 );
 
-// router.get(
-//   "/:id/:groupId/add-member",
-//   csrfProtection,
-//   asyncHandler(async (req, res) => {
-//     const { id, groupId } = req.params;
 
-//     res.render("members", {
-//       id,
-//       groupId,
-//       csrfToken: req.csrfToken(),
-//     });
-//   })
-//);
+
+
+
+
+//router for when you click on a task link
+router.get(
+  "/:id/:groupId/:taskId",
+  csrfProtection,
+  asyncHandler(async (req, res) => {
+    const userId = parseInt(req.params.id, 10);
+    const groupId = parseInt(req.params.groupId, 10);
+    const taskId = parseInt(req.params.taskId, 10);
+    const taskNameObject = await db.Task.findByPk(taskId);
+    const taskName = taskNameObject.dataValues.name
+    const taskDueDate = taskNameObject.dataValues.due_date
+    const taskDueDateYear = taskDueDate.getFullYear().toString()
+    const taskDueDateMonth = (taskDueDate.getMonth()+1).toString()
+    const taskDueDateDay = (taskDueDate.getDate()+1).toString()
+    const formatedtaskDueDateString = `${taskDueDateYear}-${taskDueDateMonth}-${taskDueDateDay}`
+    // console.log("taskId", taskId);
+
+
+
+
+
+
+    const groupTasks = await db.Task.findAll({
+      where: { group_id: groupId },
+      include: { model: db.SubTask },
+    });
+
+
+
+    const members = await db.Group.findByPk(groupId, {
+      include: { model: db.User, as: "groupToMember" },
+    });
+
+    let currentMemberIds = []
+    const getIds = (members) => {
+      for(let i=0; i<members.groupToMember.length; i++) {
+        currentMemberIds.push(members.groupToMember[i].dataValues.id)
+      }
+    }
+    getIds(members)
+
+    const ownerId = members.dataValues.owner_id;
+    const ownerName = await db.User.findByPk(ownerId);
+    const userName = await db.User.findByPk(userId);
+    const isOwner = userId === ownerId;
+
+    const users = await db.User.findAll({
+      include: { model: db.Group, as: 'userToMember'},
+        where: {
+          id: {
+            [Op.notIn]: currentMemberIds,
+            [Op.ne]: ownerId
+          }
+        },
+      });
+
+
+
+      const groups = await db.User.findByPk(userId, {
+        include: { model: db.Group, as: "userToMember" },
+      });
+
+      const ownerGroups = await db.Group.findAll({
+        where: {
+          [Op.and]: [{ owner_id: userId }, { dashboard: false }],
+        },
+      });
+      const dashboard = await db.Group.findOne({
+        where: {
+          [Op.and]: [{ owner_id: userId }, { dashboard: true }],
+        },
+      });
+
+      //querying from members and using userId
+      //or user.findbypk include group
+      const groupNameObject = await db.Group.findOne({
+        attributes: ['name'],
+        where: {id: groupId},})
+      const groupName = groupNameObject.dataValues.name
+      const groupInfo = await db.Group.findByPk(groupId);
+      const group_id = parseInt(req.params.groupId, 10);
+      //const group_id = 1
+      const tasks = await db.Task.findAll({
+        where: { group_id },
+        order: [["due_date", "ASC"]],
+      });
+      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      console.log(groupName);
+      res.render("taskDetails", {
+        ownerName,
+        isOwner,
+        taskName,
+        taskDueDateYear,
+        taskDueDateMonth,
+        taskDueDateDay,
+        formatedtaskDueDateString,
+        taskId,
+        users,
+        members,
+        taskDueDate,
+        groupId,
+        groups,
+        ownerGroups,
+        tasks,
+        userId,
+        groupName,
+        dashboard: dashboard.id,
+        userName: userName.username,
+        csrfToken: req.csrfToken(),
+    });
+  })
+);
+
+
+
+
+
+//route for editing a task
+router.post(
+  "/:id/:groupId/:taskId",
+  asyncHandler(async (req, res) => {
+    let owner_id = req.params.id;
+    let memberId = req.body.assignTo
+    const groupId = parseInt(req.params.groupId, 10);
+    const taskId = parseInt(req.params.taskId, 10);
+    const { name, due_date } = req.body;
+    // owner_id = parseInt(req.params.owner_id, 10);
+    // const group_id = parseInt(req.params.groupID, 10);
+    // console.log(group_id);
+    const group_id = groupId
+    if (memberId === undefined) {
+      //console.log({ name, group_id, owner_id: memberId, due_date, completed: false });
+      memberId = owner_id
+    }
+
+    //await db.Task.update({ name, due_date, group_id, owner_id: memberId, completed: false });
+    // res.redirect("users/:id/:groupId")
+    await db.Task.upsert({ id: taskId , name, group_id, owner_id: memberId, due_date, completed: false });
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.log(owner_id);
+    //console.log(req.originalUrl);
+    res.redirect(req.originalUrl);
+  })
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
