@@ -1,8 +1,7 @@
-
-const express = require('express');
-const db = require("../db/models");
+const express = require('express'); //
+const db = require("../db/models"); //
 const { Group, Task, SubTask } = db;
-const { csrfProtection, asyncHandler } = require('./utils');
+const { csrfProtection, asyncHandler } = require('./utils'); //
 const { requireAuth } = require("../auth");
 const { check, validationResult } = require('express-validator');
 const router = express.Router();
@@ -25,20 +24,22 @@ const router = express.Router();
 //     })
 //   );
 
-router.get(
-    "/:id",
-    asyncHandler(async (req, res) => {
-      const task_id = parseInt(req.params.id, 10);
-      //const task_id = 1
-      const task = await Task.findByPk(task_id)
-      const { name, due_date, completed, owner_id} = task
-      console.log({ name, due_date, completed, owner_id});
-      const subTasks = await SubTask.findAll({
-         where: {task_id},
-      })
-      res.send(subTasks)
-    })
-)
+// router.get(
+//     "/",
+//     asyncHandler(async (req, res) => {
+//       const task_id = parseInt(req.params.id, 10);
+//       //const task_id = 1
+//       const task = await Task.findByPk(task_id)
+//       const { name, due_date, completed, owner_id} = task
+//       console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//       console.log({ name, due_date, completed, owner_id});
+//       const subTasks = await SubTask.findAll({
+//          where: {task_id},
+//       })
+//       //res.send(subTasks)
+//       res.render("tasks");
+//     })
+// )
 
 router.post(
     "/add",
@@ -46,7 +47,7 @@ router.post(
       const { name, owner_id, due_date } = req.body;
       const group_id = parseInt(req.params.groupID, 10);
       //const group_id = 1
-      Task.create({ name, due_date, owner_id, group_id, completed: false });
+      db.Task.create({ name, due_date, owner_id, group_id, completed: false });
       res.send("sent");
       //res.render('tasks')
     })
@@ -89,7 +90,7 @@ router.post(
                 }
             }
             await task.destroy();
-          res.json({ message: `Deleted task with id of ${task_id}.` });
+
         }
     // }
     })

@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     group_id: DataTypes.INTEGER,
     owner_id: DataTypes.INTEGER,
-    due_date: DataTypes.DATE,
+    due_date: DataTypes.DATEONLY,
     completed: DataTypes.BOOLEAN
   }, {});
   Task.associate = function(models) {

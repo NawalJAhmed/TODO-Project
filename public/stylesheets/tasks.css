@@ -1,0 +1,41 @@
+/* .taskList .currentTask {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.taskList .currentTask:hover {
+  background-color: lightsalmon;
+  font-weight: bold;
+} */
+/*
+.taskList {
+  padding-left: 25px;
+} */
+
+.taskList li:hover {
+  background-color: rgba(255, 165, 0, 0.5);
+}
+
+input[type="checkbox"]:checked + label {
+  color: grey;
+  text-decoration: line-through;
+}
+
+.delete-btn {
+  color: darkred;
+}
+
+h1 {
+  color: darkred;
+}
+
+input.currentTask {
+  font-size: small;
+}
+select[type="hidden"] {
+  display: none;
+}
+
+/* .back {
+  display: none
+} */

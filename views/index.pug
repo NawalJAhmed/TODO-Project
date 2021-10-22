@@ -1,11 +1,26 @@
-extends layout
 
-append head
+head
   //- add page specific styles by appending to the head
+  title="TODO"
   link(rel="stylesheet" href="/stylesheets/index.css")
   //- add page specific js
   script(src="/javascripts/index.js" type="module" defer)
 
-block content
-  h1= title
-  p Welcome to your Project Skeleton
+body
+  nav
+    span
+    h1 //TODO:
+    a.navButtons(href="/users/login") Login
+  main
+    content.main
+      h3 Hello,
+      h2 WELCOME TO TODO
+      .buttons
+        form(action='/users/login' method='post')
+          input(type='hidden' name='_csrf' value=csrfToken)
+          input(value=`${demoEmail}` name="email" type='hidden')
+          input(value=`${demoPwd}` name="password" type='hidden')
+          button.navButtons(type='submit' ) Demo
+        a.navButtons(href="/users/signup") Signup
+      p TODO is a remember the milk clone catered to programmers. TODO lets users create groups, add members and set tasks for members.  Try it out without creating an account by clicking the Demo button!
+    img(src="./snippet1.PNG")

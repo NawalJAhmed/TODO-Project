@@ -5,3 +5,25 @@ mixin validationErrorSummary(errors)
       ul
         each error in errors
           li= error
+mixin groupList(groups)
+  if groups
+    each group in groups.dataValues.userToMember
+      div
+        a(href=`/users/${groups.dataValues.id}/${group.dataValues.id}`)= group.dataValues.name
+  if ownerGroups
+      each ownerGroup in ownerGroups
+        div
+          a(href=`/users/${ownerGroup.dataValues.owner_id}/${ownerGroup.dataValues.id}`)= ownerGroup.dataValues.name
+
+mixin taskList(tasks, subtasks)
+  if tasks
+    ul.taskList
+      each task in tasks
+        li= task
+          if (subtasks)
+            ul.subTasksList
+              each subTask in subTasks
+                li= subTask
+mixin field(labelText, fieldName, fieldValue, fieldType = 'text')
+    label(for=fieldName)= labelText
+    input(type=fieldType id=fieldName name=fieldName value=fieldValue)

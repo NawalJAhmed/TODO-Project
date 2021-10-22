@@ -1,11 +1,7 @@
-//- this is a sample pug file to test post functionality for groups
-//- NOT MEANT FOR PRODUCTION
-
 extends layout
-
-block content
+block group
   form(action='/users/:id/create-group' method='post')
     input(type='hidden' name='_csrf' value=csrfToken)
     label(for='name') name
     input(type='input' name='name' required)
-    button(type='submit' ) signup
+    button(type='submit' ) Create Group
