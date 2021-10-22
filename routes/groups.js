@@ -28,7 +28,9 @@ router.get(
     const members = await db.Group.findByPk(groupId, {
       include: { model: db.User, as: "groupToMember" },
     });
-    console.log('!!!!!!!members',members)
+
+    console.log(members)
+
     let currentMemberIds = []
     const getIds = (members) => {
         for(let i=0; i<members.groupToMember.length; i++) {
@@ -70,9 +72,7 @@ router.get(
     });
 
     const isDashboard = dashboard.id === groupId
-    console.log('!!!dashboard', isDashboard)
-    //querying from members and using userId
-    //or user.findbypk include group
+    
 
     const groupInfo = await db.Group.findByPk(groupId);
     const group_id = parseInt(req.params.groupId, 10);
