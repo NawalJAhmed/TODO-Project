@@ -6,7 +6,7 @@ a:active {
   color: inherit;
 }
 .logout {
-  background-color: darkred;
+  background-color: royalblue;
   color: white;
   font-weight: bold;
   border: none;
@@ -114,7 +114,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: darkred;
+  background-color: royalblue;
   color: white;
   font-weight: bold;
   border: none;

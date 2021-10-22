@@ -84,7 +84,7 @@ router.post(
 
       const owner_id = req.session.auth.userId;
       let dashboard = await db.Group.create({
-        name: "dashboard",
+        name: "Dashboard",
         owner_id,
         dashboard: true,
       });
