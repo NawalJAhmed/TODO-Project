@@ -1,0 +1,53 @@
+.groupMemberHeader {
+    color: darkred;
+    font-weight: bold;
+    font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+}
+
+.groupMembers {
+    font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+    padding-left: 25px;
+}
+
+.groupTitle {
+    font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+    color: darkred;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+.groupOwner {
+    padding-left: 12px;
+}
+
+.groupForm {
+    padding-left: 8px;
+}
+
+.groupTopBar {
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.groupListTitle {
+    color: darkred;
+    font-weight: bold;
+    font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+    padding-left: 10px;
+}
+
+#groupList {
+    color: darkred;
+    font-weight: bold;
+    font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+    padding-left: 10px;
+}
+
+.deleteGroupBut {
+    position: relative;
+    top: -16px;
+}

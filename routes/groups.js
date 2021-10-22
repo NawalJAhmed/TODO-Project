@@ -4,9 +4,9 @@ const { Op } = require("sequelize");
 
 const db = require("../db/models");
 const { csrfProtection, asyncHandler } = require("./utils");
-
+const { requireAuth } = require("../auth");
 const router = express.Router();
-
+router.use(requireAuth);
 // this route returns groups that a given user belongs to
 // TODO add groups, tasks, sub-tasks
 
@@ -15,6 +15,7 @@ router.get(
   csrfProtection,
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10);
+    
     const groupId = parseInt(req.params.groupId, 10);
     // const taskId = parseInt(req.params.taskId, 10);
     const groupTasks = await db.Task.findAll({
@@ -27,6 +28,8 @@ router.get(
     const members = await db.Group.findByPk(groupId, {
       include: { model: db.User, as: "groupToMember" },
     });
+
+    console.log(members)
 
     let currentMemberIds = []
     const getIds = (members) => {
@@ -67,8 +70,9 @@ router.get(
         [Op.and]: [{ owner_id: userId }, { dashboard: true }],
       },
     });
-    //querying from members and using userId
-    //or user.findbypk include group
+
+    const isDashboard = dashboard.id === groupId
+    
 
     const groupInfo = await db.Group.findByPk(groupId);
     const group_id = parseInt(req.params.groupId, 10);
@@ -78,6 +82,7 @@ router.get(
       order: [["due_date", "ASC"]],
     });
     res.render("groupInfo", {
+      isDashboard,
       ownerName,
       isOwner,
       users,
@@ -139,14 +144,12 @@ router.post(
   "/:id/:groupId/addMember",
   csrfProtection,
   asyncHandler(async (req, res) => {
-
     const user_id = parseInt(req.body.addMember);
     //req.params returning empty object. Is this because post url doesn't match current page's url?
     //const groupId = parseInt(req.params.groupId, 10);
     const groupId = parseInt(
       JSON.stringify(req.headers.referer).split("/").slice(-1)
     );
-
 
     const member = await db.Member.create({
       user_id,
@@ -181,10 +184,12 @@ router.post(
 
 //TODO requires testing once members have been added
 router.post(
-  "/:id/:groupId/leave-group",
+  "/:id/:groupId/removeMember",
   asyncHandler(async (req, res) => {
-    const groupId = parseInt(req.params.groupId, 10);
-    const userId = parseInt(req.params.id, 10);
+    const groupId = parseInt(
+        JSON.stringify(req.headers.referer).split("/").slice(-1)
+      );
+    const userId = parseInt(req.body.removeMember);
     const member = await db.Member.findOne({
       where: {
         [Op.and]: [{ user_id: userId }, { group_id: groupId }],
@@ -192,7 +197,7 @@ router.post(
     });
 
     await member.destroy();
-    res.redirect("/");
+    res.redirect("back");
   })
 );
 
