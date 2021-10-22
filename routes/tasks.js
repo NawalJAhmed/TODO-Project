@@ -1,4 +1,3 @@
-
 const express = require('express'); //
 const db = require("../db/models"); //
 const { Group, Task, SubTask } = db;
@@ -91,7 +90,7 @@ router.post(
                 }
             }
             await task.destroy();
-          res.json({ message: `Deleted task with id of ${task_id}.` });
+
         }
     // }
     })

@@ -47,6 +47,21 @@ window.onload=function(){
 
 
 
+
+
+    // const groupDetailsButton = document.getElementById('groupDetailsBttn')
+    // groupDetailsButton.addEventListener('click', async (e) => {
+    //     //e.preventDefault();
+    //     window.history.back()
+    //   })
+
+
+
+
+
+
+
+
 //select currentTaskField
 // const currentTaskFields = document.getElementsByClassName("currentTask");
 
@@ -78,3 +93,13 @@ window.onload=function(){
         })
     }
   }
+
+
+  const deleteTaskButtn = document.getElementById('deleteTaskButtn')
+
+  function SomeDeleteRowFunction() {
+    // event.target will be the input element.
+    let td = deleteTaskButtn.parentNode;
+    let tr = td.parentNode; // the row to be removed
+    tr.parentNode.removeChild(tr);
+}

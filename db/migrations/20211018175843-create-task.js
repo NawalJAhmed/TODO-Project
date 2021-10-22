@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       due_date: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       completed: {
         allowNull: false,
