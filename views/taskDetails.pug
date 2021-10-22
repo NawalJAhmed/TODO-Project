@@ -1,0 +1,74 @@
+extends layout
+append head
+    link(rel="stylesheet", href="/stylesheets/tasks.css")
+    script(src="/javascripts/index.js" type="module")
+block tasksList
+    //- if ownerGroups
+    //-     ul.taskList
+    //-         each ownerGroup in ownerGroups
+    //-                 //- display task name
+    //-                 li= ownerGroup.dataValues.name
+    //- br
+    //- form(action=`/users/${user.id}/${group.id}/add-Task` method='post')
+        form(action='/users/:id/:id/add' method='post')
+    form(action='' method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        label(for='name')
+        input(type='input' name='name' placeholder="Add a task..." required)#addTaskBox
+        //- select(name="group_name")
+        //-     if ownerGroups
+        //-         each ownerGroup in ownerGroups
+        //-             option(value=ownerGroup.dataValues.id)=ownerGroup.dataValues.name
+        //-     if groups
+        //-         each group in groups.dataValues.userToMember
+        //-             option(value=groups.dataValues.id)=groups.dataValues.name
+
+        select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
+            each user in users
+                option(value= user.id)= user.username
+        br
+        label(for='due_date')
+        input(type='date' name='due_date' placeholder="2021-12-31" min="2021-10-20" max="2022-12-31" required pattern="\d{4}-\d{2}-\d{2}")
+        button(class='addTaskButton' type='submit' ) Add Task
+    br
+    h1= `${groupName} Incomplete Tasks List`
+    button#completeTaskListButton Show Complete Tasks
+    br
+    if tasks
+        ul.taskList
+            each task in tasks
+                if task.completed === false
+                    //- display task name
+                    //- li= task.dataValues.name
+                    li
+                        a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
+    //- div.taskList
+    //-     if tasks
+    //-         each task in tasks
+    //-             if task.completed === false
+    //-                 div.currentTask
+    //-                     input(type='checkbox' class="singletask" name= task.dataValues.name)
+    //-                     label(for='task.dataValues.name')= task.dataValues.name
+                        //- br
+block group
+    p Edit Task
+    button(class='groupDetailsButton' id="groupDetailsBttn" type='submit' ) Group Details
+    form(action='' method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        label(for='name')
+        input(type='input' name='name' value=`${taskName}` required)
+
+
+        select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
+            each user in users
+                option(value= user.id)= user.username
+
+    p `#{formatedtaskDueDateString}`
+
+        input(type='date' name='due_date' value=`${formatedtaskDueDateString}` min="2021-10-20" max="2022-12-31" required)
+        button(class='editTaskButton' type='submit' ) Edit Task
+
+    //- form(action=`/users/${id}/${groupId}/add-member` method='post')
+    //-     input(type='hidden' name='_csrf' value=csrfToken)
+    //-     input.member(type='number' name='user_id' placeholder='Member Id' required)
+    //-     button(type='submit' ) Add
