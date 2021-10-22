@@ -96,6 +96,7 @@ router.get(
       isOwner,
       users,
       members,
+      currentMemberIds,
       groups,
       ownerGroups,
       tasks,
@@ -154,8 +155,6 @@ router.post(
   csrfProtection,
   asyncHandler(async (req, res) => {
     const user_id = parseInt(req.body.addMember);
-    //req.params returning empty object. Is this because post url doesn't match current page's url?
-    //const groupId = parseInt(req.params.groupId, 10);
     const groupId = parseInt(
       JSON.stringify(req.headers.referer).split("/").slice(-1)
     );
@@ -189,7 +188,7 @@ router.post(
   })
 );
 
-//TODO requires testing once members have been added
+
 router.post(
   "/:id/:groupId/removeMember",
   asyncHandler(async (req, res) => {
@@ -273,8 +272,8 @@ router.get(
         [Op.and]: [{ owner_id: userId }, { dashboard: true }],
       },
     });
-    //querying from members and using userId
-    //or user.findbypk include group
+   
+
     const groupNameObject = await db.Group.findOne({
       attributes: ["name"],
       where: { id: groupId },
@@ -283,11 +282,17 @@ router.get(
     const groupName = groupNameObject.dataValues.name;
     const groupInfo = await db.Group.findByPk(groupId);
     const group_id = parseInt(req.params.groupId, 10);
+<<<<<<< HEAD
     //const group_id = 1
     let tasks = await db.Task.findAll({
       where: {
         [Op.and]: [{ group_id }, { completed: true }],
       },
+=======
+    
+    const tasks = await db.Task.findAll({
+      where: { group_id },
+>>>>>>> 693611ed4c8e84c7910b44ec895686f3d60de694
       order: [["due_date", "ASC"]],
     });
     if (isDashboard) {
