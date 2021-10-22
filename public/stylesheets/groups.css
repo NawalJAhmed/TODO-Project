@@ -61,6 +61,7 @@
 }
 .content1Header {
   padding: 10px;
+  padding-bottom: 17px;
 }
 .content1Header > h2 {
   color: darkred;
