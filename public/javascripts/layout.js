@@ -4,9 +4,13 @@ window.addEventListener("DOMContentLoaded", (event) => {
     let dash = document.querySelector(".dashbutton");
     let groups = document.querySelectorAll(".groupButton > div > a");
     let links = [dash, ...groups];
+    let last = window.location.href.split("users")[1];
     links.forEach((link) => {
-      if (window.location.href.startsWith(link.href))
+      if (window.location.href === link.href) {
         link.style.color = "white";
+      } else if (last.startsWith(link.href.split("users")[1] + "/")) {
+        link.style.color = "white";
+      }
     });
 
     let groupHeader = document.querySelector(".groupTop");
@@ -14,7 +18,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     let groupDivs = document.querySelectorAll(".groupButton > div");
     let groupCounter = 1;
     groupHeader.addEventListener("click", (e) => {
-      window.history.pushState("page2", "Title", "/users/1/2");
+      window.history.pushState("page2", "Title", "/users/1/1");
       groupCounter++;
       if (groupCounter % 2 === 0) {
         groupIcon.innerText = "navigate_next";
@@ -51,6 +55,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     });
   });
 });
+
 (function (history) {
   var pushState = history.pushState;
   history.pushState = async function (state) {
