@@ -317,6 +317,7 @@ router.get(
     const taskNameObject = await db.Task.findByPk(taskId);
     const taskName = taskNameObject.dataValues.name
     const taskDueDate = taskNameObject.dataValues.due_date
+    const taskOwnerId = taskNameObject.dataValues.owner_id
     // const taskDueDateYear = taskDueDate.getFullYear().toString()
     // const taskDueDateMonth = (taskDueDate.getMonth()+1).toString()
     // const taskDueDateDay = (taskDueDate.getDate()+1).toString()
@@ -404,7 +405,8 @@ router.get(
 
 
 
-      //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      // console.log(taskOwnerId);
       //console.log(Subtask);
       //console.log(subTasks);
       // console.log(newGroupId);
@@ -423,6 +425,7 @@ router.get(
         userId,
         groupName,
         Subtask,
+        taskOwnerId,
         ownerId,
         dashboard: dashboard.id,
         userName: userName.username,
