@@ -19,7 +19,7 @@ block tasksList
         input(type='date' name='due_date' placeholder="2021-12-31" min="2021-10-20" max="2022-12-31" required pattern="\d{4}-\d{2}-\d{2}")
         button(class='addTaskButton' type='submit' ) Add Task
     br
-    h1= "Complete Tasks List"
+    h1= `${groupName} Complete Tasks List`
     button#showIncompletedTasksButton Show Incomplete Tasks
     br
     //- if tasks
