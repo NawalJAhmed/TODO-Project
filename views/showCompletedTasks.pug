@@ -14,14 +14,14 @@ block tasksList
         //-     if groups
         //-         each group in groups.dataValues.userToMember
         //-             option(value=groups.dataValues.id)=groups.dataValues.name
-        br
+
         label(for='due_date')
         input(type='date' name='due_date' placeholder="2021-12-31" min="2021-10-20" max="2022-12-31" required pattern="\d{4}-\d{2}-\d{2}")
         button(class='addTaskButton' type='submit' ) Add Task
-    br
+
     h1= `${groupName} Complete Tasks List`
     button#showIncompletedTasksButton Show Incomplete Tasks
-    br
+
     //- if tasks
     //-     ul.taskList
     //-         each task in tasks
@@ -41,13 +41,13 @@ block tasksList
                         a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
 block group
     p Group Owner: #{ownerName.username}
-    br
+
     form(action=`/users/${id}/${groupId}/add-member` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
         input.member(type='number' name='user_id' placeholder='Member Id' required)
         button(type='submit' ) Add
     if members
-        br
+
         p Group Members
         ul.groupList
         each member in members.dataValues.groupToMember

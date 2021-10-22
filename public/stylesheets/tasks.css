@@ -7,14 +7,14 @@
   background-color: lightsalmon;
   font-weight: bold;
 } */
-
+/*
 .taskList {
   padding-left: 25px;
-}
+} */
 
 .taskList li:hover {
-    background-color: orange;
-  }
+  background-color: rgba(255, 165, 0, 0.5);
+}
 
 input[type="checkbox"]:checked + label {
   color: grey;
@@ -32,16 +32,10 @@ h1 {
 input.currentTask {
   font-size: small;
 }
-
-.taskList {
-  color: darkred;
-}
-
-select[type='hidden'] {
-  display: none
+select[type="hidden"] {
+  display: none;
 }
 
 /* .back {
   display: none
 } */
-
