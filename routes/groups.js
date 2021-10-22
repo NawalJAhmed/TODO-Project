@@ -76,17 +76,20 @@ router.get(
     const group_id = parseInt(req.params.groupId, 10);
     //const group_id = 1
     let tasks = await db.Task.findAll({
-      where: { group_id },
+      where: {
+        [Op.and]: [{ group_id }, { completed: false }],
+      },
       order: [["due_date", "ASC"]],
     });
-
+    console.log(tasks);
     if (isDashboard) {
       tasks = await db.Task.findAll({
-        where: { owner_id: userId },
+        where: {
+          [Op.and]: [{ owner_id: userId }, { completed: false }],
+        },
         order: [["due_date", "ASC"]],
       });
     }
-
     res.render("groupInfo", {
       isDashboard,
       ownerName,
@@ -276,17 +279,30 @@ router.get(
       attributes: ["name"],
       where: { id: groupId },
     });
+    const isDashboard = dashboard.id === groupId;
     const groupName = groupNameObject.dataValues.name;
     const groupInfo = await db.Group.findByPk(groupId);
     const group_id = parseInt(req.params.groupId, 10);
     //const group_id = 1
-    const tasks = await db.Task.findAll({
-      where: { group_id },
+    let tasks = await db.Task.findAll({
+      where: {
+        [Op.and]: [{ group_id }, { completed: true }],
+      },
       order: [["due_date", "ASC"]],
     });
-    res.render("showCompletedTasks", {
+    if (isDashboard) {
+      tasks = await db.Task.findAll({
+        where: {
+          [Op.and]: [{ owner_id: userId }, { completed: true }],
+        },
+        order: [["due_date", "ASC"]],
+      });
+    }
+    res.render("groupInfo", {
+      isDashboard,
       ownerName,
       isOwner,
+      groupId,
       members,
       groups,
       ownerGroups,

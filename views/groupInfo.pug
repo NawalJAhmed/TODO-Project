@@ -31,14 +31,11 @@ block tasksList
         .taskListContainer
             ul.taskList
                 each task in tasks
-                    if task.completed === false
-                        //- display task name
-                        //- li= task.dataValues.name
-                        li
-                            form(action=`/users/${userId}/${groupId}/${task.id}/completed` method='post')
-                                input(type='hidden' name='_csrf' value=csrfToken)
-                                input(type='checkbox' class="singletask" name= task.dataValues.name onChange="this.form.submit()")
-                            a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
+                    li
+                        form(action=`/users/${userId}/${groupId}/${task.id}/completed` method='post')
+                            input(type='hidden' name='_csrf' value=csrfToken)
+                            input(type='checkbox' checked=task.completed class="singletask" name= task.dataValues.name onChange="this.form.submit()")
+                        a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
                 each el in Array(27 - tasks.length)
                     li
 
