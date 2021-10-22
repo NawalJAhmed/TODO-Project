@@ -31,14 +31,11 @@ block tasksList
         .taskListContainer
             ul.taskList
                 each task in tasks
-                    if task.completed === false
-                        //- display task name
-                        //- li= task.dataValues.name
-                        li
-                            form(action=`/users/${userId}/${groupId}/${task.id}/completed` method='post')
-                                input(type='hidden' name='_csrf' value=csrfToken)
-                                input(type='checkbox' class="singletask" name= task.dataValues.name onChange="this.form.submit()")
-                            a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
+                    li
+                        form(action=`/users/${userId}/${groupId}/${task.id}/completed` method='post')
+                            input(type='hidden' name='_csrf' value=csrfToken)
+                            input(type='checkbox' checked=task.completed class="singletask" name= task.dataValues.name onChange="this.form.submit()")
+                        a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
                 each el in Array(27 - tasks.length)
                     li
 
@@ -51,30 +48,32 @@ block group
                     form(action=`/users/${userId}/${groupId}/deleteGroup` method='post')
                         button.deleteGroupBut(type='submit') Delete Group
 
-        div
-            p.groupOwner Group Owner: #{ownerName.username}
-        if !isDashboard && isOwner
-            form.groupForm(action=`/users/${userId}/${groupId}/addMember` method='post')
-                input(type='hidden' name='_csrf' value=csrfToken)
-                label(for='addMember')
-                select(type='select' name='addMember' placeholder='Add Member')
-                    option(value='') --Select a Member--
-                    each user in users
-                        option(value= user.id)= user.username
-                button(type='submit') Add Member
-        if members && !isDashboard && isOwner
-            form.groupForm(action=`/users/${userId}/${groupId}/removeMember` method='post')
-                input(type='hidden' name='_csrf' value=csrfToken)
-                label(for='removeMember')
-                select(type='select' name='removeMember' placeholder='Remove Member')
-                    option(value='') --Select a Member--
-                    each member in members.dataValues.groupToMember
-                        option(value= member.id)= member.username
-                button(type='submit') Remove Member
+        div.groupOwnerDiv Group Owner: #{ownerName.username}
+        div.groupButtons
+            if !isDashboard && isOwner
+                form.groupForm(action=`/users/${userId}/${groupId}/addMember` method='post')
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    label(for='addMember')
+                    select(type='select' name='addMember' placeholder='Add Member')
+                        option(value='') --Select a Member--
+                        if users.length
+                            each user in users
+                                option(value= user.id)= user.username
+                    button(type='submit') Add Member
+            if members && !isDashboard && isOwner
+                form.groupForm(action=`/users/${userId}/${groupId}/removeMember` method='post')
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    label(for='removeMember')
+                    select(type='select' name='removeMember' placeholder='Remove Member')
+                        option(value='') --Select a Member--
+                        each member in members.dataValues.groupToMember
+                            option(value= member.id)= member.username
+                    button(type='submit') Remove Member
         div
         if members && !isDashboard
-
-            p.groupListTitle Group Members
             ul.groupList
-            each member in members.dataValues.groupToMember
-                li.groupMembers= member.dataValues.username
+                li.groupListTitle Group Members
+                each member in members.dataValues.groupToMember
+                    li.groupListItem= member.dataValues.username
+                each el in Array(26 - currentMemberIds.length)
+                    li

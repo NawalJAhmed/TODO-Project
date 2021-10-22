@@ -2,12 +2,12 @@ extends layout
 append head
     link(rel="stylesheet", href="/stylesheets/tasks.css")
     script(src="/javascripts/index.js" type="module")
-block tasksList
-    .content1Header
-        .groupHeader
-            h1 #{groupName}
-            if isDashboard
-                input(type='search' name='search' placeholder='Search your tasks' id='search')
+//- block tasksList
+//-     .content1Header
+//-         .groupHeader
+//-             h1 #{groupName}
+//-             if isDashboard
+//-                 input(type='search' name='search' placeholder='Search your tasks' id='search')
 
         h2= `Completed Tasks List`
         .taskHeader
@@ -27,20 +27,20 @@ block tasksList
                     button#showIncompletedTasksButton Show Incomplete Tasks
                     button(class='addTaskButton' type='submit' ) Add Task
 
-    if tasks
-        .taskListContainer
-            ul.taskList
-                each task in tasks
-                    if task.completed === true
-                        //- display task name
-                        //- li= task.dataValues.name
-                        li
-                            form(action=`/users/${userId}/${groupId}/${task.id}/completed` method='post')
-                                input(type='hidden' name='_csrf' value=csrfToken)
-                                input(type='checkbox' class="singletask" checked="true" name= task.dataValues.name onChange="this.form.submit()")
-                            a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
-                each el in Array(27 - tasks.length)
-                    li
+//-     if tasks
+//-         .taskListContainer
+//-             ul.taskList
+//-                 each task in tasks
+//-                     if task.completed === true
+//-                         //- display task name
+//-                         //- li= task.dataValues.name
+//-                         li
+//-                             form(action=`/users/${userId}/${groupId}/${task.id}/completed` method='post')
+//-                                 input(type='hidden' name='_csrf' value=csrfToken)
+//-                                 input(type='checkbox' class="singletask" checked="true" name= task.dataValues.name onChange="this.form.submit()")
+//-                             a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
+//-                 each el in Array(27 - tasks.length)
+//-                     li
 block group
     p Group Owner: #{ownerName.username}
 

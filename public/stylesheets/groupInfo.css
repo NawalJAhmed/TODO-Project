@@ -12,8 +12,12 @@
 .groupTitle {
     font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
     color: darkred;
-    font-weight: bold;
     padding-top: 10px;
+}
+
+.groupOwnerDiv {
+    display: inline-block;
+    padding-left: 10px;
 }
 
 .groupOwner {
@@ -40,11 +44,38 @@
     padding-left: 10px;
 }
 
-#groupList {
-    color: darkred;
-    font-weight: bold;
-    font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+.groupButtonContainer {
+    height: 80%
+}
+
+.groupButtons {
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 10px;
+}
+
+
+
+.groupList > li {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px dashed grey;
+    height: 20px;
+  }
+
+.groupListTitle {
     padding-left: 10px;
+    font-weight: normal;
+    color: black;
+
+}
+
+.groupListItem {
+    padding-left: 25px;
 }
 
 .deleteGroupBut {
