@@ -77,10 +77,18 @@ router.get(
     const groupInfo = await db.Group.findByPk(groupId);
     const group_id = parseInt(req.params.groupId, 10);
     //const group_id = 1
-    const tasks = await db.Task.findAll({
+    let tasks = await db.Task.findAll({
       where: { group_id },
       order: [["due_date", "ASC"]],
     });
+
+    if (isDashboard) {
+      tasks = await db.Task.findAll({
+        where: { owner_id: userId },
+        order: [["due_date", "ASC"]],
+      });
+    }
+
     res.render("groupInfo", {
       isDashboard,
       ownerName,
