@@ -229,6 +229,8 @@ router.post(
       completed: false,
     });
     // res.redirect("users/:id/:groupId")
+    console.log("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
+    console.log(owner_id);
     res.redirect(req.originalUrl);
   })
 );
@@ -383,10 +385,14 @@ router.get(
       });
     }
 
+    const taskOwnerNameObj = await db.User.findByPk(taskOwnerId);
+    const taskOwnerName = taskOwnerNameObj.dataValues.username;
+
     const Subtask = await db.SubTask.findAll({
       where: { task_id: taskId },
     });
-
+    console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+    console.log(taskOwnerName);
     res.render("taskDetails", {
       isDashboard,
       ownerName,
@@ -405,6 +411,7 @@ router.get(
       Subtask,
       taskOwnerId,
       ownerId,
+      taskOwnerName,
       dashboard: dashboard.id,
       userName: userName.username,
       csrfToken: req.csrfToken(),

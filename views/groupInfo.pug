@@ -11,7 +11,7 @@ block tasksList
 
         h2= `Incomplete Tasks List`
         .taskHeader
-            form(action='' method='post')
+            form(action=`/users/${userId}/${groupId}` method='post')
                 input(type='hidden' name='_csrf' value=csrfToken)
                 .container
                     input(type='input' name='name' placeholder="Add a task..." required)#addTaskBox
@@ -24,8 +24,8 @@ block tasksList
                         each member in members.dataValues.groupToMember
                             option(value= member.id)= member.username
                 .buttonsContainer
-                    button(class='addTaskButton' type='submit' ) Add Task
                     button#completeTaskListButton Show Complete Tasks
+                    button(class='addTaskButton' type='submit' ) Add Task
 
     if tasks
         .taskListContainer
