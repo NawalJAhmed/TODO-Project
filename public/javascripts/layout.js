@@ -44,7 +44,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       if (
         aEl.innerText.toLowerCase().startsWith(e.target.value.toLowerCase())
       ) {
-        el.style.display = "inherit";
+        el.style.display = "flex";
       } else {
         el.style.display = "none";
       }
