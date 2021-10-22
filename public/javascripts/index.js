@@ -94,3 +94,12 @@ window.onload=function(){
     }
   }
 
+
+  const deleteTaskButtn = document.getElementById('deleteTaskButtn')
+
+  function SomeDeleteRowFunction() {
+    // event.target will be the input element.
+    let td = deleteTaskButtn.parentNode;
+    let tr = td.parentNode; // the row to be removed
+    tr.parentNode.removeChild(tr);
+}

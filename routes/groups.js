@@ -205,20 +205,6 @@ router.post(
   })
 );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //post route for adding a new task
 router.post(
   "/:id/:groupId",
@@ -241,58 +227,6 @@ router.post(
   })
 );
 
-// DELETE DELETE DELETE DELETE DELETE DELETE
-// router.get(
-//   "/:id/:groupId/add-task",
-//   asyncHandler(async (req, res) => {
-//     const userId = parseInt(req.params.id, 10);
-//     const groupId = parseInt(req.params.groupId, 10);
-//     // const taskId = parseInt(req.params.taskId, 10);
-//     const groupTasks = await db.Task.findAll({
-//       where: { group_id: groupId },
-//       include: { model: db.SubTask },
-//     });
-//     const members = await db.Member.findAll({
-//       where: { group_id: groupId },
-//     });
-//     const groups = await db.User.findByPk(userId, {
-//         include: {model: db.Group, as: 'userToMember'},
-//     })
-//     const ownerGroups = await db.Group.findAll({
-//         where: {owner_id: userId}
-//     })
-//     console.log('!!!!!', ownerGroups)
-//     //querying from members and using userId
-//     //or user.findbypk include group
-
-//     const groupInfo = await db.Group.findByPk(groupId);
-//     const group_id = parseInt(req.params.groupId, 10);
-//     //const group_id = 1
-//     const tasks = await db.Task.findAll({
-//        where: {group_id},
-//        order: [['due_date', 'ASC']]
-//     })
-//     res.render("showCompletedTasks", {
-//       members,
-//       groups,
-//       ownerGroups,
-//       tasks,
-//     });
-//   })
-// );
-
-// router.post(
-//   "/:id/:groupId/add-task",
-//   asyncHandler(async (req, res) => {
-//     const { name, owner_id, due_date } = req.body;
-//     const group_id = parseInt(req.params.groupID, 10);
-//     //const group_id = 1
-//     db.Task.create({ name, due_date, owner_id, group_id, completed: false });
-//     //res.send("sent");
-//     res.redirect("/:id/:groupId")
-//     //res.render('groupInfo')
-//   })
-// );
 // show completed tasks
 // refactor later
 router.get(
@@ -450,8 +384,20 @@ router.get(
         where: { group_id },
         order: [["due_date", "ASC"]],
       });
+
+      const newtaskId = req.params.taskId
+
+
+      const Subtask = await db.SubTask.findAll({
+        where: { task_id: taskId},
+      });
+
+
+
+
       console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      console.log(groupName);
+      //console.log(subTasks);
+      // console.log(newGroupId);
       res.render("taskDetails", {
         ownerName,
         isOwner,
@@ -470,6 +416,7 @@ router.get(
         tasks,
         userId,
         groupName,
+        Subtask,
         dashboard: dashboard.id,
         userName: userName.username,
         csrfToken: req.csrfToken(),
@@ -481,7 +428,7 @@ router.get(
 
 
 
-//route for editing a task
+//route for editing a task HAS BUGS
 router.post(
   "/:id/:groupId/:taskId",
   asyncHandler(async (req, res) => {
@@ -508,6 +455,101 @@ router.post(
     res.redirect(req.originalUrl);
   })
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.post(
+  "/:id/:groupId/:taskId/delete",
+  asyncHandler(async (req, res) => {
+  // if(req.session.auth) {
+      const newtaskId = req.params.taskId
+      const task_id = parseInt(req.params.taskId)
+      console.log("////////////////////////////////////////////////////////////");
+      console.log(task_id);
+      const owner_id = req.session.auth.userId
+      // const task_id = 1
+      const task = await db.Task.findByPk(task_id);
+      const subTasks = await db.SubTask.findAll({
+          where: {task_id},
+       })
+      if (owner_id !== task.owner_id) {
+        const err = new Error("Unauthorized");
+        err.status = 401;
+        err.message = "You are not authorized to delete this task.";
+        err.title = "Unauthorized";
+        throw err;
+      }
+      if (task) {
+          if(subTasks.length) {
+              for (const subTask of subTasks) {
+                  await subTask.destroy();
+              }
+          }
+          await task.destroy();
+      }
+      res.redirect("/:id/:groupId/:taskId/");
+  // }
+  })
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

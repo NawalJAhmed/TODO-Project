@@ -53,6 +53,14 @@ block tasksList
 block group
     p Edit Task
     button(class='groupDetailsButton' id="groupDetailsBttn" type='submit' ) Group Details
+    form(action=`/users/${userId}/${groupId}/${taskId}/delete` method='post')
+        button.deleteTaskButtn(type='submit') Delete Task
+
+
+
+
+
+
     form(action='' method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
         label(for='name')
@@ -67,6 +75,12 @@ block group
 
         input(type='date' name='due_date' value=`${formatedtaskDueDateString}` min="2021-10-20" max="2022-12-31" required)
         button(class='editTaskButton' type='submit' ) Edit Task
+
+    if Subtask
+        p Sub-tasks List
+        ul.subtaskList
+            each subTask in Subtask
+                    li= subTask.dataValues.name
 
     //- form(action=`/users/${id}/${groupId}/add-member` method='post')
     //-     input(type='hidden' name='_csrf' value=csrfToken)
