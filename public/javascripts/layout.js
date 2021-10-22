@@ -24,4 +24,24 @@ window.addEventListener("DOMContentLoaded", (event) => {
       div.className = "";
     });
   });
+
+
+  // Search functionality
+  const search = document.getElementById('search')
+
+  const tasks = document.querySelectorAll('.taskList > li')
+  search.addEventListener('input', (e) => {
+
+    tasks.forEach(el => {
+      const aEl = el.querySelector('a')
+      if (aEl.innerText.toLowerCase().startsWith(e.target.value.toLowerCase())) {
+        el.style.display = 'inherit'
+      } else {
+        el.style.display = 'none'
+      }
+    })
+  })
+
 });
+
+
