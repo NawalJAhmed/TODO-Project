@@ -409,9 +409,19 @@ router.get(
     const isDashboard = dashboard.id === groupId;
     //const group_id = 1
     let tasks = await db.Task.findAll({
-      where: { group_id },
+      where: {
+        [Op.and]: [{ group_id }, { completed: false }],
+      },
       order: [["due_date", "ASC"]],
     });
+    if (isDashboard) {
+      tasks = await db.Task.findAll({
+        where: {
+          [Op.and]: [{ owner_id: userId }, { completed: false }],
+        },
+        order: [["due_date", "ASC"]],
+      });
+    }
 
     if (isDashboard) {
       tasks = await db.Task.findAll({
