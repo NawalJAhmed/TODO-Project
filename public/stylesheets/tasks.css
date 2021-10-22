@@ -37,6 +37,11 @@ input.currentTask {
   color: darkred;
 }
 
+select[type='hidden'] {
+  display: none
+}
+
 /* .back {
   display: none
 } */
+
