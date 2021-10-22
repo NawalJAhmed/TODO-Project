@@ -95,6 +95,7 @@ router.get(
       isOwner,
       users,
       members,
+      currentMemberIds,
       groups,
       ownerGroups,
       tasks,
