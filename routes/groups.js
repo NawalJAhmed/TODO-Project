@@ -188,7 +188,6 @@ router.post(
   })
 );
 
-
 router.post(
   "/:id/:groupId/removeMember",
   asyncHandler(async (req, res) => {
@@ -272,7 +271,6 @@ router.get(
         [Op.and]: [{ owner_id: userId }, { dashboard: true }],
       },
     });
-   
 
     const groupNameObject = await db.Group.findOne({
       attributes: ["name"],
@@ -282,17 +280,11 @@ router.get(
     const groupName = groupNameObject.dataValues.name;
     const groupInfo = await db.Group.findByPk(groupId);
     const group_id = parseInt(req.params.groupId, 10);
-<<<<<<< HEAD
     //const group_id = 1
     let tasks = await db.Task.findAll({
       where: {
         [Op.and]: [{ group_id }, { completed: true }],
       },
-=======
-    
-    const tasks = await db.Task.findAll({
-      where: { group_id },
->>>>>>> 693611ed4c8e84c7910b44ec895686f3d60de694
       order: [["due_date", "ASC"]],
     });
     if (isDashboard) {
