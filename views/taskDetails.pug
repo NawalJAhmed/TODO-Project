@@ -38,8 +38,16 @@ block tasksList
 block group
     p Edit Task
     button(class='groupDetailsButton' id="groupDetailsBttn" type='submit' ) Group Details
-    form(action=`/users/${userId}/${groupId}/${taskId}/delete` method='post')
-        button.deleteTaskButtn(type='submit') Delete Task
+    //- p #{task.owner_Id}
+    p User Id
+        p #{user.id}
+    p Owner Id
+        p #{isOwner}
+    if tasks
+        each task in tasks
+            if task.owner_Id === user.id
+                form(action=`/users/${userId}/${groupId}/${taskId}/delete` method='post')
+                    button.deleteTaskButtn(type='submit') Delete Task
 
     form(action=`/users/${userId}/${groupId}/${taskId}` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)

@@ -423,6 +423,7 @@ router.get(
         userId,
         groupName,
         Subtask,
+        ownerId,
         dashboard: dashboard.id,
         userName: userName.username,
         csrfToken: req.csrfToken(),
