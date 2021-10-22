@@ -47,6 +47,21 @@ window.onload=function(){
 
 
 
+
+
+    // const groupDetailsButton = document.getElementById('groupDetailsBttn')
+    // groupDetailsButton.addEventListener('click', async (e) => {
+    //     //e.preventDefault();
+    //     window.history.back()
+    //   })
+
+
+
+
+
+
+
+
 //select currentTaskField
 // const currentTaskFields = document.getElementsByClassName("currentTask");
 
@@ -78,3 +93,4 @@ window.onload=function(){
         })
     }
   }
+
