@@ -5,7 +5,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
     let groups = document.querySelectorAll(".groupButton > div > a");
     let links = [dash, ...groups];
     links.forEach((link) => {
-      if (link.href === window.location.href) link.style.color = "white";
+      if (window.location.href.startsWith(link.href))
+        link.style.color = "white";
     });
 
     let groupHeader = document.querySelector(".groupTop");
@@ -43,7 +44,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       if (
         aEl.innerText.toLowerCase().startsWith(e.target.value.toLowerCase())
       ) {
-        el.style.display = "inherit";
+        el.style.display = "flex";
       } else {
         el.style.display = "none";
       }
