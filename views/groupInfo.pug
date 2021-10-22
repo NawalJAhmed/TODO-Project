@@ -36,7 +36,7 @@ block tasksList
                             input(type='hidden' name='_csrf' value=csrfToken)
                             input(type='checkbox' checked=task.completed class="singletask" name= task.dataValues.name onChange="this.form.submit()")
                         a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
-                each el in Array(27 - tasks.length)
+                each el in Array((27 - tasks.length) > 0 ? (27 - tasks.length) : 0)
                     li
 
 block group
