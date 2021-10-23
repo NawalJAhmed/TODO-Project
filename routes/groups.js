@@ -11,13 +11,17 @@ router.use(requireAuth);
 // TODO add groups, tasks, sub-tasks
 
 router.get(
-  ["/:id/:groupId", "/:id/:groupId/completed"],
+  [
+    "/:id/:groupId",
+    "/:id/:groupId/taskList",
+    "/:id/:groupId/completed",
+    "/:id/:groupId/completed/taskList",
+  ],
   csrfProtection,
   asyncHandler(async (req, res) => {
-    console.log("this one");
     const userId = parseInt(req.params.id, 10);
     const groupId = parseInt(req.params.groupId, 10);
-
+    console.log("HELOOOOOOOOOOOOOO");
     const members = await db.Group.findByPk(groupId, {
       include: { model: db.User, as: "groupToMember" },
     });
@@ -67,8 +71,7 @@ router.get(
     const groupName = groupNameObject.dataValues.name;
     const group_id = parseInt(req.params.groupId, 10);
 
-    let completed = req.url.endsWith("completed") ? true : false;
-    console.log(req.url);
+    let completed = req.url.includes("completed") ? true : false;
     let tasks;
 
     if (isDashboard) {
@@ -86,8 +89,15 @@ router.get(
         order: [["due_date", "ASC"]],
       });
     }
-
-    res.render("groupInfo", {
+    if (req.url.endsWith("taskList")) {
+      return res.render("taskList", {
+        tasks,
+        userId,
+        groupId,
+        csrfToken: req.csrfToken(),
+      });
+    }
+    res.render("groupSide", {
       isDashboard,
       ownerName,
       isOwner,

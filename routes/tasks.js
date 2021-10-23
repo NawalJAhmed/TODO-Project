@@ -96,25 +96,30 @@ router.get(
     const group_id = parseInt(req.params.groupId, 10);
     const isDashboard = dashboard.id === groupId;
     //const group_id = 1
-    let tasks = await db.Task.findAll({
-      where: {
-        [Op.and]: [{ group_id }, { completed: false }],
-      },
-      order: [["due_date", "ASC"]],
-    });
+    let completed = req.url.includes("completed") ? true : false;
+    let tasks;
+
     if (isDashboard) {
       tasks = await db.Task.findAll({
         where: {
-          [Op.and]: [{ owner_id: userId }, { completed: false }],
+          [Op.and]: [{ owner_id: userId }, { completed }],
+        },
+        order: [["due_date", "ASC"]],
+      });
+    } else {
+      tasks = await db.Task.findAll({
+        where: {
+          [Op.and]: [{ group_id }, { completed }],
         },
         order: [["due_date", "ASC"]],
       });
     }
-
-    if (isDashboard) {
-      tasks = await db.Task.findAll({
-        where: { owner_id: userId },
-        order: [["due_date", "ASC"]],
+    if (req.url.endsWith("taskList")) {
+      return res.render("taskList", {
+        tasks,
+        userId,
+        groupId,
+        csrfToken: req.csrfToken(),
       });
     }
 
@@ -218,6 +223,7 @@ router.post(
     } else {
       await db.Task.update({ completed: false }, { where: { id: taskId } });
     }
+    console.log(req.url);
     res.redirect("back");
   })
 );

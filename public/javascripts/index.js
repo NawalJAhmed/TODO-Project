@@ -3,66 +3,54 @@ window.addEventListener("load", (event) => {
 });
 
 window.onload = function () {
-  //console.log();
   //button for viewing incompletedTasks
   const showCompletedTasksButton = document.getElementById(
     "completeTaskListButton"
   );
   const header = document.querySelector(".content1Header > h2");
+  header.innerText = window.location.href.endsWith("completed")
+    ? "Completed Tasks"
+    : "Incomplete Tasks List";
+  showCompletedTasksButton.innerText = window.location.href.endsWith(
+    "completed"
+  )
+    ? "Show Incomplete Tasks"
+    : "Show Complete Tasks";
+  showCompletedTasksButton.addEventListener("click", async (e) => {
+    let urls = window.location.href.split("/users/");
+    let params = urls[1].split("/");
+    let userId = params[0];
+    let groupId = params[1];
+    console.log(window.location.href);
 
-  if (!window.location.href.endsWith("completed")) {
-    showCompletedTasksButton.addEventListener("click", async (e) => {
-      //   e.preventDefault();
-      let toCompletedUrl = "";
-      if (window.location.href.endsWith("/")) {
-        toCompletedUrl = `${window.location.href}completed`;
-        console.log("Button Clicked");
-        console.log(toCompletedUrl);
-      } else {
-        toCompletedUrl = `${window.location.href}/completed`;
-        console.log("Button Clicked");
-        console.log(toCompletedUrl);
-      }
+    if (!window.location.href.endsWith("completed")) {
+      header.innerText = "Completed Tasks";
+      showCompletedTasksButton.innerText = "Show Incomplete Tasks";
+      fetch(`/users/${userId}/${groupId}/completed/taskList`)
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (html) {
+          let listContainer = document.querySelector(".taskListContainer");
+          listContainer.innerHTML = html;
+        });
 
-      window.location.href = toCompletedUrl;
-    });
-  }
+      history.pushState({}, "", window.location.href + "/completed");
+    } else {
+      showCompletedTasksButton.innerText = "Show Complete Tasks";
+      header.innerText = "Incomplete Tasks List";
+      fetch(`/users/${userId}/${groupId}/taskList`)
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (html) {
+          let listContainer = document.querySelector(".taskListContainer");
+          listContainer.innerHTML = html;
+        });
 
-  if (
-    window.location.href.endsWith("completed") ||
-    window.location.href.endsWith("completed/")
-  ) {
-    showCompletedTasksButton.innerText = "Show Incomplete Tasks";
-    header.innerText = "Completed Tasks";
-    showCompletedTasksButton.addEventListener("click", async (e) => {
-      // e.preventDefault();
-      let toCompletedUrl = "";
-      if (window.location.href.endsWith("/")) {
-        toCompletedUrl = window.location.href.replace(/completed/, "");
-      } else {
-        toCompletedUrl = window.location.href.replace(/\/completed/, "");
-      }
-
-      window.location.href = toCompletedUrl;
-    });
-  }
-
-  // const groupDetailsButton = document.getElementById('groupDetailsBttn')
-  // groupDetailsButton.addEventListener('click', async (e) => {
-  //     //e.preventDefault();
-  //     window.history.back()
-  //   })
-
-  //select currentTaskField
-  // const currentTaskFields = document.getElementsByClassName("currentTask");
-
-  // for (let i = 0; i < currentTaskFields.length; i++) {
-  //     const currentTaskField = currentTaskFields[i];
-  //     currentTaskField.addEventListener('click', async (e) => {
-  //         e.preventDefault();
-  //         console.log("currentTaskField Clicked");
-  //     })
-  // }
+      history.back();
+    }
+  });
 
   // delete button
   const buttons = document.querySelectorAll(".delete-btn");
