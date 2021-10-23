@@ -8,6 +8,7 @@ window.onload = function () {
   const showCompletedTasksButton = document.getElementById(
     "completeTaskListButton"
   );
+  const header = document.querySelector(".content1Header > h2");
 
   if (!window.location.href.endsWith("completed")) {
     showCompletedTasksButton.addEventListener("click", async (e) => {
@@ -32,6 +33,7 @@ window.onload = function () {
     window.location.href.endsWith("completed/")
   ) {
     showCompletedTasksButton.innerText = "Show Incomplete Tasks";
+    header.innerText = "Completed Tasks";
     showCompletedTasksButton.addEventListener("click", async (e) => {
       // e.preventDefault();
       let toCompletedUrl = "";

@@ -9,29 +9,30 @@ const { requireAuth } = require("../auth");
 const router = express.Router();
 router.use(requireAuth);
 
+// adding a subtask
 router.post(
-  "/:taskID/add",
+  "/:id/:groupId/:taskId/addSubTask",
   csrfProtection,
   asyncHandler(async (req, res) => {
     const { name } = req.body;
-    const task_id = parseInt(req.params.taskID, 10);
-    db.SubTask.create({ name, task_id });
-    res.send("added");
+    const task_id = parseInt(req.params.taskId, 10);
+    await db.SubTask.create({ name, task_id });
+    res.redirect("back");
   })
 );
 
-router.delete(
-  "/:taskID/:subTaskID",
+//deleting a subtask
+router.post(
+  "/:id/:groupId/:taskId/:subTaskId/delete",
   csrfProtection,
   asyncHandler(async (req, res) => {
-    const { name } = req.body;
-    const subTaskId = req.params.subTaskID;
+    const subTaskId = req.params.subTaskId;
+    console.log("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
     const subTask = await db.SubTask.findByPk(subTaskId);
     if (subTask) {
       await subTask.destroy();
-      res.send("deleted");
     }
-    res.send("subtask not found");
+    res.redirect("back");
   })
 );
 module.exports = router;

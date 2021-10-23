@@ -58,6 +58,7 @@
 }
 .taskList > li > a {
   width: 100%;
+  margin-left: 10px;
 }
 .content1Header {
   padding: 10px;
