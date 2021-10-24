@@ -43,7 +43,7 @@ router.get(
     const taskName = taskNameObject.dataValues.name;
     const taskDueDate = taskNameObject.dataValues.due_date;
     const taskOwnerId = taskNameObject.dataValues.owner_id;
-    const taskCompleteStatus = taskNameObject.dataValues.completed;
+    // const taskCompleteStatus = taskNameObject.dataValues.completed;
 
     const members = await db.Group.findByPk(groupId, {
       include: { model: db.User, as: "groupToMember" },
@@ -151,9 +151,7 @@ router.get(
       Subtasks,
       taskOwnerId,
       ownerId,
-      taskOwnerName,
       group_id,
-      taskCompleteStatus,
       dashboard: dashboard.id,
       userName: userName.username,
       csrfToken: req.csrfToken(),
@@ -216,7 +214,7 @@ router.post(
       }
       await task.destroy();
     }
-    res.redirect("/:id/:groupId/:taskId/");
+    res.redirect("back");
   })
 );
 
