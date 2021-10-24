@@ -14,20 +14,12 @@ block group
                     form(action=`/users/${userId}/${groupId}/${taskId}/delete` method='post')
                         button.deleteTaskButtn(type='submit') Delete Task
         div.assignedToAndBackBar
-            p.assignedto Assigned To: FIX HERE#{taskOwnerName}
+            p.assignedto Assigned To: #{taskOwnerName}
             a(class='groupDetailsButton' id="groupDetailsBttn" href=`/users/${userId}/${groupId}`) Group Details
-
-
-
-
-
-
-
         if taskOwnerId === userId
             div.taskDetailsButtons
-                p.editTaskHeader Edit Task:
             div.taskHeader
-                form(action=`/users/${userId}/${groupId}/${taskId}` method='post')
+                form.editingATask(action=`/users/${userId}/${groupId}/${taskId}` method='post')
                     input(type='hidden' name='_csrf' value=csrfToken)
                     .container
                         //- label(for='name')
@@ -37,62 +29,21 @@ block group
                             option(value= user.id)= user.username
                             each member in members.dataValues.groupToMember
                                 option(value= member.id)= member.username
-                    .editButtonsContainer
                         button(class='editTaskButton' type='submit' ) Edit Task
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //- if taskOwnerId === userId
-        //-     div.taskDetailsButtons
-        //-         p.editTaskHeader Edit Task:
-        //-     div.taskDetailsButtonsContent
-        //-         form.editingATask(action=`/users/${userId}/${groupId}/${taskId}` method='post')
-        //-             input(type='hidden' name='_csrf' value=csrfToken)
-        //-             label(for='name')
-        //-             input(type='input' name='name' value=`${taskName}` required)
-        //-             select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
-        //-                 option(value= user.id)= user.username
-        //-                 each member in members.dataValues.groupToMember
-        //-                     option(value= member.id)= member.username
-        //-             input(type='date' name='due_date' value=`${taskDueDate}` min="2021-10-20" max="2022-12-31" required)
-        //-             button(class='editTaskButton' type='submit' ) Edit Task
-
             div.subTaskDetailsButtonContent
-                form(action=`/users/${userId}/${groupId}/${taskId}/addSubTask` method='post')
+                form.addingASubTask(action=`/users/${userId}/${groupId}/${taskId}/addSubTask` method='post')
                     input(type='hidden' name='_csrf' value=csrfToken)
-                    label(for='name')
                     input(type='input' name='name' placeholder="Add a subtask..." required)#addTaskBox
-                    br
-                    button(class='addTaskButton' type='submit' ) Add Sub-task
+                    button(class='addSubTaskButton' type='submit' ) Add Sub-task
         if taskOwnerId !== userId
-            p Due Date: #{taskDueDate}
-
+            div.dueDateForNonOwners Due Date: #{taskDueDate}
         if Subtasks.length
-            p Sub-task List
-            ul.subtaskList
-            each sub in Subtasks
-                    li= sub.dataValues.name
-                        form(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
-                            input(type='hidden' name='_csrf' value=csrfToken)
-                            if taskOwnerId === userId
-                                button.deleteTaskButtn(type='submit') Delete Subtask
+            div.subTasksHeader Subtasks
+            div.listOfSubTasks
+                ul.subtaskList
+                each sub in Subtasks
+                    form.eachNewTask(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+                        li.subTaskName= sub.dataValues.name
+                        input(type='hidden' name='_csrf' value=csrfToken)
+                        if taskOwnerId === userId
+                            button.deleteSubTaskButtn(type='submit') Delete Subtask

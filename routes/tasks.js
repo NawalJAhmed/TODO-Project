@@ -136,7 +136,6 @@ router.get(
     const Subtasks = await db.SubTask.findAll({
       where: { task_id: taskId },
     });
-
     if (req.url.endsWith("taskview")) {
       return res.render("tasks", {
         isDashboard,
@@ -157,6 +156,7 @@ router.get(
         taskOwnerId,
         ownerId,
         group_id,
+        taskOwnerName,
         dashboard: dashboard.id,
         userName: userName.username,
         csrfToken: req.csrfToken(),
@@ -181,6 +181,7 @@ router.get(
       taskOwnerId,
       ownerId,
       group_id,
+      taskOwnerName,
       dashboard: dashboard.id,
       userName: userName.username,
       csrfToken: req.csrfToken(),
