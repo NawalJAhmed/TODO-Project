@@ -40,7 +40,7 @@ block group
         if taskCompleteStatus === true && taskOwnerId === userId
             div.dueDateForNonOwners Due Date: #{taskDueDate}
             div.completedStatus Task Completed
-        if Subtasks.length
+        if Subtasks.length && taskCompleteStatus === false && taskOwnerId === userId
             div.subTasksHeader Subtasks
             div.listOfSubTasks
                 ul.subtaskList
