@@ -1,67 +1,36 @@
-link(rel="stylesheet", href="/public/stylesheets/tasks.css")
-script(src="/public/javascripts/index.js" type="module")
-
-//- +validationErrorSummary(errors)
-//- form(action=`/users/${user}/${group}/add` method='post')
-//-     input(type='hidden' name='_csrf' value=csrfToken)
-//-     +field(name, task.due_date)
-//-     button(type='submit') Add Task
-//-     a(href=`/users/${user}/${group}`) Cancel
-
-//- mixin
-//- +taskList(task.name, task.due_date, task.group_id)
-
-//- Use as many divs as possible for easier styling?
-//- # are id
-//- . are class
-
-extends layout
-include utils.pug
-
-//- should it be called block tasks?
-block group
-    form(action=`/users/${user.id}/${group.id}/add` method='post')
-    form(action='' method='post')
-    form(action='/users/:id/:id/add' method='post')
+h1.groupHeader #{taskName}
+a(class='groupDetailsButton' id="groupDetailsBttn" href=`/users/${userId}/${groupId}`) Group Details
+P Assigned To: #{taskOwnerName}
+if taskOwnerId === userId
+    form(action=`/users/${userId}/${groupId}/${taskId}/delete` method='post')
+        button.deleteTaskButtn(type='submit') Delete Task
+if taskOwnerId === userId
+    form(action=`/users/${userId}/${groupId}/${taskId}` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
-        label(for='name') Add a task:
-        input(type='input' name='name' placeholder="Add a task..." required)#addTaskBox
-        select(name="group_id")
-            each group in groups
-                option(value=group.id)=group.name
-        label(for='due_date') Due Date:
-        input(type='date' name='due_date' placeholder="2021-12-31" min="2021-10-20" max="2022-12-31" required pattern="\d{4}-\d{2}-\d{2}")
-        button(class='addTaskButton' type='submit' ) Add Task
-    br
-    br
-    br
-    h1= "Tasks List"
-    br
-    br
-    div.mainTaskBox
-        div.incompleteTaskList
-            each task in tasks
-                if task.completed === false
-                    //- Form for marking a task as complete
-                    //- Cannot use method = 'put' for HTML forms so maybe change the route method too?
-                    form(action=`/users/${user.id}/${group.id}/:id/complete` method='post')
-                        input(type="hidden" name="_csrf" value=csrfToken)
-                        input(type="checkbox" task_id=`${task.id}`)#taskComplete
-                        //- Display the task name
-                        p(task_id=`${task.id}`)#taskName= task.name
-                    //- Form for deleting a task
-                    form(action=`/users/${user.id}/${group.id}/:id/delete` method='delete')
-                        input(type="hidden" name="_csrf" value=csrfToken)
-                        button(id=`delete-${task.id}`).delete-btn Delete Task
-            div.newLine
-            div.newLine
-            button#incompleteTaskListButton Show Incomplete Tasks
-        div.completeTaskList
-            each task in tasks
-                if task.completed === true
-                    input(type="checkbox" task_id=`${task.id}`)#taskIncomplete
-                    //- Display the task name
-                    p(task_id=`${task.id}`)#taskName= task.name
-            div.newLine
-            div.newLine
-            button#completeTaskListButton Show Complete Tasks
+        label(for='name')
+        input(type='input' name='name' value=`${taskName}` required)
+        select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
+            option(value= user.id)= user.username
+            each member in members.dataValues.groupToMember
+                option(value= member.id)= member.username
+        input(type='date' name='due_date' value=`${taskDueDate}` min="2021-10-20" max="2022-12-31" required)
+        button(class='editTaskButton' type='submit' ) Edit Task
+
+    form(action=`/users/${userId}/${groupId}/${taskId}/addSubTask` method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        label(for='name')
+        input(type='input' name='name' placeholder="Add a subtask..." required)#addTaskBox
+        br
+        button(class='addTaskButton' type='submit' ) Add Sub-task
+if taskOwnerId !== userId
+    p Due Date: #{taskDueDate}
+
+if Subtasks.length
+    p Sub-task List
+    ul.subtaskList
+    each sub in Subtasks
+            li= sub.dataValues.name
+                form(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    if taskOwnerId === userId
+                        button.deleteTaskButtn(type='submit') Delete Subtask

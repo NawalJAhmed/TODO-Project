@@ -1,4 +1,21 @@
+let urls;
+let userId;
+let groupId;
+let taskId;
+window.onload = function () {
+  urls = window.location.href.split("/users/");
+  params = urls[1].split("/");
+  userId = params[0];
+  groupId = params[1];
+  taskId = parseInt(params[2]);
+};
+
 function completed() {
+  urls = window.location.href.split("/users/");
+  params = urls[1].split("/");
+  userId = params[0];
+  groupId = params[1];
+  taskId = parseInt(params[2]);
   let eComp = !window.location.href.endsWith("completed");
   history.pushState(
     {},
@@ -7,6 +24,84 @@ function completed() {
       ? window.location.href + "/completed"
       : window.location.href.slice(0, -10)
   );
+  const showCompletedTasksButton = document.getElementById(
+    "completeTaskListButton"
+  );
+  const header = document.querySelector(".content1Header > h2");
+  if (window.location.href.endsWith("completed")) {
+    header.innerText = "Completed Tasks";
+    showCompletedTasksButton.innerText = "Show Incomplete Tasks";
+    fetch(`/users/${userId}/${groupId}/completed/taskList`)
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (html) {
+        let listContainer = document.querySelector(".taskListContainer");
+        listContainer.innerHTML = html;
+      });
+  } else {
+    showCompletedTasksButton.innerText = "Show Complete Tasks";
+    header.innerText = "Incomplete Tasks List";
+    fetch(`/users/${userId}/${groupId}/taskList`)
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (html) {
+        let listContainer = document.querySelector(".taskListContainer");
+        listContainer.innerHTML = html;
+      });
+  }
+}
+function taskView(taskIdView) {
+  urls = window.location.href.split("/users/");
+  params = urls[1].split("/");
+  userId = params[0];
+  groupId = params[1];
+  if (window.location.href.endsWith("/completed")) {
+    history.pushState(
+      {},
+      "",
+      `/users/${userId}/${groupId}/${taskIdView}/completed`
+    );
+  } else {
+    history.pushState({}, "", `/users/${userId}/${groupId}/${taskIdView}`);
+  }
+  fetch(`/users/${userId}/${groupId}/${taskIdView}/taskview`)
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (html) {
+      let taskIdView = document.querySelector(".task");
+      taskIdView.innerHTML = html;
+    });
+}
+
+function groupView(groupIdView, groupName) {
+  urls = window.location.href.split("/users/");
+  params = urls[1].split("/");
+  userId = params[0];
+
+  fetch(`/users/${userId}/${groupIdView}/groupView`)
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (html) {
+      let groupContainer = document.querySelector(".task");
+      groupContainer.innerHTML = html;
+    });
+  fetch(`/users/${userId}/${groupIdView}/taskList`)
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (html) {
+      let listContainer = document.querySelector(".taskListContainer");
+      listContainer.innerHTML = html;
+    })
+    .then(() => {
+      let groupHeader = document.querySelector(".groupHeader > h1");
+      groupHeader.innerText = groupName;
+      history.pushState({}, "", `/users/${userId}/${groupIdView}`);
+    });
 }
 
 (function (history) {
@@ -14,37 +109,16 @@ function completed() {
   history.pushState = async function (state) {
     // YOUR CUSTOM HOOK / FUNCTION
     pushState.apply(history, arguments);
-    let urls = window.location.href.split("/users/");
-    let params = urls[1].split("/");
-    let userId = params[0];
-    let groupId = params[1];
-    const showCompletedTasksButton = document.getElementById(
-      "completeTaskListButton"
-    );
-    const header = document.querySelector(".content1Header > h2");
-
-    if (window.location.href.endsWith("completed")) {
-      header.innerText = "Completed Tasks";
-      showCompletedTasksButton.innerText = "Show Incomplete Tasks";
-      fetch(`/users/${userId}/${groupId}/completed/taskList`)
-        .then(function (response) {
-          return response.text();
-        })
-        .then(function (html) {
-          let listContainer = document.querySelector(".taskListContainer");
-          listContainer.innerHTML = html;
-        });
-    } else if (!window.location.href.endsWith("completed")) {
-      showCompletedTasksButton.innerText = "Show Complete Tasks";
-      header.innerText = "Incomplete Tasks List";
-      fetch(`/users/${userId}/${groupId}/taskList`)
-        .then(function (response) {
-          return response.text();
-        })
-        .then(function (html) {
-          let listContainer = document.querySelector(".taskListContainer");
-          listContainer.innerHTML = html;
-        });
-    }
+    let dash = document.querySelector(".dashbutton");
+    let groups = document.querySelectorAll(".groupButton > div > a");
+    let links = [dash, ...groups];
+    let groupHeader = document.querySelector(".groupHeader > h1");
+    links.forEach((link) => {
+      if (link.innerText === groupHeader.innerText) {
+        link.style.color = "white";
+      } else {
+        link.style.color = "black";
+      }
+    });
   };
 })(window.history);

@@ -3,14 +3,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
   let dash = document.querySelector(".dashbutton");
   let groups = document.querySelectorAll(".groupButton > div > a");
   let links = [dash, ...groups];
-  let last = window.location.href.split("users")[1];
   let groupCounter = 1;
+  let groupHead = document.querySelector(".groupHeader > h1");
 
   links.forEach((link) => {
-    if (window.location.href === link.href) {
+    if (link.innerText.toLowerCase() === groupHead.innerText.toLowerCase()) {
       link.style.color = "white";
-    } else if (last.startsWith(link.href.split("users")[1] + "/")) {
-      link.style.color = "white";
+    } else {
+      link.style.color = "black";
     }
   });
   let groupHeader = document.querySelector(".groupTop");

@@ -40,7 +40,7 @@ block tasksList
                             form(action=`/users/${userId}/${groupId}/${task.id}/completed` method='post')
                                 input(type='hidden' name='_csrf' value=csrfToken)
                                 input(type='checkbox' checked=task.completed class="singletask" name= task.dataValues.name onChange="this.form.submit()" disabled)
-                        a(href=`/users/${user.id}/${groupId}/${task.dataValues.id}` class="tasklink")=task.dataValues.name
+                        a(class="tasklink" onclick=`taskView(${task.dataValues.id})`)=task.dataValues.name
                         if task.dataValues.owner_id === userId
                             form(action=`/users/${userId}/${groupId}/${task.dataValues.id}/delete` method='post')
                                 button.hoverDeleteTaskButton(type='submit') Delete

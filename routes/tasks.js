@@ -33,7 +33,7 @@ router.post(
 
 //router for when you click on a task link
 router.get(
-  "/:id/:groupId/:taskId",
+  ["/:id/:groupId/:taskId", "/:id/:groupId/:taskId/taskview"],
   csrfProtection,
   asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10);
@@ -105,14 +105,20 @@ router.get(
         where: {
           [Op.and]: [{ owner_id: userId }, { completed }],
         },
-        order: [["due_date", "ASC"], ["id", "ASC"]],
+        order: [
+          ["due_date", "ASC"],
+          ["id", "ASC"],
+        ],
       });
     } else {
       tasks = await db.Task.findAll({
         where: {
           [Op.and]: [{ group_id }, { completed }],
         },
-        order: [["due_date", "ASC"], ["id", "ASC"]],
+        order: [
+          ["due_date", "ASC"],
+          ["id", "ASC"],
+        ],
       });
     }
     if (req.url.endsWith("taskList")) {
@@ -131,8 +137,31 @@ router.get(
       where: { task_id: taskId },
     });
 
-    // console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-    // console.log(taskCompleteStatus);
+    if (req.url.endsWith("taskview")) {
+      return res.render("tasks", {
+        isDashboard,
+        ownerName,
+        isOwner,
+        taskName,
+        taskId,
+        users,
+        members,
+        taskDueDate,
+        groupId,
+        groups,
+        ownerGroups,
+        tasks,
+        userId,
+        groupName,
+        Subtasks,
+        taskOwnerId,
+        ownerId,
+        group_id,
+        dashboard: dashboard.id,
+        userName: userName.username,
+        csrfToken: req.csrfToken(),
+      });
+    }
     res.render("taskDetails", {
       isDashboard,
       ownerName,
@@ -182,7 +211,6 @@ router.post(
       due_date,
       completed: false,
     });
-
 
     res.redirect(req.originalUrl);
   })

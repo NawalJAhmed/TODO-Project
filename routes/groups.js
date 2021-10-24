@@ -18,6 +18,7 @@ router.get(
     "/:id/:groupId/completed",
     "/:id/:groupId/completed/:taskId",
     "/:id/:groupId/completed/taskList",
+    "/:id/:groupId/groupView",
   ],
   csrfProtection,
   asyncHandler(async (req, res) => {
@@ -81,70 +82,33 @@ router.get(
         where: {
           [Op.and]: [{ owner_id: userId }, { completed }],
         },
-        order: [["due_date", "ASC"], ["id", "ASC"]],
+        order: [
+          ["due_date", "ASC"],
+          ["id", "ASC"],
+        ],
       });
     } else {
       tasks = await db.Task.findAll({
         where: {
           [Op.and]: [{ group_id }, { completed }],
         },
-        order: [["due_date", "ASC"], ["id", "ASC"]],
+        order: [
+          ["due_date", "ASC"],
+          ["id", "ASC"],
+        ],
       });
     }
 
-
-    // let dashBoardIds = [];
-    // const getDashBoardIds = (members) => {
-    //   for (let i = 0; i < members.groupToMember.length; i++) {
-    //     currentMemberIds.push(members.groupToMember[i].dataValues.id);
-    //   }
-    // };
-    // getIds(members);
-
-
-
-    // const dashBoardIds = await db.Group.findAll({
-    //   attributes: ['id'],
-    //   where: {
-    //     [Op.and]: [{ owner_id: 2 }, { dashboard: true }],
-    //   },
-    // })
-
-
-
-
-    // let arrayOfAllDashBoardIds = []
-    // const dashBoardIds = await sequelize.query(
-    //   'SELECT id FROM "Groups" WHERE dashboard = true'
-    // )
-    // const neededDashBoardIdsInfo = dashBoardIds[0]
-    // neededDashBoardIdsInfo.forEach(e => {
-    //   for (id in e) {
-    //     arrayOfAllDashBoardIds.push(e[id])
-    //   }
-    // });
-
-
-
-
-    let arrayOfAllDashBoardIds = []
+    let arrayOfAllDashBoardIds = [];
     const dashBoardIds = await sequelize.query(
       `SELECT id, name FROM "Groups" WHERE dashboard = true UNION SELECT id, name FROM "Tasks" WHERE group_id = ${userId}`
-    )
-    const neededDashBoardIdsInfo = dashBoardIds[0]
-    neededDashBoardIdsInfo.forEach(e => {
+    );
+    const neededDashBoardIdsInfo = dashBoardIds[0];
+    neededDashBoardIdsInfo.forEach((e) => {
       for (id in e) {
-        arrayOfAllDashBoardIds.push(e[id])
+        arrayOfAllDashBoardIds.push(e[id]);
       }
     });
-
-    console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
-    console.log(neededDashBoardIdsInfo);
-
-
-
-
-
 
     if (req.url.endsWith("taskList")) {
       return res.render("taskList", {
@@ -154,9 +118,27 @@ router.get(
         csrfToken: req.csrfToken(),
       });
     }
-
-    console.log("WELCOME");
-    console.log(isDashboard);
+    if (req.url.endsWith("groupView")) {
+      return res.render("groupView", {
+        isDashboard,
+        ownerName,
+        isOwner,
+        users,
+        members,
+        currentMemberIds,
+        groups,
+        ownerGroups,
+        tasks,
+        userId,
+        groupId,
+        groupName,
+        ownerId,
+        dashBoardIds,
+        dashboard: dashboard.id,
+        userName: userName.username,
+        csrfToken: req.csrfToken(),
+      });
+    }
 
     res.render("groupSide", {
       isDashboard,
