@@ -5,6 +5,7 @@ const { Op } = require("sequelize");
 const db = require("../db/models");
 const { csrfProtection, asyncHandler } = require("./utils");
 const { requireAuth } = require("../auth");
+const { sequelize } = require("../db/models");
 const router = express.Router();
 router.use(requireAuth);
 // this route returns groups that a given user belongs to
@@ -15,6 +16,7 @@ router.get(
     "/:id/:groupId",
     "/:id/:groupId/taskList",
     "/:id/:groupId/completed",
+    "/:id/:groupId/completed/:taskId",
     "/:id/:groupId/completed/taskList",
   ],
   csrfProtection,
@@ -79,16 +81,71 @@ router.get(
         where: {
           [Op.and]: [{ owner_id: userId }, { completed }],
         },
-        order: [["due_date", "ASC"]],
+        order: [["due_date", "ASC"], ["id", "ASC"]],
       });
     } else {
       tasks = await db.Task.findAll({
         where: {
           [Op.and]: [{ group_id }, { completed }],
         },
-        order: [["due_date", "ASC"]],
+        order: [["due_date", "ASC"], ["id", "ASC"]],
       });
     }
+
+
+    // let dashBoardIds = [];
+    // const getDashBoardIds = (members) => {
+    //   for (let i = 0; i < members.groupToMember.length; i++) {
+    //     currentMemberIds.push(members.groupToMember[i].dataValues.id);
+    //   }
+    // };
+    // getIds(members);
+
+
+
+    // const dashBoardIds = await db.Group.findAll({
+    //   attributes: ['id'],
+    //   where: {
+    //     [Op.and]: [{ owner_id: 2 }, { dashboard: true }],
+    //   },
+    // })
+
+
+
+
+    // let arrayOfAllDashBoardIds = []
+    // const dashBoardIds = await sequelize.query(
+    //   'SELECT id FROM "Groups" WHERE dashboard = true'
+    // )
+    // const neededDashBoardIdsInfo = dashBoardIds[0]
+    // neededDashBoardIdsInfo.forEach(e => {
+    //   for (id in e) {
+    //     arrayOfAllDashBoardIds.push(e[id])
+    //   }
+    // });
+
+
+
+
+    let arrayOfAllDashBoardIds = []
+    const dashBoardIds = await sequelize.query(
+      `SELECT id, name FROM "Groups" WHERE dashboard = true UNION SELECT id, name FROM "Tasks" WHERE group_id = ${userId}`
+    )
+    const neededDashBoardIdsInfo = dashBoardIds[0]
+    neededDashBoardIdsInfo.forEach(e => {
+      for (id in e) {
+        arrayOfAllDashBoardIds.push(e[id])
+      }
+    });
+
+    console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
+    console.log(neededDashBoardIdsInfo);
+
+
+
+
+
+
     if (req.url.endsWith("taskList")) {
       return res.render("taskList", {
         tasks,
@@ -97,6 +154,10 @@ router.get(
         csrfToken: req.csrfToken(),
       });
     }
+
+    console.log("WELCOME");
+    console.log(isDashboard);
+
     res.render("groupSide", {
       isDashboard,
       ownerName,
@@ -111,6 +172,7 @@ router.get(
       groupId,
       groupName,
       ownerId,
+      dashBoardIds,
       dashboard: dashboard.id,
       userName: userName.username,
       csrfToken: req.csrfToken(),
