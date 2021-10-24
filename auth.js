@@ -23,6 +23,11 @@ const requireAuth = async (req, res, next) => {
   const group = await db.Group.findByPk(groupId);
   if (!group && !undefined) return res.redirect(`/user`);
   }
+  const taskId = parseInt(req.url.split("/")[3], 10);
+  if(!isNaN(taskId)) {
+  const task = await db.Task.findByPk(taskId);
+  if (!task && !undefined) return res.redirect(`/user`);
+  }
   return next();
 };
 

@@ -43,6 +43,7 @@ router.get(
     const taskName = taskNameObject.dataValues.name;
     const taskDueDate = taskNameObject.dataValues.due_date;
     const taskOwnerId = taskNameObject.dataValues.owner_id;
+    // const taskCompleteStatus = taskNameObject.dataValues.completed;
 
     const members = await db.Group.findByPk(groupId, {
       include: { model: db.User, as: "groupToMember" },
@@ -104,14 +105,14 @@ router.get(
         where: {
           [Op.and]: [{ owner_id: userId }, { completed }],
         },
-        order: [["due_date", "ASC"]],
+        order: [["due_date", "ASC"], ["id", "ASC"]],
       });
     } else {
       tasks = await db.Task.findAll({
         where: {
           [Op.and]: [{ group_id }, { completed }],
         },
-        order: [["due_date", "ASC"]],
+        order: [["due_date", "ASC"], ["id", "ASC"]],
       });
     }
     if (req.url.endsWith("taskList")) {
@@ -126,9 +127,12 @@ router.get(
     const taskOwnerNameObj = await db.User.findByPk(taskOwnerId);
     const taskOwnerName = taskOwnerNameObj.dataValues.username;
 
-    const Subtask = await db.SubTask.findAll({
+    const Subtasks = await db.SubTask.findAll({
       where: { task_id: taskId },
     });
+
+    // console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    // console.log(taskCompleteStatus);
     res.render("taskDetails", {
       isDashboard,
       ownerName,
@@ -144,10 +148,10 @@ router.get(
       tasks,
       userId,
       groupName,
-      Subtask,
+      Subtasks,
       taskOwnerId,
       ownerId,
-      taskOwnerName,
+      group_id,
       dashboard: dashboard.id,
       userName: userName.username,
       csrfToken: req.csrfToken(),
@@ -155,12 +159,14 @@ router.get(
   })
 );
 
-//route for editing a task HAS BUGS
+//route for editing a task
 router.post(
   "/:id/:groupId/:taskId",
   asyncHandler(async (req, res) => {
     let owner_id = req.params.id;
     let memberId = req.body.assignTo;
+    const groupId = parseInt(req.params.groupId, 10);
+    const group_id = parseInt(req.params.groupId, 10);
     const taskId = parseInt(req.params.taskId, 10);
     const { name, due_date } = req.body;
 
@@ -176,6 +182,7 @@ router.post(
       due_date,
       completed: false,
     });
+
 
     res.redirect(req.originalUrl);
   })
@@ -207,7 +214,7 @@ router.post(
       }
       await task.destroy();
     }
-    res.redirect("/:id/:groupId/:taskId/");
+    res.redirect("back");
   })
 );
 
