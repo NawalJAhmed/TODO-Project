@@ -6,30 +6,35 @@ append head
 
 block group
     block group
-        h1.groupHeader #{taskName}
-        a(class='groupDetailsButton' id="groupDetailsBttn" href=`/users/${userId}/${groupId}`) Group Details
-        P Assigned To: #{taskOwnerName}
+        div.taskDetailsTopBar
+            h1.taskNameHeader #{taskName}
+            div
+                if taskOwnerId === userId
+                    form(action=`/users/${userId}/${groupId}/${taskId}/delete` method='post')
+                        button.deleteTaskButtn(type='submit') Delete Task
+        div.assignedToAndBackBar
+            p.assignedto Assigned To: FIX HERE#{taskOwnerName}
+            a(class='groupDetailsButton' id="groupDetailsBttn" href=`/users/${userId}/${groupId}`) Group Details
         if taskOwnerId === userId
-            form(action=`/users/${userId}/${groupId}/${taskId}/delete` method='post')
-                button.deleteTaskButtn(type='submit') Delete Task
-        if taskOwnerId === userId
-            form(action=`/users/${userId}/${groupId}/${taskId}` method='post')
-                input(type='hidden' name='_csrf' value=csrfToken)
-                label(for='name')
-                input(type='input' name='name' value=`${taskName}` required)
-                select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
-                    option(value= user.id)= user.username
-                    each member in members.dataValues.groupToMember
-                        option(value= member.id)= member.username
-                input(type='date' name='due_date' value=`${taskDueDate}` min="2021-10-20" max="2022-12-31" required)
-                button(class='editTaskButton' type='submit' ) Edit Task
+            div.taskDetailsButtons
+                p.editTaskHeader Edit Task:
+                form(action=`/users/${userId}/${groupId}/${taskId}` method='post')
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    label(for='name')
+                    input(type='input' name='name' value=`${taskName}` required)
+                    select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
+                        option(value= user.id)= user.username
+                        each member in members.dataValues.groupToMember
+                            option(value= member.id)= member.username
+                    input(type='date' name='due_date' value=`${taskDueDate}` min="2021-10-20" max="2022-12-31" required)
+                    button(class='editTaskButton' type='submit' ) Edit Task
 
-            form(action=`/users/${userId}/${groupId}/${taskId}/addSubTask` method='post')
-                input(type='hidden' name='_csrf' value=csrfToken)
-                label(for='name')
-                input(type='input' name='name' placeholder="Add a subtask..." required)#addTaskBox
-                br
-                button(class='addTaskButton' type='submit' ) Add Sub-task
+                form(action=`/users/${userId}/${groupId}/${taskId}/addSubTask` method='post')
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    label(for='name')
+                    input(type='input' name='name' placeholder="Add a subtask..." required)#addTaskBox
+                    br
+                    button(class='addTaskButton' type='submit' ) Add Sub-task
         if taskOwnerId !== userId
             p Due Date: #{taskDueDate}
 
