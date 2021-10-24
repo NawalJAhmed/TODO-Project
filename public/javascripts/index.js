@@ -1,7 +1,3 @@
-window.addEventListener("load", (event) => {
-  console.log("hello from javascript!");
-});
-
 window.onload = function () {
   //button for viewing incompletedTasks
   const showCompletedTasksButton = document.getElementById(
@@ -21,35 +17,6 @@ window.onload = function () {
     let params = urls[1].split("/");
     let userId = params[0];
     let groupId = params[1];
-    console.log(window.location.href);
-
-    if (!window.location.href.endsWith("completed")) {
-      header.innerText = "Completed Tasks";
-      showCompletedTasksButton.innerText = "Show Incomplete Tasks";
-      fetch(`/users/${userId}/${groupId}/completed/taskList`)
-        .then(function (response) {
-          return response.text();
-        })
-        .then(function (html) {
-          let listContainer = document.querySelector(".taskListContainer");
-          listContainer.innerHTML = html;
-        });
-
-      history.pushState({}, "", window.location.href + "/completed");
-    } else {
-      showCompletedTasksButton.innerText = "Show Complete Tasks";
-      header.innerText = "Incomplete Tasks List";
-      fetch(`/users/${userId}/${groupId}/taskList`)
-        .then(function (response) {
-          return response.text();
-        })
-        .then(function (html) {
-          let listContainer = document.querySelector(".taskListContainer");
-          listContainer.innerHTML = html;
-        });
-
-      history.back();
-    }
   });
 
   // delete button
