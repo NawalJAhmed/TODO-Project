@@ -16,7 +16,7 @@ block group
         div.assignedToAndBackBar
             p.assignedto Assigned To: #{taskOwnerName}
             a(class='groupDetailsButton' id="groupDetailsBttn" href=`/users/${userId}/${groupId}`) Group Details
-        if taskOwnerId === userId
+        if taskOwnerId === userId && taskCompleteStatus === false
             div.taskDetailsButtons
             div.taskHeader
                 form.editingATask(action=`/users/${userId}/${groupId}/${taskId}` method='post')
@@ -37,6 +37,9 @@ block group
                     button(class='addSubTaskButton' type='submit' ) Add Sub-task
         if taskOwnerId !== userId
             div.dueDateForNonOwners Due Date: #{taskDueDate}
+        if taskCompleteStatus === true && taskOwnerId === userId
+            div.dueDateForNonOwners Due Date: #{taskDueDate}
+            div.completedStatus Task Completed
         if Subtasks.length
             div.subTasksHeader Subtasks
             div.listOfSubTasks

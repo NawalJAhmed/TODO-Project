@@ -247,6 +247,12 @@ div.dueDateForNonOwners {
   padding-left: 10px;
   padding-top: 10px;
 }
+
+div.completedStatus {
+  padding-left: 10px;
+  padding-top: 12px;
+}
+
 /* .taskDetailsButtonsContent {  */
 
 /* }  */
