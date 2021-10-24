@@ -19,6 +19,7 @@ router.get(
     "/:id/:groupId/completed/:taskId",
     "/:id/:groupId/completed/taskList",
     "/:id/:groupId/groupView",
+    "/:id/:groupId/update",
   ],
   csrfProtection,
   asyncHandler(async (req, res) => {
@@ -120,6 +121,27 @@ router.get(
     }
     if (req.url.endsWith("groupView")) {
       return res.render("groupView", {
+        isDashboard,
+        ownerName,
+        isOwner,
+        users,
+        members,
+        currentMemberIds,
+        groups,
+        ownerGroups,
+        tasks,
+        userId,
+        groupId,
+        groupName,
+        ownerId,
+        dashBoardIds,
+        dashboard: dashboard.id,
+        userName: userName.username,
+        csrfToken: req.csrfToken(),
+      });
+    }
+    if (req.url.endsWith("update")) {
+      return res.render("updateMemberDrop", {
         isDashboard,
         ownerName,
         isOwner,

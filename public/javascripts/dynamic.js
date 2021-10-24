@@ -24,13 +24,10 @@ function completed() {
       ? window.location.href + "/completed"
       : window.location.href.slice(0, -10)
   );
-  const showCompletedTasksButton = document.getElementById(
-    "completeTaskListButton"
-  );
+
   const header = document.querySelector(".content1Header > h2");
   if (window.location.href.endsWith("completed")) {
     header.innerText = "Completed Tasks";
-    showCompletedTasksButton.innerText = "Show Incomplete Tasks";
     fetch(`/users/${userId}/${groupId}/completed/taskList`)
       .then(function (response) {
         return response.text();
@@ -40,7 +37,6 @@ function completed() {
         listContainer.innerHTML = html;
       });
   } else {
-    showCompletedTasksButton.innerText = "Show Complete Tasks";
     header.innerText = "Incomplete Tasks List";
     fetch(`/users/${userId}/${groupId}/taskList`)
       .then(function (response) {
@@ -76,7 +72,7 @@ function taskView(taskIdView) {
     });
 }
 
-function groupView(groupIdView, groupName) {
+async function groupView(groupIdView, groupName) {
   urls = window.location.href.split("/users/");
   params = urls[1].split("/");
   userId = params[0];
@@ -88,6 +84,19 @@ function groupView(groupIdView, groupName) {
     .then(function (html) {
       let groupContainer = document.querySelector(".task");
       groupContainer.innerHTML = html;
+    });
+  fetch(`/users/${userId}/${groupIdView}/update`)
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (html) {
+      let updateMemberDrop = document.querySelector(".taskHeader");
+      updateMemberDrop.innerHTML = html;
+    })
+    .then(() => {
+      let groupHeader = document.querySelector(".groupHeader > h1");
+      groupHeader.innerText = groupName;
+      history.pushState({}, "", `/users/${userId}/${groupIdView}`);
     });
   fetch(`/users/${userId}/${groupIdView}/taskList`)
     .then(function (response) {
@@ -113,6 +122,9 @@ function groupView(groupIdView, groupName) {
     let groups = document.querySelectorAll(".groupButton > div > a");
     let links = [dash, ...groups];
     let groupHeader = document.querySelector(".groupHeader > h1");
+    const showCompletedTasksButton = document.getElementById(
+      "completeTaskListButton"
+    );
     links.forEach((link) => {
       if (link.innerText === groupHeader.innerText) {
         link.style.color = "white";
@@ -120,5 +132,10 @@ function groupView(groupIdView, groupName) {
         link.style.color = "black";
       }
     });
+    if (window.location.href.endsWith("completed")) {
+      showCompletedTasksButton.innerText = "Show Incomplete Tasks";
+    } else {
+      showCompletedTasksButton.innerText = "Show Complete Tasks";
+    }
   };
 })(window.history);
