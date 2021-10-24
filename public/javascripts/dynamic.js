@@ -14,7 +14,6 @@ function completed() {
   history.pushState = async function (state) {
     // YOUR CUSTOM HOOK / FUNCTION
     pushState.apply(history, arguments);
-    console.log(e.status);
     let urls = window.location.href.split("/users/");
     let params = urls[1].split("/");
     let userId = params[0];
@@ -24,10 +23,10 @@ function completed() {
     );
     const header = document.querySelector(".content1Header > h2");
 
-    if (!window.location.href.endsWith("completed")) {
+    if (window.location.href.endsWith("completed")) {
       header.innerText = "Completed Tasks";
       showCompletedTasksButton.innerText = "Show Incomplete Tasks";
-      fetch(window.location.href)
+      fetch(`/users/${userId}/${groupId}/completed/taskList`)
         .then(function (response) {
           return response.text();
         })
@@ -35,7 +34,7 @@ function completed() {
           let listContainer = document.querySelector(".taskListContainer");
           listContainer.innerHTML = html;
         });
-    } else {
+    } else if (!window.location.href.endsWith("completed")) {
       showCompletedTasksButton.innerText = "Show Complete Tasks";
       header.innerText = "Incomplete Tasks List";
       fetch(`/users/${userId}/${groupId}/taskList`)
