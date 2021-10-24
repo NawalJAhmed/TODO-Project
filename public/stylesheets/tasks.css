@@ -116,14 +116,53 @@ p.assignedto {
 }
 
 .editTaskHeader {
-  padding-right: 10px;
-  padding-left: 10px;
+  /* padding-right: 10px; */
+  /* padding-left: 25px; */
   padding-top: 15px;
   width: 100%;
-
-  /* height: 54px; */
   display: inline-flex;
   flex-direction: row;
   justify-content: space-between;
   margin: 0;
+  margin-left: 5px;
 }
+
+/* .editTaskHeader {
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 15px;
+  width: 100%;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0;
+} */
+
+.taskDetailsButtons{
+  padding-left: 5px;
+}
+
+form.editingATask {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.editButtonsContainer {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+}
+
+/* form.editingATask > .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+} */
+
+/* .taskDetailsButtonsContent {  */
+
+/* }  */

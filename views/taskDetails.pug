@@ -1,3 +1,4 @@
+//- appears on refresh
 extends groupInfo
 append head
     link(rel="stylesheet", href="/stylesheets/tasks.css")
@@ -15,20 +16,68 @@ block group
         div.assignedToAndBackBar
             p.assignedto Assigned To: FIX HERE#{taskOwnerName}
             a(class='groupDetailsButton' id="groupDetailsBttn" href=`/users/${userId}/${groupId}`) Group Details
+
+
+
+
+
+
+
         if taskOwnerId === userId
             div.taskDetailsButtons
                 p.editTaskHeader Edit Task:
+            div.taskHeader
                 form(action=`/users/${userId}/${groupId}/${taskId}` method='post')
                     input(type='hidden' name='_csrf' value=csrfToken)
-                    label(for='name')
-                    input(type='input' name='name' value=`${taskName}` required)
-                    select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
-                        option(value= user.id)= user.username
-                        each member in members.dataValues.groupToMember
-                            option(value= member.id)= member.username
-                    input(type='date' name='due_date' value=`${taskDueDate}` min="2021-10-20" max="2022-12-31" required)
-                    button(class='editTaskButton' type='submit' ) Edit Task
+                    .container
+                        //- label(for='name')
+                        input(type='input' name='name' value=`${taskName}` required)#editTaskNameBox
+                        input(type='date' name='due_date' value=`${taskDueDate}` min="2021-10-20" max="2022-12-31" required)#editTaskDueDateBox
+                        select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
+                            option(value= user.id)= user.username
+                            each member in members.dataValues.groupToMember
+                                option(value= member.id)= member.username
+                    .editButtonsContainer
+                        button(class='editTaskButton' type='submit' ) Edit Task
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //- if taskOwnerId === userId
+        //-     div.taskDetailsButtons
+        //-         p.editTaskHeader Edit Task:
+        //-     div.taskDetailsButtonsContent
+        //-         form.editingATask(action=`/users/${userId}/${groupId}/${taskId}` method='post')
+        //-             input(type='hidden' name='_csrf' value=csrfToken)
+        //-             label(for='name')
+        //-             input(type='input' name='name' value=`${taskName}` required)
+        //-             select(type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
+        //-                 option(value= user.id)= user.username
+        //-                 each member in members.dataValues.groupToMember
+        //-                     option(value= member.id)= member.username
+        //-             input(type='date' name='due_date' value=`${taskDueDate}` min="2021-10-20" max="2022-12-31" required)
+        //-             button(class='editTaskButton' type='submit' ) Edit Task
+
+            div.subTaskDetailsButtonContent
                 form(action=`/users/${userId}/${groupId}/${taskId}/addSubTask` method='post')
                     input(type='hidden' name='_csrf' value=csrfToken)
                     label(for='name')
