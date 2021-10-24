@@ -84,6 +84,7 @@ form > .container {
 }
 form > .container > * {
   width: 32%;
+  height: 25px
 }
 .buttonsContainer {
   display: flex;
