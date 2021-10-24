@@ -56,6 +56,10 @@
     padding-right: 10px;
 }
 
+.memberContainer {
+    height: 20px;
+    overflow-y: scroll;
+  }
 
 
 .groupList > li {
