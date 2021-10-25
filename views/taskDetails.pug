@@ -40,6 +40,8 @@ block group
         if taskCompleteStatus === true && taskOwnerId === userId
             div.dueDateForNonOwners Due Date: #{taskDueDate}
             div.completedStatus Task Completed
+        if taskCompleteStatus === true && taskOwnerId !== userId
+            div.completedStatus Task Completed
         if Subtasks.length && taskCompleteStatus === false && taskOwnerId === userId
             div.subTasksHeader Subtasks
             div.listOfSubTasks
@@ -50,3 +52,10 @@ block group
                         input(type='hidden' name='_csrf' value=csrfToken)
                         if taskOwnerId === userId
                             button.deleteSubTaskButtn(type='submit') Delete Subtask
+        if (Subtasks.length && taskCompleteStatus === false && taskOwnerId !== userId) || (Subtasks.length && taskCompleteStatus === true && taskOwnerId === userId) || (Subtasks.length && taskCompleteStatus === true && taskOwnerId !== userId)
+        div.subTasksHeader Subtasks
+        div.listOfSubTasks
+            ul.subtaskList
+            each sub in Subtasks
+                form.eachNewTask(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+                    li.subTaskName= sub.dataValues.name
