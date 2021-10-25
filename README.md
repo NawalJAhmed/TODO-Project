@@ -59,6 +59,43 @@
 - Scroll Through Long List Of Tasks
  
 <div>
+ 
+<div align="center">
+
+## How To Run Locally
+ 
+<div>
+
+<div align="justify">
+
+To run locally, you must have **NodeJS** and **Postgres** installed on your machine. Once they are installed, Download/Git Clone the repo and create an *.env* and database following the *.env.example* located in the root of the repo. Then look at the repo's *package.json* located in the root to see what packages the project is dependant one. Use `npm install` to install those dependencies. After that, use **Sequelize** to run all the migrations (`npx dotenv sequelize-cli db:migrate`) and then run all pending seeds (`npx dotenv sequelize-cli db:seed:all`). Check to see if the database was properly seeded using **psql**. If seeded correctly, run the server using `npm start`.
+ 
+<div>
+ 
+<div align="center">
+
+## Dependencies
+ 
+<div>
+
+<div align="justify">
+
+- BcryptJS - Bcrypt in JS (hash passwords).
+- Cookie-Parser - Parse HTTPS request cookies.
+- Csurf - Node.js CSRF protection middleware.
+- Express - Node.js web framework.
+- Express Session - Session middleware for Express.
+- Express Validator - Validator module middleware for Express.
+- HTTP Errors - Create HTTP Error Objects.
+- Morgan - HTTP request logger middleware.
+- Per ENV - Clean up package.json.
+- Pug - HTML templating engine.
+- Sequelize - ORM.
+- Dotenv - Load environment variables.
+- Nodemon - Development monitoring script.
+ 
+<div>
+ 
 
 <div align="center">
   
