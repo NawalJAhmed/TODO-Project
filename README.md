@@ -167,6 +167,19 @@ To run locally, you must have **NodeJS** and **Postgres** installed on your mach
  
 
 <div align="center">
+ 
+## Technical Implementation
+ 
+<div>
+
+<div align="justify">
+
+ The database schema required more forethought than any other technical aspect of this project. Thinking carefully about this led to a schema that was aligned with our front-end queries. For example, deciding early that a group owner was not a member of that group kept the group owner out of the member table. This kept our queries shorter and easier to debug when we needed to, for example, restrict non group owners from write/update/delete privileges. 
+ 
+<div>
+ 
+
+<div align="center">
   
 ## Project Created By
   
