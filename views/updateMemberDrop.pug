@@ -1,0 +1,15 @@
+form(action=`/users/${userId}/${groupId}` method='post')
+    input(type='hidden' name='_csrf' value=csrfToken)
+    .container
+        input(type='input' name='name' placeholder="Add a task..." required)#addTaskBox
+        input(type='date' name='due_date' placeholder="2021-12-31" min="2021-10-20" max="2022-12-31" required pattern="\d{4}-\d{2}-\d{2}")
+        select( type=`${groupId === dashboard ? 'hidden': "select"}` name='assignTo' value= userId)
+            if isDashboard
+                option(value= user.id)= user.username
+            if !isDashboard
+                option(value= ownerId)= ownerName.username
+            each member in members.dataValues.groupToMember
+                option(value= member.id)= member.username
+    .buttonsContainer
+        button#completeTaskListButton(type="button" onclick="completed()")
+        button(class='addTaskButton' type='submit' ) Add Task

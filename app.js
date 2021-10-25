@@ -52,8 +52,8 @@ app.use(restoreUser);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/users", groupsRouter);
-app.use("/users/:userID/#groups/:groupID/", tasksRouter);
-app.use("/users/:userID/:groupID", subTasksRouter);
+app.use("/users", tasksRouter);
+app.use("/users", subTasksRouter);
 app.get(
   /(.*?)/,
   asyncHandler(async (req, res) => {

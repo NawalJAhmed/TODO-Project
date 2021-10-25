@@ -11,13 +11,15 @@ html
         link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css")
         link(rel='stylesheet' href='/stylesheets/groups.css')
         script(src="/javascripts/layout.js")
+        script(src="/javascripts/dynamic.js")
+
   body
     nav
       div
         h1.logo= `//TODO: ${userName}`
       a.logout(href="/users/logout") Logout
     aside
-      a(href=`/users/${userId}/${dashboard}`).dashbutton Dashboard
+      a(onclick=`groupView(${dashboard}, "Dashboard")` id=`/users/${userId}/${dashboard}`).dashbutton Dashboard
       form(action=`/users/${userId}/${groupId}/create-group` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
         input(type='input' name='name' placeholder="Group Name" required)
@@ -31,12 +33,9 @@ html
     content.group
       block tasksList
     content.task
-      block groupInfo
       block group
       block task
     footer
-      h2 Created By:
-      .people
         .will
           h3 William Short
           .links
@@ -52,3 +51,5 @@ html
           .links
             a(href="https://www.linkedin.com/in/anthony-fahden-a9251260/" class="fab fa-linkedin-in" target="_blank")
             a(href="https://github.com/juniporous" class="fab fa-github" target="_blank")
+        a(href="https://github.com/juniporous/TODO-Project" class="fab fa-github" target="_blank")
+          div= "       Project Repo"

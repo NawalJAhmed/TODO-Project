@@ -8,6 +8,10 @@
   padding: 0;
 }
 
+.taskContainer {
+  overflow-y: scroll;
+}
+
 .taskList > li {
   display: flex;
   width: 100%;
@@ -58,6 +62,7 @@
 }
 .taskList > li > a {
   width: 100%;
+  margin-left: 10px;
 }
 .content1Header {
   padding: 10px;
@@ -83,6 +88,7 @@ form > .container {
 }
 form > .container > * {
   width: 32%;
+  height: 25px;
 }
 .buttonsContainer {
   display: flex;
