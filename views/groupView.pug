@@ -26,12 +26,13 @@ div
                     option(value='') --Select a Member--
                     each member in members.dataValues.groupToMember
                         option(value= member.id)= member.username
-                button(type='submit') Remove Member
+                button.removeMemberBttn(type='submit') Remove Member
     div
-    if members && !isDashboard
-        ul.groupList
-            li.groupListTitle Group Members
-            each member in members.dataValues.groupToMember
-                li.groupListItem= member.dataValues.username
-            each el in Array(26 - currentMemberIds.length)
-                li
+        if members && !isDashboard
+            div
+                ul.groupList
+                    li.groupListTitle Group Members
+                    each member in members.dataValues.groupToMember
+                        li.groupListItem= member.dataValues.username
+                    each el in Array(26 - currentMemberIds.length)
+                        li
