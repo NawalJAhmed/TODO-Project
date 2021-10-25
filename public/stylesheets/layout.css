@@ -111,8 +111,19 @@ h2.groups {
   cursor: pointer;
 }
 footer > * {
-  font-size: 40px;
+  font-size: 30px;
+  font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
   margin-right: 70px;
+}
+footer > a.fab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer > a > * {
+  font-family: Trebuchet MS, Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  margin-left: 10px;
 }
 .people > div {
   width: fit-content;

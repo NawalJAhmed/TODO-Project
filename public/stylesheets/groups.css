@@ -9,7 +9,6 @@
 }
 
 .taskContainer {
-  height: 540px;
   overflow-y: scroll;
 }
 
@@ -89,7 +88,7 @@ form > .container {
 }
 form > .container > * {
   width: 32%;
-  height: 25px
+  height: 25px;
 }
 .buttonsContainer {
   display: flex;

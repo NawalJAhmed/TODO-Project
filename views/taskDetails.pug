@@ -41,26 +41,24 @@ block group
                     input(type='hidden' name='_csrf' value=csrfToken)
                     input(type='input' name='name' placeholder="Add a subtask..." required)#addTaskBox
                     button(class='addSubTaskButton' type='submit' ) Add Sub-task
-        if Subtasks.length && taskCompleteStatus === false && taskOwnerId === userId
-            div.subTasksHeader Subtasks
-            div.listOfSubTasks
-                ul.subtaskList
-                each sub in Subtasks
-                    form.eachNewTask(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+        div.subTasksHeader Subtasks
+        div.taskContainer
+            ul.taskList(id="subTaskList")
+                if Subtasks.length && taskCompleteStatus === false && taskOwnerId === userId
+                    each sub in Subtasks
                         li.subTaskName= sub.dataValues.name
-                        input(type='hidden' name='_csrf' value=csrfToken)
-                        button.deleteSubTaskButtn(type='submit') Delete Subtask
-        if Subtasks.length && taskCompleteStatus === false && taskOwnerId !== userId
-            div.subTasksHeader Subtasks
-            div.listOfSubTasks
-                ul.subtaskList
-                each sub in Subtasks
-                    form.eachNewTask(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+                            form.eachNewTask(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+                                input(type='hidden' name='_csrf' value=csrfToken)
+                                button.deleteSubTaskButtn(type='submit') Delete Subtask
+
+                if Subtasks.length && taskCompleteStatus === false && taskOwnerId !== userId
+                    each sub in Subtasks
                         li.subTaskName= sub.dataValues.name
-        if Subtasks.length && taskCompleteStatus === true
-            div.subTasksHeader Subtasks
-            div.listOfSubTasks
-                ul.subtaskList
-                each sub in Subtasks
-                    form.eachNewTask(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+                            form.eachNewTask(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+
+                if Subtasks.length && taskCompleteStatus === true
+                    each sub in Subtasks
                         li.subTaskName= sub.dataValues.name
+                            form.eachNewTask(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+                each el in Array((15 - Subtasks.length) > 0 ? (15 - Subtasks.length) : 0)
+                    li.subTaskName
