@@ -121,7 +121,6 @@ async function groupView(groupIdView, groupName) {
     let dash = document.querySelector(".dashbutton");
     let groups = document.querySelectorAll(".groupButton > div > a");
     let links = [dash, ...groups];
-    let groupHeader = document.querySelector(".groupHeader > h1");
     const showCompletedTasksButton = document.getElementById(
       "completeTaskListButton"
     );
