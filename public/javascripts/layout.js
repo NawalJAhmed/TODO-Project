@@ -12,6 +12,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     } else {
       link.style.color = "black";
     }
+    link.addEventListener("click", (e) => (link.style.color = "white"));
   });
   let groupHeader = document.querySelector(".groupTop");
   let groupIcon = document.querySelector(".material-icons");

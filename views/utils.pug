@@ -9,11 +9,11 @@ mixin groupList(groups)
   if groups
     each group in groups.dataValues.userToMember
       div
-        a(onclick=`groupView(${group.dataValues.id}, "${group.dataValues.name}")`)= group.dataValues.name
+        a(onclick=`groupView(${group.dataValues.id}, "${group.dataValues.name}")` id=`/users/${userId}/${group.id}`)= group.dataValues.name
   if ownerGroups
       each ownerGroup in ownerGroups
         div
-          a(onclick=`groupView(${ownerGroup.dataValues.id}, "${ownerGroup.dataValues.name}")`)= ownerGroup.dataValues.name
+          a(onclick=`groupView(${ownerGroup.dataValues.id}, "${ownerGroup.dataValues.name}")` id=`/users/${userId}/${ownerGroup.id}`)= ownerGroup.dataValues.name
 
 mixin taskList(tasks, subtasks)
   if tasks

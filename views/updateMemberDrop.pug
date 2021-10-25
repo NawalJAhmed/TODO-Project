@@ -1,4 +1,4 @@
-form(action=`/users/${userId}/${groupId}` method='post' id="selectID")
+form(action=`/users/${userId}/${groupId}` method='post')
     input(type='hidden' name='_csrf' value=csrfToken)
     .container
         input(type='input' name='name' placeholder="Add a task..." required)#addTaskBox

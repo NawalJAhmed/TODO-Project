@@ -76,7 +76,7 @@ async function groupView(groupIdView, groupName) {
   urls = window.location.href.split("/users/");
   params = urls[1].split("/");
   userId = params[0];
-
+  console.log(this);
   fetch(`/users/${userId}/${groupIdView}/groupView`)
     .then(function (response) {
       return response.text();

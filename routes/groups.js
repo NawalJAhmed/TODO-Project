@@ -110,59 +110,7 @@ router.get(
         arrayOfAllDashBoardIds.push(e[id]);
       }
     });
-
-    if (req.url.endsWith("taskList")) {
-      return res.render("taskList", {
-        tasks,
-        userId,
-        groupId,
-        csrfToken: req.csrfToken(),
-      });
-    }
-    if (req.url.endsWith("groupView")) {
-      return res.render("groupView", {
-        isDashboard,
-        ownerName,
-        isOwner,
-        users,
-        members,
-        currentMemberIds,
-        groups,
-        ownerGroups,
-        tasks,
-        userId,
-        groupId,
-        groupName,
-        ownerId,
-        dashBoardIds,
-        dashboard: dashboard.id,
-        userName: userName.username,
-        csrfToken: req.csrfToken(),
-      });
-    }
-    if (req.url.endsWith("update")) {
-      return res.render("updateMemberDrop", {
-        isDashboard,
-        ownerName,
-        isOwner,
-        users,
-        members,
-        currentMemberIds,
-        groups,
-        ownerGroups,
-        tasks,
-        userId,
-        groupId,
-        groupName,
-        ownerId,
-        dashBoardIds,
-        dashboard: dashboard.id,
-        userName: userName.username,
-        csrfToken: req.csrfToken(),
-      });
-    }
-
-    res.render("groupSide", {
+    let vars = {
       isDashboard,
       ownerName,
       isOwner,
@@ -180,7 +128,23 @@ router.get(
       dashboard: dashboard.id,
       userName: userName.username,
       csrfToken: req.csrfToken(),
-    });
+    };
+    if (req.url.endsWith("taskList")) {
+      return res.render("taskList", {
+        tasks,
+        userId,
+        groupId,
+        csrfToken: req.csrfToken(),
+      });
+    }
+    if (req.url.endsWith("groupView")) {
+      return res.render("groupView", vars);
+    }
+    if (req.url.endsWith("update")) {
+      return res.render("updateMemberDrop", vars);
+    }
+
+    res.render("groupSide", vars);
   })
 );
 
