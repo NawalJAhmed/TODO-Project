@@ -34,6 +34,31 @@
 //TODO: is a [Remember The Milk](https://www.rememberthemilk.com/) inspired full-stack web application catered to programmers. //TODO: lets users create groups, add members, set tasks, subtasks, and assign due dates for members. Try out the app as a Demo user by clicking on the [link](https://aa-todo.herokuapp.com/) above!
  
 <div>
+ 
+<div align="center">
+
+## Features
+ 
+<div>
+
+<div align="justify">
+
+- Account Signup/Login/Logout
+- Personal Dashboard Created Upon Signup
+- Demo User
+- Create/Delete Groups
+- Add/Remove Group Members
+- Add New Personal/Group Tasks
+- Display Tasks By Ascending Due Date
+- Assign Tasks To Group Members By Having Them Become The Task Owner
+- All Tasks Assigned To User Appear On Dashboard
+- Task Owners Can Create/Delete Subtasks
+- Edit Tasks If Task Owner
+- Mark Task As Complete If Task Owner
+- Search Through Tasks In Group
+- Scroll Through Long List Of Tasks
+ 
+<div>
 
 <div align="center">
   
