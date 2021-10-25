@@ -2,8 +2,8 @@
  
 # //TODO: Project
   
-[![Website](https://img.shields.io/website?down_message=Down&label=Website&logo=heroku&style=for-the-badge&up_message=Online&url=https%3A%2F%2Faa-todo.herokuapp.com%2F)](https://aa-todo.herokuapp.com/)
-[![Project - Wiki](https://img.shields.io/static/v1?label=Project&message=Wiki&color=%23CFD8DC&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/juniporous/TODO-Project/wiki)
+![Website](https://img.shields.io/website?down_message=Offline%20%3A%28&label=App%20is&logo=heroku&style=for-the-badge&up_color=%233bad0e&up_message=Online.%20Click%20Here%21&url=https%3A%2F%2Faa-todo.herokuapp.com%2F)
+[![Project Wiki - Click Here!](https://img.shields.io/static/v1?label=Project+Wiki&message=Click+Here!&color=%23CFD8DC&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/juniporous/TODO-Project/wiki)
   
 ## Technologies  
 
@@ -24,6 +24,18 @@
 </div>
 
 <div align="center">
+
+## About
+ 
+<div>
+
+<div align="justify">
+
+//TODO: is a [Remember The Milk](https://www.rememberthemilk.com/) inspired full-stack web application catered to programmers. //TODO: lets users create groups, add members, set tasks, subtasks, and assign due dates for members. Try out the app as a Demo user by clicking on the [link](https://aa-todo.herokuapp.com/) above!
+ 
+<div>
+
+<div align="center">
   
 ## Project Created By
   
@@ -40,7 +52,6 @@
 [![Nawal Ahmed - LinkedIn](https://img.shields.io/static/v1?label=Nawal+Ahmed&message=LinkedIn&color=%230077B5&style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/nawaljahmed/) [![Nawal Ahmed - GitHub](https://img.shields.io/static/v1?label=Nawal+Ahmed&message=GitHub&color=%23161B22&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/nawaljahmed)
 
 <div>
-
 
 <div align="center">
 
