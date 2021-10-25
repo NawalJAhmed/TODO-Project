@@ -110,9 +110,9 @@ h2.groups {
   height: 24px;
   cursor: pointer;
 }
-footer > h2 {
-  color: white;
+footer > * {
   font-size: 40px;
+  margin-right: 70px;
 }
 .people > div {
   width: fit-content;
