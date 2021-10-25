@@ -124,8 +124,11 @@ async function groupView(groupIdView, groupName) {
     const showCompletedTasksButton = document.getElementById(
       "completeTaskListButton"
     );
+
     links.forEach((link) => {
-      if (window.location.pathname.startsWith(link.id)) {
+      if (window.location.pathname === link.id) {
+        link.style.color = "white";
+      } else if (window.location.pathname.startsWith(`${link.id}/`)) {
         link.style.color = "white";
       } else {
         link.style.color = "black";

@@ -7,12 +7,13 @@ window.addEventListener("DOMContentLoaded", (event) => {
   let groupHead = document.querySelector(".groupHeader > h1");
 
   links.forEach((link) => {
-    if (link.innerText.toLowerCase() === groupHead.innerText.toLowerCase()) {
+    if (window.location.pathname === link.id) {
+      link.style.color = "white";
+    } else if (window.location.pathname.startsWith(`${link.id}/`)) {
       link.style.color = "white";
     } else {
       link.style.color = "black";
     }
-    link.addEventListener("click", (e) => (link.style.color = "white"));
   });
   let groupHeader = document.querySelector(".groupTop");
   let groupIcon = document.querySelector(".material-icons");

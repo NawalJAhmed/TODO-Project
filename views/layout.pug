@@ -19,7 +19,7 @@ html
         h1.logo= `//TODO: ${userName}`
       a.logout(href="/users/logout") Logout
     aside
-      a(onclick=`groupView(${dashboard}, "Dashboard")` id=`users/${userId}/${dashboard}`).dashbutton Dashboard
+      a(onclick=`groupView(${dashboard}, "Dashboard")` id=`/users/${userId}/${dashboard}`).dashbutton Dashboard
       form(action=`/users/${userId}/${groupId}/create-group` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
         input(type='input' name='name' placeholder="Group Name" required)
