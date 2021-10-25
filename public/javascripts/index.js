@@ -12,12 +12,6 @@ window.onload = function () {
   )
     ? "Show Incomplete Tasks"
     : "Show Complete Tasks";
-  showCompletedTasksButton.addEventListener("click", async (e) => {
-    let urls = window.location.href.split("/users/");
-    let params = urls[1].split("/");
-    let userId = params[0];
-    let groupId = params[1];
-  });
 
   // delete button
   const buttons = document.querySelectorAll(".delete-btn");

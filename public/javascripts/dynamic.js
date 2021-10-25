@@ -76,7 +76,7 @@ async function groupView(groupIdView, groupName) {
   urls = window.location.href.split("/users/");
   params = urls[1].split("/");
   userId = params[0];
-  console.log(this);
+  console.log();
   fetch(`/users/${userId}/${groupIdView}/groupView`)
     .then(function (response) {
       return response.text();
@@ -126,7 +126,7 @@ async function groupView(groupIdView, groupName) {
       "completeTaskListButton"
     );
     links.forEach((link) => {
-      if (link.innerText === groupHeader.innerText) {
+      if (window.location.pathname.startsWith(link.id)) {
         link.style.color = "white";
       } else {
         link.style.color = "black";
