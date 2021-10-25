@@ -2,7 +2,7 @@
  
 # //TODO: Project
   
-![Website](https://img.shields.io/website?down_message=Down&label=Website&logo=heroku&style=for-the-badge&up_message=Online&url=https%3A%2F%2Faa-todo.herokuapp.com%2F)
+[![Website](https://img.shields.io/website?down_message=Down&label=Website&logo=heroku&style=for-the-badge&up_message=Online&url=https%3A%2F%2Faa-todo.herokuapp.com%2F)](https://aa-todo.herokuapp.com/)
 [![Project - Wiki](https://img.shields.io/static/v1?label=Project&message=Wiki&color=%23CFD8DC&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/juniporous/TODO-Project/wiki)
   
 ## Technologies  
