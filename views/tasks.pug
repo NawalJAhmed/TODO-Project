@@ -8,6 +8,12 @@ div.taskDetailsTopBar
 div.assignedToAndBackBar
     p.assignedto Assigned To: #{taskOwnerName}
     a(class='groupDetailsButton' id="groupDetailsBttn" href=`/users/${userId}/${groupId}`) Group Details
+if taskOwnerId !== userId
+    div.dueDateForNonOwners Due Date: #{taskDueDate}
+if taskOwnerId === userId && taskCompleteStatus === true
+    div.dueDateForNonOwners Due Date: #{taskDueDate}
+if taskCompleteStatus === true
+    div.completedStatus Task Completed
 if taskOwnerId === userId && taskCompleteStatus === false
     div.taskDetailsButtons
     div.taskHeader
@@ -27,13 +33,6 @@ if taskOwnerId === userId && taskCompleteStatus === false
             input(type='hidden' name='_csrf' value=csrfToken)
             input(type='input' name='name' placeholder="Add a subtask..." required)#addTaskBox
             button(class='addSubTaskButton' type='submit' ) Add Sub-task
-if taskOwnerId !== userId
-    div.dueDateForNonOwners Due Date: #{taskDueDate}
-if taskCompleteStatus === true && taskOwnerId === userId
-    div.dueDateForNonOwners Due Date: #{taskDueDate}
-    div.completedStatus Task Completed
-if taskCompleteStatus === true && taskOwnerId !== userId
-    div.completedStatus Task Completed
 if Subtasks.length && taskCompleteStatus === false && taskOwnerId === userId
     div.subTasksHeader Subtasks
     div.listOfSubTasks
@@ -42,9 +41,15 @@ if Subtasks.length && taskCompleteStatus === false && taskOwnerId === userId
             form.eachNewTask(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
                 li.subTaskName= sub.dataValues.name
                 input(type='hidden' name='_csrf' value=csrfToken)
-                if taskOwnerId === userId
-                    button.deleteSubTaskButtn(type='submit') Delete Subtask
-if (Subtasks.length && taskCompleteStatus === false && taskOwnerId !== userId) || (Subtasks.length && taskCompleteStatus === true && taskOwnerId === userId) || (Subtasks.length && taskCompleteStatus === true && taskOwnerId !== userId)
+                button.deleteSubTaskButtn(type='submit') Delete Subtask
+if Subtasks.length && taskCompleteStatus === false && taskOwnerId !== userId
+    div.subTasksHeader Subtasks
+    div.listOfSubTasks
+        ul.subtaskList
+        each sub in Subtasks
+            form.eachNewTask(action=`/users/${userId}/${groupId}/${taskId}/${sub.dataValues.id}/delete` method='post')
+                li.subTaskName= sub.dataValues.name
+if Subtasks.length && taskCompleteStatus === true
     div.subTasksHeader Subtasks
     div.listOfSubTasks
         ul.subtaskList
