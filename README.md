@@ -96,6 +96,25 @@ To run locally, you must have **NodeJS** and **Postgres** installed on your mach
  
 <div>
  
+<div align="center">
+
+## Future Features
+ 
+<div>
+
+<div align="justify">
+
+- Make overdue task name in red.
+- Prevent from making task due in past.
+- Indicate task have subtask on the left panel.
+- Right pane subtasks are checkboxes.
+- Animation.
+- Improved UI/UX.
+- Extended group functionality.
+- NPM tests hooked to complete subtasks.
+ 
+<div>
+ 
 
 <div align="center">
   
