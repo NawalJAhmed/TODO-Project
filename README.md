@@ -31,7 +31,7 @@
 
 <div align="justify">
 
-//TODO: is a [Remember The Milk](https://www.rememberthemilk.com/) inspired full-stack web application catered to programmers. //TODO: lets users create groups, add members, set tasks, subtasks, and assign due dates for members. Try out the app as a Demo user by clicking on the [link](https://aa-todo.herokuapp.com/) above!
+//TODO: is a [Remember The Milk](https://www.rememberthemilk.com/) inspired full-stack web application with dynamic features catered to programmers. //TODO: lets users create groups, add members, set tasks, subtasks, and assign due dates for members. Try out the app as a Demo user by clicking on the [link](https://aa-todo.herokuapp.com/) above!
  
 <div>
  
