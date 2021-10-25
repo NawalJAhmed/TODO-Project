@@ -59,6 +59,112 @@
 - Scroll Through Long List Of Tasks
  
 <div>
+ 
+<div align="center">
+
+## Screenshots
+ 
+<div>
+
+<div align="center">
+
+### Demo User
+ 
+![demo](https://user-images.githubusercontent.com/11577850/138720984-be43bf04-c4df-484d-bd8a-d4dd87f159b3.png)
+ 
+### Sign Up
+ 
+![sign-up](https://user-images.githubusercontent.com/11577850/138721169-8c6443e6-cd43-4386-a2fd-12d4396572b5.png)
+
+### Login
+ 
+![login](https://user-images.githubusercontent.com/11577850/138721230-54f5a525-9729-46db-ab40-a230acecbcf5.png)
+ 
+### Create Group
+
+![create new group](https://user-images.githubusercontent.com/11577850/138721293-3de5c9d5-417c-4ff0-812d-ad3beb4765cf.png)
+
+### Add/Remove Group Members
+
+![add⁄removeGroupMembers](https://user-images.githubusercontent.com/11577850/138721475-4d6f78c3-bebc-47b4-8171-9e04450e4e1f.png)
+ 
+### Add Tasks
+ 
+![addNewTask](https://user-images.githubusercontent.com/11577850/138721510-d09c0ab1-f7b6-412b-920a-2ac9127d1a39.png)
+ 
+### Search Tasks
+ 
+![search](https://user-images.githubusercontent.com/11577850/138721549-7233741b-b20a-44c3-9c95-51460296ed45.png)
+ 
+### Edit Task Details
+ 
+![editTaskDetails](https://user-images.githubusercontent.com/11577850/138721596-d8c9a82d-df05-4deb-b699-9aaf35d4a238.png)
+ 
+### Create Subtasks
+ 
+![createSubTasks](https://user-images.githubusercontent.com/11577850/138721630-c59ed193-4304-425f-aca0-0da5e46afb48.png)
+ 
+### Mark Task Completed
+ 
+![markTaskAsCompleted](https://user-images.githubusercontent.com/11577850/138721671-2b15ae27-7b74-445d-b9de-ba7c13781ce6.png)
+ 
+<div>
+ 
+<div align="center">
+
+## How To Run Locally
+ 
+<div>
+
+<div align="justify">
+
+To run locally, you must have **NodeJS** and **Postgres** installed on your machine. Once they are installed, Download/Git Clone the repo and create an *.env* and database following the *.env.example* located in the root of the repo. Then look at the repo's *package.json* located in the root to see what packages the project is dependant one. Use `npm install` to install those dependencies. After that, use **Sequelize** to run all the migrations (`npx dotenv sequelize-cli db:migrate`) and then run all pending seeds (`npx dotenv sequelize-cli db:seed:all`). Check to see if the database was properly seeded using **psql**. If seeded correctly, run the server using `npm start`.
+ 
+<div>
+ 
+<div align="center">
+
+## Dependencies
+ 
+<div>
+
+<div align="justify">
+
+- BcryptJS - Bcrypt in JS (hash passwords).
+- Cookie-Parser - Parse HTTPS request cookies.
+- Csurf - Node.js CSRF protection middleware.
+- Express - Node.js web framework.
+- Express Session - Session middleware for Express.
+- Express Validator - Validator module middleware for Express.
+- HTTP Errors - Create HTTP Error Objects.
+- Morgan - HTTP request logger middleware.
+- Per ENV - Clean up package.json.
+- Pug - HTML templating engine.
+- Sequelize - ORM.
+- Dotenv - Load environment variables.
+- Nodemon - Development monitoring script.
+ 
+<div>
+ 
+<div align="center">
+
+## Future Features
+ 
+<div>
+
+<div align="justify">
+
+- Make overdue task name in red.
+- Prevent from making task due in past.
+- Indicate task have subtask on the left panel.
+- Right pane subtasks are checkboxes.
+- Animation.
+- Improved UI/UX.
+- Extended group functionality.
+- NPM tests hooked to complete subtasks.
+ 
+<div>
+ 
 
 <div align="center">
   
@@ -80,7 +186,7 @@
 
 <div align="center">
 
-### Badges Found & Created Using
+## Badges Found & Created Using
 [Badges4 ReadMe.md Profile](https://github.com/alexandresanlim/Badges4-README.md-Profile) | [Markdown Badges](https://github.com/Ileriayo/markdown-badges) | [Badge Generator](https://michaelcurrin.github.io/badge-generator/#/generic) | [Shields.io](https://shields.io/) | [Simple Icons](https://simpleicons.org/)
   
 <div>
