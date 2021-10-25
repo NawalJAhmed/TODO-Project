@@ -1,6 +1,11 @@
-# //TODO: Project
-
 <div align="center">
+ 
+# //TODO: Project
+  
+![Website](https://img.shields.io/website?down_message=Down&label=Website&logo=heroku&style=for-the-badge&up_message=Online&url=https%3A%2F%2Faa-todo.herokuapp.com%2F)
+[![Project - Wiki](https://img.shields.io/static/v1?label=Project&message=Wiki&color=%23CFD8DC&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/juniporous/TODO-Project/wiki)
+  
+## Technologies  
 
 ![JS Badge](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![CSS3 Badge](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
@@ -18,14 +23,19 @@
 
 </div>
 
-
 <div align="center">
   
 ## Project Created By
+  
+### Anthony Fahden
 
 [![Anthony Fahden - LinkedIn](https://img.shields.io/static/v1?label=Anthony+Fahden&message=LinkedIn&color=%230077B5&style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/anthony-fahden-a9251260/) [![Anthony Fahden - GitHub](https://img.shields.io/static/v1?label=Anthony+Fahden&message=GitHub&color=%23161B22&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/juniporous)
+
+### William Short
   
 [![William Short - LinkedIn](https://img.shields.io/static/v1?label=William+Short&message=LinkedIn&color=%230077B5&style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/will-s-231740126/) [![William Short - GitHub](https://img.shields.io/static/v1?label=William+Short&message=GitHub&color=%23161B22&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/will-short)
+  
+### Nawal Ahmed
 
 [![Nawal Ahmed - LinkedIn](https://img.shields.io/static/v1?label=Nawal+Ahmed&message=LinkedIn&color=%230077B5&style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/nawaljahmed/) [![Nawal Ahmed - GitHub](https://img.shields.io/static/v1?label=Nawal+Ahmed&message=GitHub&color=%23161B22&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/nawaljahmed)
 
@@ -35,6 +45,6 @@
 <div align="center">
 
 ### Badges Found & Created Using
-[Badges4 ReadMe.md Profile](https://github.com/alexandresanlim/Badges4-README.md-Profile) | [Markdown Badges](https://github.com/Ileriayo/markdown-badges) | [Badge Generator](https://michaelcurrin.github.io/badge-generator/#/generic) | [Simple Icons](https://simpleicons.org/)
+[Badges4 ReadMe.md Profile](https://github.com/alexandresanlim/Badges4-README.md-Profile) | [Markdown Badges](https://github.com/Ileriayo/markdown-badges) | [Badge Generator](https://michaelcurrin.github.io/badge-generator/#/generic) | [Shields.io](https://shields.io/) | [Simple Icons](https://simpleicons.org/)
   
 <div>
