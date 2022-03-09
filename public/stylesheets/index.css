@@ -44,9 +44,11 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 14px;
 }
 .navButtons:hover {
   color: black;
+  
 }
 span {
   width: 75px;
@@ -58,6 +60,7 @@ main {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  padding-left: 25px;
 }
 
 .buttons {
