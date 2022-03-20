@@ -2,7 +2,7 @@
 
 # //TODO: Project
 
-[![Website](https://img.shields.io/website?down_message=Offline%20%3A%28&label=App%20is&logo=heroku&style=for-the-badge&up_color=%233bad0e&up_message=Online.%20Click%20Here%21&url=https%3A%2F%2Faa-todo.herokuapp.com%2F)](https://aa-todo.herokuapp.com/)
+[![Website](https://img.shields.io/website?down_message=Offline%20%3A%28&label=App%20is&logo=heroku&style=for-the-badge&up_color=%233bad0e&up_message=Online.%20Click%20Here%21&url=https%3A%2F%2Fgroup-todo.herokuapp.com%2F)](https://group-todo.herokuapp.com/)
 [![Project Wiki - Click Here!](https://img.shields.io/static/v1?label=Project+Wiki&message=Click+Here!&color=%23CFD8DC&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/juniporous/TODO-Project/wiki)
 
 ## Technologies
@@ -31,7 +31,7 @@
 
 <div align="justify">
 
-//TODO: is a [Remember The Milk](https://www.rememberthemilk.com/) inspired full-stack web application with dynamic features catered to programmers. //TODO: lets users create groups, add members, set tasks, subtasks, and assign due dates for members. Try out the app as a Demo user by clicking on the [link](https://aa-todo.herokuapp.com/) above!
+//TODO: is a [Remember The Milk](https://www.rememberthemilk.com/) inspired full-stack web application with dynamic features catered to programmers. //TODO: lets users create groups, add members, set tasks, subtasks, and assign due dates for members. Try out the app as a Demo user by clicking on the [link](https://group-todo.herokuapp.com/) above!
 
 <div>
 
