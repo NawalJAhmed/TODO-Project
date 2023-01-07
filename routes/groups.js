@@ -9,7 +9,7 @@ const { sequelize } = require("../db/models");
 const router = express.Router();
 router.use(requireAuth);
 // this route returns groups that a given user belongs to
-// TODO add groups, tasks, sub-tasks
+// Quicklist add groups, tasks, sub-tasks
 
 router.get(
   [

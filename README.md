@@ -1,9 +1,8 @@
 <div align="center">
 
-# //TODO: Project
+# Quicklist Project
 
 [![Website](https://img.shields.io/website?down_message=Offline%20%3A%28&label=App%20is&logo=heroku&style=for-the-badge&up_color=%233bad0e&up_message=Online.%20Click%20Here%21&url=https%3A%2F%2Fgroup-todo.herokuapp.com%2F)](https://group-todo.herokuapp.com/)
-[![Project Wiki - Click Here!](https://img.shields.io/static/v1?label=Project+Wiki&message=Click+Here!&color=%23CFD8DC&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/juniporous/TODO-Project/wiki)
 
 ## Technologies
 
@@ -31,7 +30,7 @@
 
 <div align="justify">
 
-//TODO: is a [Remember The Milk](https://www.rememberthemilk.com/) inspired full-stack web application with dynamic features catered to programmers. //TODO: lets users create groups, add members, set tasks, subtasks, and assign due dates for members. Try out the app as a Demo user by clicking on the [link](https://group-todo.herokuapp.com/) above!
+Quicklist is a [Remember The Milk](https://www.rememberthemilk.com/) inspired full-stack web application with dynamic features catered to programmers. Quicklist lets users create groups, add members, set tasks, subtasks, and assign due dates for members. Try out the app as a Demo user by clicking on the [link](https://group-todo.herokuapp.com/) above!
 
 <div>
 
@@ -118,7 +117,7 @@
 
 <div align="justify">
 
-To run locally, you must have **NodeJS** and **Postgres** installed on your machine. Once they are installed, Download/Git Clone the repo and create an *.env* and database following the *.env.example* located in the root of the repo. Then look at the repo's *package.json* located in the root to see what packages the project is dependant on. Use `npm install` to install those dependencies. After that, use **Sequelize** to run all the migrations (`npx dotenv sequelize-cli db:migrate`) and then run all pending seeds (`npx dotenv sequelize-cli db:seed:all`). Check to see if the database was properly seeded using **psql**. If seeded correctly, run the server using `npm start`.
+To run locally, you must have **NodeJS** and **Postgres** installed on your machine. Once they are installed, Download/Git Clone the repo and create an _.env_ and database following the _.env.example_ located in the root of the repo. Then look at the repo's _package.json_ located in the root to see what packages the project is dependant on. Use `npm install` to install those dependencies. After that, use **Sequelize** to run all the migrations (`npx dotenv sequelize-cli db:migrate`) and then run all pending seeds (`npx dotenv sequelize-cli db:seed:all`). Check to see if the database was properly seeded using **psql**. If seeded correctly, run the server using `npm start`.
 
 <div>
 
@@ -165,7 +164,6 @@ To run locally, you must have **NodeJS** and **Postgres** installed on your mach
 
 <div>
 
-
 <div align="center">
 
 ## Technical Implementation
@@ -174,32 +172,24 @@ To run locally, you must have **NodeJS** and **Postgres** installed on your mach
 
 <div align="justify">
 
- The database schema required more forethought than any other technical aspect of this project. Thinking carefully about this led to a schema that was aligned with our front-end queries. For example, deciding early that a group owner was not a member of that group kept the group owner out of the member table. This kept our queries shorter and easier to debug when we needed to, for example, restrict non group owners from write/update/delete privileges.
+The database schema required more forethought than any other technical aspect of this project. Thinking carefully about this led to a schema that was aligned with our front-end queries. For example, deciding early that a group owner was not a member of that group kept the group owner out of the member table. This kept our queries shorter and easier to debug when we needed to, for example, restrict non group owners from write/update/delete privileges.
 
 <div>
-
 
 <div align="center">
 
 ## Project Created By
-### Nawal Ahmed
 
-[![Nawal Ahmed - LinkedIn](https://img.shields.io/static/v1?label=Nawal+Ahmed&message=LinkedIn&color=%230077B5&style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/nawaljahmed/) [![Nawal Ahmed - GitHub](https://img.shields.io/static/v1?label=Nawal+Ahmed&message=GitHub&color=%23161B22&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/nawaljahmed)
+### Jarif Ahmed
 
-### Anthony Fahden
-
-[![Anthony Fahden - LinkedIn](https://img.shields.io/static/v1?label=Anthony+Fahden&message=LinkedIn&color=%230077B5&style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/anthony-fahden-a9251260/) [![Anthony Fahden - GitHub](https://img.shields.io/static/v1?label=Anthony+Fahden&message=GitHub&color=%23161B22&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/juniporous)
-
-### William Short
-
-[![William Short - LinkedIn](https://img.shields.io/static/v1?label=William+Short&message=LinkedIn&color=%230077B5&style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/will-s-231740126/) [![William Short - GitHub](https://img.shields.io/static/v1?label=William+Short&message=GitHub&color=%23161B22&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/will-short)
-
+[![Jarif Ahmed - LinkedIn](https://img.shields.io/static/v1?label=Jarif+Ahmed&message=LinkedIn&color=%230077B5&style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/jarifnahmed/) [![Jarif Ahmed - GitHub](https://img.shields.io/static/v1?label=Jarif+Ahmed&message=GitHub&color=%23161B22&style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/jarifnahmed)
 
 <div>
 
 <div align="center">
 
 ## Badges Found & Created Using
+
 [Badges4 ReadMe.md Profile](https://github.com/alexandresanlim/Badges4-README.md-Profile) | [Markdown Badges](https://github.com/Ileriayo/markdown-badges) | [Badge Generator](https://michaelcurrin.github.io/badge-generator/#/generic) | [Shields.io](https://shields.io/) | [Simple Icons](https://simpleicons.org/)
 
 <div>
