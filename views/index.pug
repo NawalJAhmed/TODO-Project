@@ -5,31 +5,23 @@ head
   link(rel="stylesheet" href="/stylesheets/index.css")
   //- add page specific js
   script(src="/javascripts/index.js" type="module" defer)
-  meta(name="description" content="//TODO:")
-  meta(name="title" property="og:title" content="//TODO:")
+  meta(name="description" content="Quicklist")
+  meta(name="title" property="og:title" content="Quicklist")
   meta(property="og:type" content="Website")
   meta(name="image" property="og:image" content="https://res.cloudinary.com/diiwknzfk/image/upload/v1648248351/app_images/todo.png")
-  meta(name="description" property="og:description" content="//TODO:")
-  meta(name="author" content="Jarif Ahmed")
-
-//- Global site tag (gtag.js) - Google Analytics
-script(async src="https://www.googletagmanager.com/gtag/js?id=G-SFX14HDP0P")
-script(
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SFX14HDP0P'))
+  meta(name="description" property="og:description" content="Quicklist")
+  meta(name="author" content="Jarif Ahmed
+  
 
 body
   nav
     span
-    h1 //TODO:
+    h1 Quicklist
     a.navButtons(href="/users/login") Login
   main
     content.main
       h3 Hello,
-      h2 WELCOME TO TODO
+      h2 Welcome to Quicklist
       .buttons
         form(action='/users/login' method='post')
           input(type='hidden' name='_csrf' value=csrfToken)
@@ -37,5 +29,5 @@ body
           input(value=`${demoPwd}` name="password" type='hidden')
           button.navButtons(type='submit' ) Demo
         a.navButtons(href="/users/signup") Signup
-      p TODO is a remember the milk clone catered to programmers. TODO lets users create groups, add members and set tasks for members.  Try it out without creating an account by clicking the Demo button!
+      p Quicklist is a remember the milk clone catered to programmers. Quicklist lets users create groups, add members and set tasks for members.  Try it out without creating an account by clicking the Demo button!
     img(src="./snippet1.PNG")

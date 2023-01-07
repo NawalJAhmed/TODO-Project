@@ -16,7 +16,7 @@ html
   body
     nav
       div
-        h1.logo= `//TODO: ${userName}`
+        h1.logo= `Quicklist ${userName}`
       a.logout(href="/users/logout") Logout
     aside
       a(onclick=`groupView(${dashboard}, "Dashboard")` id=`/users/${userId}/${dashboard}`).dashbutton Dashboard
@@ -36,10 +36,11 @@ html
       block group
       block task
     footer
+=======
         .jarif
           h3 Jarif Ahmed
           .links
             a(href="https://www.linkedin.com/in/jarifnahmed/" class="fab fa-linkedin-in" target="_blank")
             a(href="https://github.com/jarifnahmed" class="fab fa-github" target="_blank")
-        a(href="https://github.com/jarifnahmed/quicklist_project" class="fab fa-github" target="_blank")
+        a(href="https://github.com/jarifnahmed/quicklist_project/" class="fab fa-github" target="_blank")
           div= "       Project Repo"
