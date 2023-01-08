@@ -22,12 +22,12 @@ html
       a(onclick=`groupView(${dashboard}, "Dashboard")` id=`/users/${userId}/${dashboard}`).dashbutton Dashboard
       form(action=`/users/${userId}/${groupId}/create-group` method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
-        input(type='input' name='name' placeholder="Group Name" required)
+        input(type='input' name='name' placeholder="group Name" required)
         button(type='submit' ) Add
       .groupButton
         header.groupTop
           span(class="material-icons" style="font-size:22px;")= "expand_more"
-          h2.groups Groups
+          h2.groups groups
         +groupList(groups)
     block errors
     content.group

@@ -1,76 +1,76 @@
-const express = require("express");
-const { check, validationResult } = require("express-validator");
-const bcrypt = require("bcryptjs");
+const express = require('express');
+const { check, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
-const db = require("../db/models");
-const { csrfProtection, asyncHandler } = require("./utils");
-const { loginUser, logoutUser } = require("../auth");
-const { Op } = require("sequelize");
+const db = require('../db/models');
+const { csrfProtection, asyncHandler } = require('./utils');
+const { loginUser, logoutUser } = require('../auth');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 //DEMO USER PWD IS demouser
-router.get("/signup", csrfProtection, (req, res) => {
-  const user = db.User.build();
+router.get('/signup', csrfProtection, (req, res) => {
+  const user = db.user.build();
 
-  res.render("signup", {
-    title: "signup",
+  res.render('signup', {
+    title: 'signup',
     user,
     csrfToken: req.csrfToken(),
   });
 });
 
 const userValidators = [
-  check("username")
+  check('username')
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a username")
+    .withMessage('Please provide a username')
     .isLength({ max: 15 })
-    .withMessage("username most be less than 15 characters"),
-  check("email")
+    .withMessage('username most be less than 15 characters'),
+  check('email')
     .exists({ checkFalsy: true })
-    .withMessage("Please provide an Email Address")
+    .withMessage('Please provide an Email Address')
     .isLength({ max: 250 })
-    .withMessage("Email Address must be less than 250 characters long")
+    .withMessage('Email Address must be less than 250 characters long')
     .isEmail()
-    .withMessage("Email Address is not a valid email")
+    .withMessage('Email Address is not a valid email')
     .custom((value) => {
-      return db.User.findOne({ where: { email: value } }).then((user) => {
+      return db.user.findOne({ where: { email: value } }).then((user) => {
         if (user) {
           return Promise.reject(
-            "The provided Email Address is already in use by another account"
+            'The provided Email Address is already in use by another account'
           );
         }
       });
     }),
-  check("password")
+  check('password')
     .exists({ checkFalsy: true })
-    .withMessage("please provide a password")
+    .withMessage('please provide a password')
     .isLength({ max: 50 })
-    .withMessage("Password must not be more than 50 characters long")
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, "g")
+    .withMessage('Password must not be more than 50 characters long')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, 'g')
     .withMessage(
       'Password must contain at least 1 lowercase letter, uppercase letter, number, and special character (i.e. "!@#$%^&*")'
     ),
-  check("confirmPassword")
+  check('confirmPassword')
     .exists({ checkFalsy: true })
-    .withMessage("please confirm your password")
+    .withMessage('please confirm your password')
     .isLength({ max: 50 })
-    .withMessage("Confirm Password must not be more than 50 characters long")
+    .withMessage('Confirm Password must not be more than 50 characters long')
     .custom((value, { req }) => {
       if (value !== req.body.password) {
-        throw new Error("Confirm Password does not match Password");
+        throw new Error('Confirm Password does not match Password');
       }
       return true;
     }),
 ];
 
 router.post(
-  "/signup",
+  '/signup',
   csrfProtection,
   userValidators,
   asyncHandler(async (req, res) => {
     const { username, email, password } = req.body;
 
-    const user = db.User.build({
+    const user = db.user.build({
       username,
       email,
     });
@@ -83,8 +83,8 @@ router.post(
       loginUser(req, res, user);
 
       const owner_id = req.session.auth.userId;
-      let dashboard = await db.Group.create({
-        name: "Dashboard",
+      let dashboard = await db.group.create({
+        name: 'Dashboard',
         owner_id,
         dashboard: true,
       });
@@ -92,16 +92,16 @@ router.post(
       res.redirect(url);
     } else {
       const errors = validatorErrors.array();
-      const usernameError = errors.find((error) => error.param === "username");
-      const emailError = errors.find((error) => error.param === "email");
-      const passwordError = errors.find((error) => error.param === "password");
+      const usernameError = errors.find((error) => error.param === 'username');
+      const emailError = errors.find((error) => error.param === 'email');
+      const passwordError = errors.find((error) => error.param === 'password');
       const comfirmPasswordError = errors.find(
-        (error) => error.param === "confirmPassword"
+        (error) => error.param === 'confirmPassword'
       );
       const data = req.body;
 
-      res.render("signup", {
-        title: "signup",
+      res.render('signup', {
+        title: 'signup',
         user,
         usernameError,
         emailError,
@@ -114,38 +114,38 @@ router.post(
   })
 );
 
-router.get("/login", csrfProtection, (req, res) => {
-  const user = db.User.build();
-  res.render("login", {
-    title: "login",
+router.get('/login', csrfProtection, (req, res) => {
+  const user = db.user.build();
+  res.render('login', {
+    title: 'login',
     user,
-    notFound: "",
+    notFound: '',
     csrfToken: req.csrfToken(),
   });
 });
 
 const loginValidators = [
-  check("email")
+  check('email')
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a Email Address"),
-  check("password")
+    .withMessage('Please provide a Email Address'),
+  check('password')
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a Password"),
+    .withMessage('Please provide a Password'),
 ];
 
 router.post(
-  "/login",
+  '/login',
   csrfProtection,
   loginValidators,
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     let errors = [];
-    let notFound = "";
+    let notFound = '';
     const validatorErrors = validationResult(req);
     console.log(req.body);
     if (validatorErrors.isEmpty()) {
-      const user = await db.User.findOne({ where: { email } });
+      const user = await db.user.findOne({ where: { email } });
 
       if (user !== null) {
         // If the user exists then compare their password
@@ -161,27 +161,27 @@ router.post(
           loginUser(req, res, user);
 
           const owner_id = req.session.auth.userId;
-          let dashboard = await db.Group.findOne({
+          let dashboard = await db.group.findOne({
             where: {
               [Op.and]: [{ owner_id }, { dashboard: true }],
             },
           });
           let url = `/users/${owner_id}/${dashboard.id}`;
-          console.log("!!!!!!!!!!!! " + url);
+          console.log('!!!!!!!!!!!! ' + url);
           return res.redirect(url);
         }
       }
 
       // Otherwise display an error message to the user.
-      notFound = "please check your email address and password and try again";
+      notFound = 'please check your email address and password and try again';
     } else {
       errors = validatorErrors.array();
     }
-    const emailError = errors.find((error) => error.param === "email");
-    const passwordError = errors.find((error) => error.param === "password");
+    const emailError = errors.find((error) => error.param === 'email');
+    const passwordError = errors.find((error) => error.param === 'password');
     const data = req.body;
-    res.render("login", {
-      title: "Login",
+    res.render('login', {
+      title: 'Login',
       email,
       emailError,
       passwordError,
@@ -192,9 +192,9 @@ router.post(
   })
 );
 
-router.get("/logout", (req, res) => {
+router.get('/logout', (req, res) => {
   logoutUser(req, res);
-  res.redirect("/users/login");
+  res.redirect('/users/login');
 });
 
 module.exports = router;

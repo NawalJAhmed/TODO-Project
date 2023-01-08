@@ -1,4 +1,4 @@
-const db = require("./db/models");
+const db = require('./db/models');
 
 const loginUser = (req, res, user) => {
   req.session.auth = {
@@ -12,32 +12,31 @@ const logoutUser = (req, res) => {
 
 const requireAuth = async (req, res, next) => {
   if (!res.locals.authenticated) {
-    return res.redirect("/users/login");
+    return res.redirect('/users/login');
   }
-  let userId = parseInt(req.url.split("/")[1], 10);
+  let userId = parseInt(req.url.split('/')[1], 10);
   if (req.session.auth.userId !== userId) {
     return res.redirect(`/user`);
   }
-  const groupId = parseInt(req.url.split("/")[2], 10);
-  if(!isNaN(groupId)) {
-  const group = await db.Group.findByPk(groupId);
-  if (!group && !undefined) return res.redirect(`/user`);
+  const groupId = parseInt(req.url.split('/')[2], 10);
+  if (!isNaN(groupId)) {
+    const group = await db.group.findByPk(groupId);
+    if (!group && !undefined) return res.redirect(`/user`);
   }
-  const taskId = parseInt(req.url.split("/")[3], 10);
-  if(!isNaN(taskId)) {
-  const task = await db.Task.findByPk(taskId);
-  if (!task && !undefined) return res.redirect(`/user`);
+  const taskId = parseInt(req.url.split('/')[3], 10);
+  if (!isNaN(taskId)) {
+    const task = await db.task.findByPk(taskId);
+    if (!task && !undefined) return res.redirect(`/user`);
   }
   return next();
 };
 
 const restoreUser = async (req, res, next) => {
-
   if (req.session.auth) {
     const { userId } = req.session.auth;
 
     try {
-      const user = await db.User.findByPk(userId);
+      const user = await db.user.findByPk(userId);
 
       if (user) {
         res.locals.authenticated = true;

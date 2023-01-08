@@ -4,34 +4,34 @@ div
         div
             if !isDashboard && isOwner
                 form(action=`/users/${userId}/${groupId}/deleteGroup` method='post')
-                    button.deleteGroupBut(type='submit') Delete Group
+                    button.deleteGroupBut(type='submit') Delete group
 
-    div.groupOwnerDiv Group Owner: #{ownerName.username}
+    div.groupOwnerDiv group Owner: #{ownerName.username}
     div.groupButtons
         if !isDashboard && isOwner
             form.groupForm(action=`/users/${userId}/${groupId}/addMember` method='post')
                 input(type='hidden' name='_csrf' value=csrfToken)
                 label(for='addMember')
-                select(type='select' name='addMember' placeholder='Add Member')
-                    option(value='') --Select a Member--
+                select(type='select' name='addMember' placeholder='Add member')
+                    option(value='') --Select a member--
                     if users.length
                         each user in users
                             option(value= user.id)= user.username
-                button(type='submit') Add Member
+                button(type='submit') Add member
         if members && !isDashboard && isOwner
             form.groupForm(action=`/users/${userId}/${groupId}/removeMember` method='post')
                 input(type='hidden' name='_csrf' value=csrfToken)
                 label(for='removeMember')
-                select(type='select' name='removeMember' placeholder='Remove Member')
-                    option(value='') --Select a Member--
+                select(type='select' name='removeMember' placeholder='Remove member')
+                    option(value='') --Select a member--
                     each member in members.dataValues.groupToMember
                         option(value= member.id)= member.username
-                button.removeMemberBttn(type='submit') Remove Member
+                button.removeMemberBttn(type='submit') Remove member
     div
         if members && !isDashboard
             div
                 ul.groupList
-                    li.groupListTitle Group Members
+                    li.groupListTitle group members
                     each member in members.dataValues.groupToMember
                         li.groupListItem= member.dataValues.username
                     each el in Array(26 - currentMemberIds.length)

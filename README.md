@@ -44,18 +44,18 @@ Quicklist is a [Remember The Milk](https://www.rememberthemilk.com/) inspired fu
 
 - Account Signup/Login/Logout
 - Personal Dashboard Created Upon Signup
-- Demo User
-- Create/Delete Groups
-- Add/Remove Group Members
-- Add New Personal/Group Tasks
-- Display Tasks By Ascending Due Date
-- Assign Tasks To Group Members By Having Them Become The Task Owner
-- All Tasks Assigned To User Appear On Dashboard
-- Task Owners Can Create/Delete Subtasks
-- Edit Tasks If Task Owner
-- Mark Task As Complete If Task Owner
-- Search Through Tasks In Group
-- Scroll Through Long List Of Tasks
+- Demo user
+- Create/Delete groups
+- Add/Remove group members
+- Add New Personal/group tasks
+- Display tasks By Ascending Due Date
+- Assign tasks To group members By Having Them Become The task Owner
+- All tasks Assigned To user Appear On Dashboard
+- task Owners Can Create/Delete Subtasks
+- Edit tasks If task Owner
+- Mark task As Complete If task Owner
+- Search Through tasks In group
+- Scroll Through Long List Of tasks
 
 <div>
 
@@ -67,7 +67,7 @@ Quicklist is a [Remember The Milk](https://www.rememberthemilk.com/) inspired fu
 
 <div align="center">
 
-### Demo User
+### Demo user
 
 ![demo](https://user-images.githubusercontent.com/11577850/138720984-be43bf04-c4df-484d-bd8a-d4dd87f159b3.png)
 
@@ -79,23 +79,23 @@ Quicklist is a [Remember The Milk](https://www.rememberthemilk.com/) inspired fu
 
 ![login](https://user-images.githubusercontent.com/11577850/138721230-54f5a525-9729-46db-ab40-a230acecbcf5.png)
 
-### Create Group
+### Create group
 
 ![create new group](https://user-images.githubusercontent.com/11577850/138721293-3de5c9d5-417c-4ff0-812d-ad3beb4765cf.png)
 
-### Add/Remove Group Members
+### Add/Remove group members
 
 ![add⁄removeGroupMembers](https://user-images.githubusercontent.com/11577850/138721475-4d6f78c3-bebc-47b4-8171-9e04450e4e1f.png)
 
-### Add Tasks
+### Add tasks
 
 ![addNewTask](https://user-images.githubusercontent.com/11577850/138721510-d09c0ab1-f7b6-412b-920a-2ac9127d1a39.png)
 
-### Search Tasks
+### Search tasks
 
 ![search](https://user-images.githubusercontent.com/11577850/138721549-7233741b-b20a-44c3-9c95-51460296ed45.png)
 
-### Edit Task Details
+### Edit task Details
 
 ![editTaskDetails](https://user-images.githubusercontent.com/11577850/138721596-d8c9a82d-df05-4deb-b699-9aaf35d4a238.png)
 
@@ -103,7 +103,7 @@ Quicklist is a [Remember The Milk](https://www.rememberthemilk.com/) inspired fu
 
 ![createSubTasks](https://user-images.githubusercontent.com/11577850/138723133-f83588ce-0f45-43b5-8d91-b7c050ccb7bb.png)
 
-### Mark Task Completed
+### Mark task Completed
 
 ![markTaskAsCompleted](https://user-images.githubusercontent.com/11577850/138721671-2b15ae27-7b74-445d-b9de-ba7c13781ce6.png)
 

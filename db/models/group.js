@@ -1,24 +1,28 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Group = sequelize.define('Group', {
-    name: DataTypes.STRING,
-    owner_id: DataTypes.INTEGER,
-    dashboard: DataTypes.BOOLEAN
-  }, {});
-  Group.associate = function(models) {
+  const group = sequelize.define(
+    'group',
+    {
+      name: DataTypes.STRING,
+      owner_id: DataTypes.INTEGER,
+      dashboard: DataTypes.BOOLEAN,
+    },
+    {}
+  );
+  group.associate = function (models) {
     // associations can be defined here
     const columnMapping = {
-      through: 'Member',
+      through: 'member',
       foreignKey: 'group_id',
       otherKey: 'user_id',
-      as: 'groupToMember'
-    }
-    Group.belongsToMany(models.User, columnMapping)
+      as: 'groupToMember',
+    };
+    group.belongsToMany(models.user, columnMapping);
 
-    Group.belongsTo(models.User, {
+    group.belongsTo(models.user, {
       as: 'groupToUser',
-      foreignKey: 'owner_id'
-    })
+      foreignKey: 'owner_id',
+    });
   };
-  return Group;
+  return group;
 };
