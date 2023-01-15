@@ -4,20 +4,32 @@ const {
 
 module.exports = {
   development: {
-    username,
-    password,
-    database,
-    host,
+    // username,
+    // password,
+    // database,
+    // host,
+    // dialect: 'postgres',
+    // seederStorage: 'sequelize',
+
+    use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
     seederStorage: 'sequelize',
+    dialectOptions: {
+      ssl: {
+        require: false,
+        rejectUnauthorized: false,
+      },
+    },
   },
   production: {
     use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
     seederStorage: 'sequelize',
     dialectOptions: {
-      ssl: true,
-      native: true
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
     },
   },
 };
