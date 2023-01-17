@@ -6,7 +6,7 @@ const { csrfProtection, asyncHandler } = require("./utils");
 router.get("/", csrfProtection, function (req, res, next) {
   res.render("index", {
     demoEmail: "demo@test.com",
-    demoPwd: "demouser1",
+    demoPwd: "Demouser1!",
     csrfToken: req.csrfToken(),
   });
 });

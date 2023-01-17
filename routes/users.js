@@ -8,7 +8,7 @@ const { loginUser, logoutUser } = require('../auth');
 const { Op } = require('sequelize');
 
 const router = express.Router();
-//DEMO USER PWD IS demouser1
+//DEMO USER PWD IS Demouser1!
 router.get('/signup', csrfProtection, (req, res) => {
   const user = db.user.build();
 
