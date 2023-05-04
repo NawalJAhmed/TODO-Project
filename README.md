@@ -2,7 +2,7 @@
 
 # Quicklist
 
-[Website](https://quicklist.onrender.com/)
+[Link](https://quicklist.onrender.com/)
 
 ## Technologies
 
