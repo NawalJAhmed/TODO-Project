@@ -2,7 +2,7 @@
 
 # Quicklist
 
-[![Website](https://img.shields.io/website?down_message=Offline%20%3A%28&label=App%20is&logo=heroku&style=for-the-badge&up_color=%233bad0e&up_message=Online.%20Click%20Here%21&url=https%3A%2F%2Fgroup-todo.herokuapp.com%2F)](https://group-todo.herokuapp.com/)
+[Website](https://quicklist.onrender.com/)
 
 ## Technologies
 
