@@ -1,7 +1,7 @@
 'use strict';
 
-const app = require('../../app.js');
-const https = require('https');
+// const app = require('../../app.js');
+// const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -17,12 +17,12 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-const options = {
-  ca: fs.readFileSync('./certs/ca.pem'),
-  // other options
-};
+// const options = {
+//   ca: fs.readFileSync('./certs/ca.pem'),
+//   // other options
+// };
 
-https.createServer(options, app).listen(443);
+// https.createServer(options, app).listen(443);
 
 fs
   .readdirSync(__dirname)
